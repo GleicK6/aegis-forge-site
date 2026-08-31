@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AGORA — Outil municipal (planning, matériel, flotte, congés)</title>
+
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:; connect-src 'self' https://formspree.io; frame-ancestors 'none'; form-action 'self' https://formspree.io; base-uri 'self'; object-src 'none'; upgrade-insecure-requests">
+<meta http-equiv="X-Content-Type-Options" content="nosniff">
+<meta http-equiv="X-Frame-Options" content="DENY">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), payment=(), usb=(), accelerometer=(), gyroscope=()">
+<meta name="robots" content="index, follow, noimageindex, max-snippet:160, max-image-preview:standard">
+<meta name="description" content="AGORA — outil municipal en release candidate : planning agents, suivi matériel, flotte de véhicules, congés. Pilote en commune partenaire depuis mai 2026. Multi-tenant, hébergé en Europe.">
+
+<!-- SEO : Open Graph, Twitter Card et Schema.org WebApplication.
+     URL canonique et og:url sont injectées au build par tools/build-sites.mjs. -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="AEGIS Forge">
+<meta property="og:title" content="AGORA — Outil municipal : planning, matériel, flotte, congés">
+<meta property="og:description" content="Une seule interface pour le quotidien des services techniques municipaux. Multi-tenant, hébergé en Europe, données exportables. Pilote en commune partenaire depuis mai 2026.">
+<meta property="og:image" content="https://aegis-forge.fr/rss/agora-screen-planning.png">
+<meta property="og:locale" content="fr_FR">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="AGORA — Outil municipal : planning, matériel, flotte, congés">
+<meta name="twitter:description" content="Une seule interface pour le quotidien des services techniques municipaux. Multi-tenant, hébergé en Europe, données exportables.">
+<meta name="twitter:image" content="https://aegis-forge.fr/rss/agora-screen-planning.png">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "AGORA",
+  "applicationCategory": "BusinessApplication",
+  "operatingSystem": "Web",
+  "description": "Outil municipal multi-tenant : planning des agents, suivi du matériel, flotte de véhicules, congés. Hébergé en Union européenne, données exportables. En release candidate, pilote en commune partenaire depuis mai 2026.",
+  "url": "https://aegis-forge.fr/aegis-agora.html",
+  "image": "https://aegis-forge.fr/rss/agora-screen-planning.png",
+  "inLanguage": "fr",
+  "publisher": {
+    "@type": "Organization",
+    "name": "AEGIS Forge",
+    "url": "https://aegis-forge.fr/"
+  },
+  "featureList": [
+    "Planning mensuel des agents",
+    "Inventaire matériel et réservations",
+    "Gestion de flotte de véhicules et contrôles techniques",
+    "Gestion des congés",
+    "Multi-tenant, hébergement Union européenne",
+    "Export complet des données sans frais"
+  ]
+}
+</script>
+
+<link rel="stylesheet" href="_shared/fonts.css">
+<link rel="stylesheet" href="_shared/operational.css">
+<link rel="stylesheet" href="_shared/contact-modal.css">
+<script src="_shared/contact-modal.js" defer></script>
+<link rel="stylesheet" href="_shared/lightbox.css">
+<script src="_shared/lightbox.js" defer></script>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect x='6' y='6' width='20' height='20' fill='none' stroke='%231e3a8a' stroke-width='2'/><rect x='12' y='12' width='8' height='8' fill='none' stroke='%231e3a8a' stroke-width='1.5' transform='rotate(45 16 16)'/></svg>">
+
+<style>
+/* ─── Bridge clair → operational tokens (page-local) ─── */
+:root {
+  --paper:       var(--bg);
+  --paper-warm:  var(--surf-2);
+  --paper-deep:  var(--surf-2);
+  --paper-card:  var(--surf);
+  --serif:       var(--display);
+  --forge:       var(--sig);
+  --forge-soft:  var(--sig-soft);
+  --prev:        var(--pri);
+  --prev-soft:   var(--pri-soft);
+  --warn:        var(--crit);
+  --warn-soft:   var(--crit-soft);
+  --line-soft:   var(--line-2);
+}
+
+/* Helpers couleur (accent emphasis) */
+.pri-c { color: var(--pri); }
+.prev, .prev-c { color: var(--prev); }
+.forge-c, .forge { color: var(--forge); }
+.sig-c { color: var(--sig); }
+
+/* Mock UI */
+.mock {
+  margin-top: 40px;
+  background: var(--paper-card);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: 200px 1fr;
+}
+.mock-titlebar {
+  grid-column: 1 / -1;
+  padding: 12px 18px;
+  background: var(--paper-warm);
+  border-bottom: 1px solid var(--line);
+  display: flex; justify-content: space-between; align-items: center;
+  font-family: var(--mono); font-size: 11px; letter-spacing: 0.1em;
+  color: var(--ink-3);
+}
+.mock-titlebar .dots { display: flex; gap: 6px; }
+.mock-titlebar .dots span { width: 8px; height: 8px; border-radius: 50%; background: var(--line); }
+.mock-titlebar .dots span:first-child { background: #e8a39a; }
+.mock-titlebar .dots span:nth-child(2) { background: #e3c378; }
+.mock-titlebar .dots span:nth-child(3) { background: #92b988; }
+.mock-titlebar .url { flex: 1; text-align: center; color: var(--ink-2); }
+
+.mock-side {
+  background: var(--paper-warm);
+  border-right: 1px solid var(--line);
+  padding: 16px 0;
+}
+.mock-side-h {
+  padding: 0 18px 10px;
+  font-family: var(--mono); font-size: 10px; letter-spacing: 0.16em;
+  color: var(--ink-3); text-transform: uppercase;
+}
+.mock-nav-item {
+  padding: 9px 18px;
+  display: flex; align-items: center; gap: 10px;
+  font-family: var(--sans); font-size: 13.5px;
+  color: var(--ink-2);
+  border-left: 2px solid transparent;
+}
+.mock-nav-item.active {
+  background: var(--paper-card); color: var(--ink);
+  border-left-color: var(--prev); font-weight: 500;
+}
+.mock-nav-item svg { width: 14px; height: 14px; flex-shrink: 0; }
+.mock-nav-item .badge {
+  margin-left: auto;
+  font-family: var(--mono); font-size: 9.5px;
+  padding: 1px 7px; border-radius: 100px;
+  background: var(--forge-soft); color: var(--forge);
+}
+
+.mock-main { padding: 24px 28px; }
+.mock-main-bar {
+  display: flex; justify-content: space-between; align-items: baseline;
+  margin-bottom: 18px; padding-bottom: 16px;
+  border-bottom: 1px solid var(--line-soft);
+}
+.mock-main-h {
+  font-family: var(--display); font-weight: 700; font-size: 22px;
+  letter-spacing: -0.015em; color: var(--ink);
+}
+.mock-main-h span { color: var(--prev); }
+.mock-main-tools {
+  display: flex; gap: 8px;
+  font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.1em;
+  color: var(--ink-3); text-transform: uppercase;
+}
+.mock-main-tools span {
+  padding: 5px 11px;
+  border: 1px solid var(--line);
+  border-radius: 100px;
+}
+.mock-main-tools .on {
+  color: var(--ink); border-color: var(--ink); background: var(--paper-deep);
+}
+
+.planning {
+  display: grid;
+  grid-template-columns: 80px repeat(7, 1fr);
+  gap: 1px;
+  background: var(--line-soft);
+  border: 1px solid var(--line-soft);
+  border-radius: 8px;
+  overflow: hidden;
+}
+.planning > div { background: var(--paper); }
+.planning-h, .planning-d {
+  padding: 10px 12px;
+  font-family: var(--mono); font-size: 10px; letter-spacing: 0.12em;
+  color: var(--ink-3); text-transform: uppercase;
+  background: var(--paper-warm);
+}
+.planning-d { text-align: center; }
+.planning-d b {
+  color: var(--ink); display: block;
+  font-family: var(--display); font-size: 14px; letter-spacing: -0.01em;
+  font-weight: 600;
+}
+.planning-svc {
+  padding: 16px 12px;
+  font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.14em;
+  color: var(--ink-2); text-transform: uppercase;
+  background: var(--paper-warm);
+  display: flex; align-items: center; gap: 6px;
+}
+.planning-svc::before {
+  content: ''; width: 8px; height: 8px; background: currentColor;
+  border-radius: 2px;
+}
+.planning-svc.tec { color: var(--prev); }
+.planning-svc.adm { color: var(--forge); }
+.planning-svc.ed  { color: #6a8aa8; }
+
+.planning-cell {
+  padding: 4px; min-height: 56px;
+  display: flex; flex-direction: column; gap: 2px;
+}
+.shift {
+  padding: 4px 6px;
+  font-family: var(--sans); font-size: 11px; line-height: 1.3;
+  border-left: 2px solid;
+  border-radius: 2px;
+}
+.shift b {
+  font-family: var(--mono); font-size: 9.5px;
+  color: var(--ink); display: block; letter-spacing: 0.06em;
+}
+.shift.tec { border-color: var(--prev); background: rgba(30,58,138,0.08); color: var(--prev); }
+.shift.adm { border-color: var(--forge); background: rgba(217,106,24,0.08); color: var(--forge); }
+.shift.ed  { border-color: #6a8aa8; background: rgba(106,138,168,0.08); color: #4a6982; }
+.shift.alert { border-color: var(--warn); background: rgba(196,56,56,0.08); color: var(--warn); }
+
+.mock-bottom {
+  margin-top: 14px;
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px;
+}
+.mock-stat {
+  padding: 12px 14px;
+  background: var(--paper); border: 1px solid var(--line-soft);
+  border-radius: 8px;
+  display: flex; flex-direction: column; gap: 4px;
+}
+.mock-stat .l {
+  font-family: var(--mono); font-size: 9.5px; letter-spacing: 0.16em;
+  color: var(--ink-3); text-transform: uppercase;
+}
+.mock-stat .v {
+  font-family: var(--display); font-weight: 700; font-size: 22px;
+  letter-spacing: -0.015em; color: var(--ink);
+}
+.mock-stat .v.prev-c { color: var(--prev); }
+.mock-stat .v.forge-c { color: var(--forge); }
+.mock-stat .v.warn-c { color: var(--warn); }
+
+/* Modules */
+.modules { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+.mod {
+  background: var(--paper-card);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 28px 30px;
+  display: flex; flex-direction: column; gap: 16px;
+  transition: all .25s var(--ease);
+}
+.mod:hover {
+  border-color: var(--ink-4);
+  transform: translateY(-3px);
+  box-shadow: 0 12px 32px rgba(10,22,40,0.08);
+}
+.mod-head { display: flex; justify-content: space-between; align-items: start; gap: 16px; }
+.mod-ico {
+  width: 44px; height: 44px;
+  border: 1.5px solid var(--prev);
+  border-radius: 4px;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--prev);
+  flex-shrink: 0;
+}
+.mod-ico svg { width: 22px; height: 22px; }
+.mod-id {
+  font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.16em;
+  color: var(--sig); text-transform: uppercase; font-weight: 600;
+}
+.mod-h {
+  font-family: var(--display); font-weight: 700; font-size: 22px;
+  letter-spacing: -0.015em; line-height: 1.2; color: var(--ink);
+}
+.mod-h em {
+  font-style: normal; font-weight: 400; color: var(--ink-3);
+}
+.mod-b {
+  font-family: var(--sans); font-size: 14.5px; line-height: 1.6;
+  color: var(--ink-2);
+}
+.mod-list {
+  margin-top: 4px; padding-top: 14px;
+  border-top: 1px solid var(--line-soft);
+  display: flex; flex-direction: column; gap: 8px;
+  font-family: var(--sans); font-size: 13.5px; color: var(--ink-2);
+}
+.mod-list li { display: flex; gap: 10px; align-items: baseline; list-style: none; }
+.mod-list li::before {
+  content: ''; width: 5px; height: 5px; background: var(--prev);
+  border-radius: 50%; flex-shrink: 0; transform: translateY(-2px);
+}
+
+/* Security band */
+.sec-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 20px;
+}
+.sec {
+  background: var(--paper-card);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 30px 32px;
+}
+.sec-num {
+  font-family: var(--mono); font-size: 11px; letter-spacing: 0.16em;
+  color: var(--sig); text-transform: uppercase; margin-bottom: 14px;
+  font-weight: 600;
+}
+.sec-h {
+  font-family: var(--display); font-weight: 700; font-size: 22px;
+  letter-spacing: -0.02em; color: var(--ink); margin-bottom: 12px;
+  line-height: 1.2;
+}
+.sec-h em {
+  font-style: normal; font-weight: 400; color: var(--prev);
+}
+.sec-b {
+  font-family: var(--sans); font-size: 15px; line-height: 1.6;
+  color: var(--ink-2); margin-bottom: 18px;
+}
+.sec-row {
+  display: grid; grid-template-columns: 110px 1fr;
+  gap: 16px; padding: 10px 0;
+  border-top: 1px solid var(--line-soft);
+  font-family: var(--sans); font-size: 13.5px;
+}
+.sec-row b {
+  color: var(--ink-3); font-weight: 500;
+  font-family: var(--mono); font-size: 11px; letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.sec-row span { color: var(--ink); }
+
+/* Trajectoire produit — pattern 3 cards aligne sur aegis-forge.html "Trois profils" */
+.aud-sec { padding: 96px 0 120px; border-top: 1px solid var(--line); }
+.aud-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 0;
+  border: 1px solid var(--line);
+  background: var(--line);
+  border-radius: 6px;
+  overflow: hidden;
+}
+.aud-cell {
+  background: var(--surf);
+  padding: 30px 30px 32px;
+  display: flex; flex-direction: column; gap: 14px;
+  transition: background .2s;
+  min-height: 240px;
+}
+.aud-cell:hover { background: var(--surf-2); }
+.aud-cell.now { background: var(--surf-2); }
+.aud-cell-num {
+  font-family: var(--display); font-weight: 800;
+  font-size: 38px; line-height: 1;
+  letter-spacing: -0.04em; color: var(--sig);
+  display: flex; align-items: baseline; gap: 10px;
+}
+.aud-cell.now .aud-cell-num { color: var(--forge); }
+.aud-cell-num span {
+  font-family: var(--mono); font-size: 10.5px;
+  font-weight: 500; color: var(--ink-3);
+  letter-spacing: 0.18em; text-transform: uppercase;
+}
+.aud-cell.now .aud-cell-num span { color: var(--forge); }
+.aud-cell-h {
+  font-family: var(--display); font-weight: 700;
+  font-size: 22px; line-height: 1.15;
+  letter-spacing: -0.02em; color: var(--ink);
+}
+.aud-cell-b {
+  font-family: var(--sans); font-size: 14.5px;
+  line-height: 1.6; color: var(--ink-2);
+  flex: 1;
+}
+
+/* ─── Vrais screens AGORA ─── */
+.agora-screens {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 22px;
+}
+.agora-screen {
+  margin: 0;
+  display: flex; flex-direction: column; gap: 14px;
+}
+.agora-screen-frame {
+  background: var(--surf);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  overflow: hidden;
+  transition: transform .2s, box-shadow .2s, border-color .2s;
+}
+.agora-screen-frame:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 14px 32px rgba(10,22,40,0.10);
+  border-color: var(--ink-4);
+}
+.agora-screen-bar {
+  display: flex; align-items: center; gap: 6px;
+  padding: 8px 14px;
+  background: var(--surf-2);
+  border-bottom: 1px solid var(--line);
+}
+.agora-screen-bar .dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--line);
+  animation: none;
+}
+.agora-screen-bar .dot:nth-child(1) { background: #ed6a5e; }
+.agora-screen-bar .dot:nth-child(2) { background: #f5bf4f; }
+.agora-screen-bar .dot:nth-child(3) { background: #61c554; }
+.agora-screen-url {
+  font-family: var(--mono); font-size: 10px;
+  letter-spacing: 0.08em; color: var(--ink-3);
+  text-transform: uppercase;
+  margin-left: 12px;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.agora-screen img {
+  display: block;
+  width: 100%; height: auto;
+  background: var(--surf);
+}
+.agora-screen-cap {
+  font-family: var(--sans); font-size: 13px;
+  line-height: 1.55; color: var(--ink-2);
+  padding: 0 4px;
+}
+.agora-screen-cap b {
+  color: var(--ink); font-weight: 600;
+  font-family: var(--mono); font-size: 11px;
+  letter-spacing: 0.14em; text-transform: uppercase;
+}
+.agora-screens-note {
+  margin-top: 28px;
+  font-family: var(--sans); font-size: 14px;
+  line-height: 1.6; color: var(--ink-3);
+  max-width: 760px;
+  text-align: center;
+  margin-left: auto; margin-right: auto;
+}
+.agora-screens-note em {
+  font-style: normal; color: var(--pri); font-weight: 500;
+  font-family: var(--mono); font-size: 13px;
+}
+
+@media (max-width: 920px) {
+  .mock { grid-template-columns: 1fr; }
+  .mock-side { display: none; }
+  .modules, .sec-grid, .aud-grid { grid-template-columns: 1fr; }
+  .planning { grid-template-columns: 60px repeat(7, 1fr); font-size: 9px; }
+  .mock-bottom { grid-template-columns: 1fr 1fr; }
+  .agora-screens { grid-template-columns: 1fr; }
+}
+</style>
+<link rel="canonical" href="https://aegis-forge.fr/aegis-agora.html">
+<meta property="og:url" content="https://aegis-forge.fr/aegis-agora.html">
+</head>
+<body data-screen-label="AGORA">
+
+<div class="shell">
+
+  <!-- NAV -->
+  <header class="nav">
+    <a href="aegis-forge.html" class="nav-mark">
+      <img src="rss/aegis-forge-icon.webp" alt="" width="20" height="24">
+      <span class="nav-mark-txt">AEGIS<small class="sig-c">// AGORA</small></span>
+    </a>
+    <nav class="nav-links">
+      <a href="aegis-forge.html"><span>00</span>Forge</a>
+      <a href="aegis-agora.html" class="active"><span>01</span>AGORA</a>
+      <a href="forge-octane.html"><span>02</span>Octane</a>
+      <a href="actualites.html"><span>03</span>Actualités</a>
+      <a href="#contact"><span>04</span>Contact</a>
+    </nav>
+    <a href="#contact" class="nav-cta">Demander une présentation</a>
+  </header>
+
+  <!-- BREADCRUMB -->
+  <div class="crumb">
+    <a href="aegis-forge.html">AEGIS FORGE</a>
+    <span class="sep">/</span>
+    <span class="here">AGORA</span>
+    <span class="ref"><b>FG-01</b> · OUTIL MUNICIPAL</span>
+  </div>
+
+  <!-- HERO -->
+  <section class="fhero" data-screen-label="01 Hero AGORA">
+    <div class="rv">
+      <div class="fhero-pre">Release candidate · Pilote en commune partenaire depuis mai 2026</div>
+      <h1>
+        Planning, matériel,<br>
+        véhicules, congés.<br>
+        Une seule <span class="acc">interface</span>.
+      </h1>
+      <p class="fhero-lede">
+        <strong>AGORA</strong> regroupe planning des agents, suivi du matériel, flotte de véhicules et gestion des congés dans une seule interface. <em>En release candidate depuis mai 2026</em>, avec une commune partenaire en pilote.
+      </p>
+      <div class="fhero-actions">
+        <a href="#contact" class="btn btn-sig">Demander une présentation</a>
+        <a href="#modules" class="btn btn-outline">Voir les modules</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- KPI -->
+  <section class="kpi rv">
+    <div class="kpi-cell">
+      <div class="kpi-num">1</div>
+      <div class="kpi-lbl"><b>Commune pilote</b> · mai 2026</div>
+    </div>
+    <div class="kpi-cell">
+      <div class="kpi-num">4</div>
+      <div class="kpi-lbl"><b>Modules en service</b> · planning, matériel, flotte, congés</div>
+    </div>
+    <div class="kpi-cell">
+      <div class="kpi-num">100<span>%</span></div>
+      <div class="kpi-lbl"><b>Hébergement Europe</b> · Frankfurt / Paris</div>
+    </div>
+  </section>
+
+  <!-- CAPTURES (interface en production) -->
+  <section style="padding: 96px 0 120px; border-top: 1px solid var(--line)" data-screen-label="02 Captures">
+    <div class="section-head rv">
+      <div class="section-num">§ 02 / Captures de production</div>
+      <h2 class="section-title">L'interface, <span class="sig-c">en service</span>.</h2>
+      <div class="section-meta">TROIS ÉCRANS<br>COMMUNE PARTENAIRE</div>
+    </div>
+
+    <div class="agora-screens rv">
+      <figure class="agora-screen">
+        <div class="agora-screen-frame">
+          <div class="agora-screen-bar">
+            <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+            <span class="agora-screen-url">agora · planning · avril 2026</span>
+          </div>
+          <img src="rss/agora-screen-planning.png" alt="AGORA — vue planning mensuel, tâches ponctuelles, congés, événements colorés par catégorie" loading="lazy" data-lightbox>
+        </div>
+        <figcaption class="agora-screen-cap"><b>FIG. 01 · Planning</b> — vue mensuelle multi-services. Tâches ponctuelles, cycliques et fériés en un seul écran.</figcaption>
+      </figure>
+
+      <figure class="agora-screen">
+        <div class="agora-screen-frame">
+          <div class="agora-screen-bar">
+            <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+            <span class="agora-screen-url">agora · matériel · stock</span>
+          </div>
+          <img src="rss/agora-screen-materiel.png" alt="AGORA — inventaire matériel avec stocks disponibles et réservations" loading="lazy" data-lightbox>
+        </div>
+        <figcaption class="agora-screen-cap"><b>FIG. 02 · Matériel</b> — inventaire, état du stock en temps réel, calendrier de prêts avec disponibilité par jour.</figcaption>
+      </figure>
+
+      <figure class="agora-screen">
+        <div class="agora-screen-frame">
+          <div class="agora-screen-bar">
+            <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+            <span class="agora-screen-url">agora · engins · contrôles techniques</span>
+          </div>
+          <img src="rss/agora-screen-engins.png" alt="AGORA — gestion flotte véhicules, suivi contrôles techniques et entretiens" loading="lazy" data-lightbox>
+        </div>
+        <figcaption class="agora-screen-cap"><b>FIG. 03 · Engins</b> — flotte de véhicules, suivi des contrôles techniques avec alerte avant expiration, entretiens datés.</figcaption>
+      </figure>
+    </div>
+    <p class="agora-screens-note">Trois captures réelles de l'interface AGORA en production pour une commune partenaire. Multi-commune : chaque commune voit uniquement ses données.</p>
+  </section>
+
+  <!-- MODULES -->
+  <section id="modules" style="padding: 96px 0 120px; border-top: 1px solid var(--line)" data-screen-label="03 Modules">
+    <div class="section-head rv">
+      <div class="section-num">§ 03 / Quatre modules</div>
+      <h2 class="section-title">Quatre <span class="sig-c">modules</span>,<br>une seule interface.</h2>
+      <div class="section-meta">M.01 → M.04<br>BASE PARTAGÉE</div>
+    </div>
+
+    <div class="modules rv">
+
+      <article class="mod">
+        <div class="mod-head">
+          <div class="mod-ico">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <rect x="3" y="4" width="18" height="17" rx="1"/>
+              <path d="M3 9h18 M7 1v4 M17 1v4"/>
+            </svg>
+          </div>
+          <div>
+            <div class="mod-id">M.01 · DANS LA RC</div>
+          </div>
+        </div>
+        <h3 class="mod-h">Planning <em>hebdomadaire</em></h3>
+        <p class="mod-b">Affectation par créneau, par agent, par service. Détection des créneaux vacants, alertes sur dépassement horaire mensuel, copie de gabarit d'une semaine à l'autre.</p>
+        <ul class="mod-list">
+          <li>Glisser-déposer des créneaux, validation rapide</li>
+          <li>Astreintes week-end et jours fériés</li>
+          <li>Export PDF signé et iCal pour les agents</li>
+          <li>Filtres par service, qualification, statut</li>
+        </ul>
+      </article>
+
+      <article class="mod">
+        <div class="mod-head">
+          <div class="mod-ico">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <rect x="3" y="3" width="18" height="18" rx="1"/>
+              <path d="M3 8h18 M8 8v13 M3 14h18"/>
+            </svg>
+          </div>
+          <div><div class="mod-id">M.02 · DANS LA RC</div></div>
+        </div>
+        <h3 class="mod-h">Inventaire du <em>matériel</em></h3>
+        <p class="mod-b">Catalogue du matériel (outillage, EPI, mobilier, fournitures), localisation, état, dates de contrôle. Alertes stock bas et contrôles à programmer. Sorties avec signature de l'agent emprunteur.</p>
+        <ul class="mod-list">
+          <li>QR code par référence, scan mobile</li>
+          <li>Historique des sorties et retours</li>
+          <li>Alertes stock bas, contrôle dépassé</li>
+          <li>Export inventaire annuel comptable</li>
+        </ul>
+      </article>
+
+      <article class="mod">
+        <div class="mod-head">
+          <div class="mod-ico">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M2 16l1.5 -6h17L22 16v4h-3v-2H5v2H2z"/>
+              <circle cx="7" cy="18" r="1.5"/><circle cx="17" cy="18" r="1.5"/>
+              <path d="M5 13h14"/>
+            </svg>
+          </div>
+          <div><div class="mod-id">M.03 · DANS LA RC</div></div>
+        </div>
+        <h3 class="mod-h">Flotte de <em>véhicules</em></h3>
+        <p class="mod-b">Inventaire de la flotte (utilitaires, véhicules de service, deux-roues), réservation par créneau, suivi des kilomètres, dates de contrôle technique, sinistres.</p>
+        <ul class="mod-list">
+          <li>Réservation glissante, détection des conflits</li>
+          <li>Alertes CT, vidange, assurance</li>
+          <li>Journal de bord — agent et kilométrage</li>
+          <li>Tableau des sinistres et coûts</li>
+        </ul>
+      </article>
+
+      <article class="mod">
+        <div class="mod-head">
+          <div class="mod-ico">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <rect x="4" y="3" width="16" height="18" rx="1"/>
+              <path d="M8 7h8 M8 11h8 M8 15h6"/>
+            </svg>
+          </div>
+          <div><div class="mod-id">M.04 · DANS LA RC</div></div>
+        </div>
+        <h3 class="mod-h">Congés &amp; <em>absences</em></h3>
+        <p class="mod-b">Demande de congés par l'agent, validation par le responsable, intégration au planning, suivi des soldes (CA, RTT, récupération).</p>
+        <ul class="mod-list">
+          <li>Demande et validation en deux clics</li>
+          <li>Soldes calculés automatiquement</li>
+          <li>Blocage automatique des créneaux planning</li>
+          <li>Alerte aux conflits multi-agents</li>
+        </ul>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- SECURITY -->
+  <section style="padding: 96px 0 120px; border-top: 1px solid var(--line)" data-screen-label="04 Sécurité">
+    <div class="section-head rv">
+      <div class="section-num">§ 04 / Sécurité &amp; conformité</div>
+      <h2 class="section-title">Conforme, <span class="sig-c">auditable</span>,<br>transportable.</h2>
+      <div class="section-meta">SEC.01 · ISOLATION<br>SEC.02 · DONNÉES</div>
+    </div>
+
+    <div class="sec-grid rv">
+      <div class="sec">
+        <div class="sec-num">SEC.01 · Isolation</div>
+        <h3 class="sec-h">Chaque commune <em>chez elle</em></h3>
+        <p class="sec-b">Chaque commune accède uniquement à ses propres données — l'isolation est garantie au niveau de la base elle-même, pas par un simple filtre applicatif. Toutes les modifications sont datées et conservées pour audit.</p>
+        <div class="sec-row"><b>Isolation</b><span>Au niveau base, vérifiée en continu</span></div>
+        <div class="sec-row"><b>Audit</b><span>Toutes modifications datées, signées</span></div>
+        <div class="sec-row"><b>Sauvegardes</b><span>Quotidiennes chiffrées · 35 jours</span></div>
+      </div>
+      <div class="sec">
+        <div class="sec-num">SEC.02 · Données</div>
+        <h3 class="sec-h">RGPD &amp; <em>portabilité</em></h3>
+        <p class="sec-b">Données hébergées en Europe (Frankfurt et Paris). Export complet des données à tout moment, dans un format ouvert (CSV / JSON), sans pénalité contractuelle.</p>
+        <div class="sec-row"><b>Hôte</b><span>Frankfurt &amp; Paris · 100 % UE</span></div>
+        <div class="sec-row"><b>Export</b><span>CSV / JSON · à tout moment</span></div>
+        <div class="sec-row"><b>Registre</b><span>Tenu à jour, accessible DPO</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ROADMAP -->
+  <section class="aud-sec" data-screen-label="05 Trajectoire">
+    <div class="section-head rv">
+      <div class="section-num">§ 05 / Trajectoire produit</div>
+      <h2 class="section-title">Trois étapes,<br>de mars à <span class="sig-c">mai 2026</span>.</h2>
+      <div class="section-meta">01 · 02 · 03<br>MARS → MAI 2026</div>
+    </div>
+
+    <div class="aud-grid rv">
+      <div class="aud-cell">
+        <div class="aud-cell-num">01<span>// 03 / 2026</span></div>
+        <h3 class="aud-cell-h">Démarrage.</h3>
+        <p class="aud-cell-b">Conception et développement des quatre modules — planning, matériel, véhicules, congés. Architecture pensée pour le multi-commune dès l'origine.</p>
+      </div>
+      <div class="aud-cell">
+        <div class="aud-cell-num">02<span>// 05 / 2026</span></div>
+        <h3 class="aud-cell-h">Release candidate.</h3>
+        <p class="aud-cell-b">Les quatre modules sont fonctionnels et testés. Préparation à la mise en service réelle : audit de sécurité, captures, documentation.</p>
+      </div>
+      <div class="aud-cell now">
+        <div class="aud-cell-num">03<span>// 05 / 2026 · ACTIF</span></div>
+        <h3 class="aud-cell-h">Pilote en commune partenaire.</h3>
+        <p class="aud-cell-b">Mise en production chez la première commune partenaire. Les agents et services techniques utilisent AGORA au quotidien. Les retours sont intégrés au fil de l'eau.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="contact" id="contact" data-screen-label="06 Contact">
+    <div class="contact-inner">
+      <div class="contact-grid">
+        <div class="rv">
+          <div class="contact-pre">§ 06 / Déploiement AGORA</div>
+          <h2>Une commune qui cherche<br>son <em>outil</em>&nbsp;?</h2>
+          <p class="contact-lede">La prise en main d'AGORA passe par une première présentation avec votre équipe — DGS, services techniques, élu référent. Reprise des données de l'outil existant prise en charge.</p>
+          <div class="contact-actions">
+            <a href="mailto:contact@aegis-forge.fr" class="contact-mail js-aegis-contact">Demander une présentation</a>
+          </div>
+        </div>
+        <div class="contact-meta rv d1">
+          <b>Tarif</b><span>Forfait commune · sur devis</span>
+          <b>Reprise</b><span>Données existantes incluses</span>
+          <b>Formation</b><span>2 sessions de 4 h</span>
+          <b>Sortie</b><span>Export complet sans frais</span>
+          <b>Hébergement</b><span>Europe · FRA / PAR</span>
+          <b>Légal</b><span><a href="mentions.html">Mentions</a> · <a href="mentions.html#confidentialite">Confidentialité</a></span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<!-- FOOT -->
+<footer class="foot">
+  <div class="foot-brand">
+    <img src="rss/aegis-forge-icon.webp" alt="AEGIS Forge" width="30" height="36" class="foot-logo">
+    <span>© <b>2025—2026</b> · AGORA · une réalisation AEGIS Forge</span>
+  </div>
+  <div>FICHE FG-01 · <b>END OF DOCUMENT</b></div>
+  <div class="foot-ver">
+    <span class="v">v1.1</span> · REV. <b>2026.05.25</b> · BUILD r05 ·
+    <a href="aegis-forge.html">↑ Forge</a>
+  </div>
+</footer>
+
+<script>
+(function(){
+  if ('IntersectionObserver' in window){
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if (e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+      });
+    }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+    document.querySelectorAll('.rv').forEach(function(el){ io.observe(el); });
+  } else {
+    document.querySelectorAll('.rv').forEach(function(el){ el.classList.add('in'); });
+  }
+
+  document.querySelectorAll('a[href^="#"]').forEach(function(a){
+    a.addEventListener('click', function(e){
+      var href = a.getAttribute('href'); if (href.length < 2) return;
+      var target = document.querySelector(href); if (!target) return;
+      e.preventDefault();
+      window.scrollTo({ top: target.offsetTop - 24, behavior: 'smooth' });
+    });
+  });
+})();
+</script>
+
+</body>
+</html>

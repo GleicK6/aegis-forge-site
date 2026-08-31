@@ -1,0 +1,125 @@
+/* ─────────────────────────────────────────────────────────────
+   AEGIS — Lightbox screenshots
+   Agrandit au clic les images marquees data-lightbox.
+   Charte neutre, meme logique que contact-modal.css.
+   ───────────────────────────────────────────────────────────── */
+
+/* Cursor scope sous .aegis-lb-ready (posee par lightbox.js) :
+   sans JS, pas d'affordance mensongere */
+body.aegis-lb-ready img[data-lightbox] {
+  cursor: zoom-in;
+}
+
+/* Anneau interieur : survit aux conteneurs overflow:hidden
+   (octane-screen, agora-screen-frame, dossier) et reste visible
+   sur les fonds clairs du theme */
+img[data-lightbox]:focus-visible {
+  outline: 3px solid var(--sig, #d96a18);
+  outline-offset: -3px;
+}
+
+.aegis-lb {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  display: none;
+  font-family: inherit;
+}
+
+.aegis-lb[aria-hidden="false"] {
+  display: block;
+}
+
+.aegis-lb:focus {
+  outline: none;
+}
+
+.aegis-lb__overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.85);
+  cursor: zoom-out;
+  animation: aegis-lb-fade 200ms ease-out;
+}
+
+.aegis-lb__figure {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  max-width: calc(100vw - 48px);
+  pointer-events: none;
+  animation: aegis-lb-slide 250ms ease-out;
+}
+
+.aegis-lb__img {
+  display: block;
+  max-width: calc(100vw - 48px);
+  max-height: calc(100vh - 110px);
+  width: auto;
+  height: auto;
+  border-radius: 4px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+  pointer-events: auto;
+  cursor: zoom-out;
+}
+
+.aegis-lb__caption {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 13px;
+  line-height: 1.5;
+  text-align: center;
+  max-width: 70ch;
+  padding: 0 12px;
+}
+
+.aegis-lb__close {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  z-index: 1;
+  width: 44px;
+  height: 44px;
+  background: transparent;
+  border: 1px solid transparent;
+  color: #fff;
+  cursor: pointer;
+  font-size: 28px;
+  line-height: 1;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.aegis-lb__close:hover,
+.aegis-lb__close:focus-visible {
+  border-color: currentColor;
+  outline: none;
+}
+
+@keyframes aegis-lb-fade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes aegis-lb-slide {
+  from { opacity: 0; transform: translate(-50%, -48%); }
+  to { opacity: 1; transform: translate(-50%, -50%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .aegis-lb__overlay,
+  .aegis-lb__figure {
+    animation: none;
+  }
+}
+
+body.aegis-lb-open {
+  overflow: hidden;
+}

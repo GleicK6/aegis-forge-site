@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Octane · carburants &amp; détours</title>
+
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:; connect-src 'self' https://formspree.io; frame-ancestors 'none'; form-action 'self' https://formspree.io; base-uri 'self'; object-src 'none'; upgrade-insecure-requests">
+<meta http-equiv="X-Content-Type-Options" content="nosniff">
+<meta http-equiv="X-Frame-Options" content="DENY">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), payment=(), usb=(), accelerometer=(), gyroscope=()">
+<meta name="robots" content="index, follow, noimageindex, max-snippet:160, max-image-preview:standard">
+<meta name="description" content="Octane — app utilitaire grand public : comparateur de stations carburant en France, Luxembourg et Espagne. Calcul de détour rentable, suivi conso, alertes prix, votes communautaires.">
+
+<!-- SEO / IA discoverability : Open Graph, Twitter Card et Schema.org MobileApplication.
+     URL canonique et og:url sont injectées au build par tools/build-sites.mjs. -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="AEGIS Forge">
+<meta property="og:title" content="Octane — comparateur de carburant transfrontalier">
+<meta property="og:description" content="App mobile Android pour comparer le prix du carburant en France, Luxembourg, Espagne et Italie. Calcul de détour rentable, alertes prix, votes communautaires.">
+<meta property="og:image" content="https://aegis-forge.fr/octane-og.png">
+<meta property="og:locale" content="fr_FR">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Octane — comparateur de carburant transfrontalier">
+<meta name="twitter:description" content="App mobile Android. Comparateur transfrontalier France / Luxembourg / Espagne / Italie, calcul de détour, alertes prix.">
+<meta name="twitter:image" content="https://aegis-forge.fr/octane-og.png">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "MobileApplication",
+  "name": "Octane",
+  "alternateName": "Octane — Prix Carburant",
+  "operatingSystem": "Android",
+  "applicationCategory": "TravelApplication",
+  "applicationSubCategory": "Navigation",
+  "description": "App mobile Android pour comparer le prix du carburant en France, Luxembourg, Espagne et Italie. Calcul de détour rentable, alertes prix, votes communautaires.",
+  "url": "https://aegis-forge.fr/forge-octane.html",
+  "downloadUrl": "https://play.google.com/store/apps/details?id=com.pleinmalin.app",
+  "image": "https://aegis-forge.fr/octane-og.png",
+  "inLanguage": ["fr", "en", "es", "de"],
+  "offers": [
+    { "@type": "Offer", "price": "0", "priceCurrency": "EUR", "name": "Gratuit" },
+    { "@type": "Offer", "price": "1.99", "priceCurrency": "EUR", "name": "Premium mensuel" },
+    { "@type": "Offer", "price": "14.99", "priceCurrency": "EUR", "name": "Premium annuel" }
+  ],
+  "publisher": {
+    "@type": "Organization",
+    "name": "AEGIS Forge",
+    "url": "https://aegis-forge.fr/"
+  },
+  "featureList": [
+    "Comparateur de stations carburant géolocalisées",
+    "Recherche transfrontalière France / Luxembourg / Espagne / Italie",
+    "Calcul de rentabilité du détour en euros",
+    "Alertes prix personnalisées",
+    "Rappels au rythme des pleins",
+    "Votes communautaires sur les nuisances"
+  ]
+}
+</script>
+
+<link rel="stylesheet" href="_shared/fonts.css">
+<link rel="stylesheet" href="_shared/operational.css">
+<link rel="stylesheet" href="_shared/contact-modal.css">
+<script src="_shared/contact-modal.js" defer></script>
+<link rel="stylesheet" href="_shared/lightbox.css">
+<script src="_shared/lightbox.js" defer></script>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect x='6' y='6' width='20' height='20' fill='none' stroke='%23d96a18' stroke-width='2'/><rect x='12' y='12' width='8' height='8' fill='none' stroke='%23d96a18' stroke-width='1.5' transform='rotate(45 16 16)'/></svg>">
+
+<style>
+/* ─── Bridge clair → operational tokens (page-local) ─── */
+:root {
+  --paper:       var(--bg);
+  --paper-warm:  var(--surf-2);
+  --paper-deep:  var(--surf-2);
+  --paper-card:  var(--surf);
+  --serif:       var(--display);
+  --forge:       var(--sig);
+  --forge-soft:  var(--sig-soft);
+  --prev:        var(--pri);
+  --prev-soft:   var(--pri-soft);
+  --warn:        var(--crit);
+  --warn-soft:   var(--crit-soft);
+  --line-soft:   var(--line-2);
+}
+
+/* Helpers couleur (accent emphasis) */
+.pri-c { color: var(--pri); }
+.prev, .prev-c { color: var(--prev); }
+.forge-c, .forge { color: var(--forge); }
+.sig-c { color: var(--sig); }
+
+/* ─── Features ─── */
+.feat-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;
+}
+.feat {
+  background: var(--surf);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 26px;
+  display: flex; flex-direction: column; gap: 14px;
+  transition: border-color .2s, transform .2s var(--ease), box-shadow .2s var(--ease);
+}
+.feat:hover {
+  border-color: var(--ink-4);
+  transform: translateY(-3px);
+  box-shadow: 0 12px 32px rgba(10,22,40,0.08);
+}
+.feat-ico {
+  width: 40px; height: 40px;
+  border: 1.5px solid var(--sig);
+  border-radius: 4px;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--sig);
+}
+.feat-ico svg { width: 20px; height: 20px; }
+.feat-id {
+  font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.16em;
+  color: var(--sig); text-transform: uppercase; font-weight: 600;
+}
+.feat-h {
+  font-family: var(--display); font-weight: 700; font-size: 20px;
+  letter-spacing: -0.015em; line-height: 1.2; color: var(--ink);
+}
+.feat-h em {
+  font-style: normal; font-weight: 400; color: var(--ink-3);
+}
+.feat-b {
+  font-family: var(--sans); font-size: 14.5px; line-height: 1.6;
+  color: var(--ink-2); flex: 1;
+}
+
+/* ─── Votes ─── */
+.votes {
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  background: var(--surf);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  overflow: hidden;
+}
+.vote {
+  padding: 24px 22px;
+  border-right: 1px solid var(--line-2);
+  display: flex; flex-direction: column; gap: 10px;
+}
+.vote:last-child { border-right: none; }
+.vote-ico { width: 36px; height: 36px; color: var(--sig); }
+.vote-num {
+  font-family: var(--mono); font-size: 10px; letter-spacing: 0.16em;
+  color: var(--sig); text-transform: uppercase; font-weight: 600;
+}
+.vote-t {
+  font-family: var(--display); font-weight: 700; font-size: 17px;
+  letter-spacing: -0.015em; color: var(--ink);
+}
+.vote-b {
+  font-family: var(--sans); font-size: 13.5px; line-height: 1.55;
+  color: var(--ink-2);
+}
+.vote-meter {
+  margin-top: 6px;
+  height: 5px;
+  background: var(--surf-2);
+  border: 1px solid var(--line-2);
+  border-radius: 100px;
+  position: relative;
+  overflow: hidden;
+}
+.vote-meter::after {
+  content: ''; position: absolute; top: 0; left: 0; bottom: 0;
+  background: var(--sig);
+}
+.vote.v1 .vote-meter::after { width: 78%; }
+.vote.v2 .vote-meter::after { width: 64%; }
+.vote.v3 .vote-meter::after { width: 91%; }
+.vote.v4 .vote-meter::after { width: 52%; }
+
+/* ─── Captures officielles Play Store ─── */
+.octane-screens-wrap {
+  max-width: 880px;
+  margin-left: auto; margin-right: auto;
+  position: relative;
+}
+.octane-screens {
+  display: flex;
+  gap: 18px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-padding: 0 6px;
+  padding: 4px 6px 16px;
+  scrollbar-width: thin;
+  scrollbar-color: var(--line) transparent;
+  -webkit-overflow-scrolling: touch;
+  scroll-behavior: smooth;
+}
+.octane-screens::-webkit-scrollbar { height: 6px; }
+.octane-screens::-webkit-scrollbar-track { background: transparent; }
+.octane-screens::-webkit-scrollbar-thumb { background: var(--line); border-radius: 100px; }
+.octane-screen {
+  flex: 0 0 calc((100% - 36px) / 3);
+  scroll-snap-align: start;
+  background: var(--surf);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  overflow: hidden;
+  position: relative;
+  transition: transform .2s, box-shadow .2s;
+}
+.octane-screen:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 28px rgba(10,22,40,0.10);
+}
+.octane-screen img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 9/16;
+  object-fit: cover;
+}
+.octane-scroll-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 3;
+  width: 40px; height: 40px;
+  border-radius: 50%;
+  background: var(--surf);
+  border: 1px solid var(--line);
+  color: var(--ink-2);
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 6px 18px rgba(10,22,40,0.08);
+  transition: opacity .18s, background .18s, color .18s, border-color .18s, transform .18s;
+  padding: 0;
+}
+.octane-scroll-btn svg { width: 18px; height: 18px; }
+.octane-scroll-btn:hover:not(:disabled) {
+  background: var(--sig);
+  color: var(--surf);
+  border-color: var(--sig);
+}
+.octane-scroll-btn:disabled {
+  opacity: 0;
+  pointer-events: none;
+}
+.octane-scroll-btn.prev { left: -20px; }
+.octane-scroll-btn.next { right: -20px; }
+.octane-screens-cap {
+  margin-top: 22px;
+  font-family: var(--sans);
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--ink-3);
+  max-width: 760px;
+  text-align: center;
+  margin-left: auto; margin-right: auto;
+}
+.octane-screens-cap em {
+  font-style: normal; color: var(--sig); font-weight: 500;
+}
+.octane-screens-cap strong {
+  color: var(--ink); font-weight: 600;
+}
+
+/* ─── Mécanique du comparateur ─── */
+.octane-mech {
+  max-width: 820px;
+  margin-left: auto; margin-right: auto;
+}
+.octane-mech p {
+  font-family: var(--sans); font-size: 16px; line-height: 1.65;
+  color: var(--ink-2);
+  margin-bottom: 18px;
+}
+.octane-mech p em {
+  font-style: normal; color: var(--sig); font-weight: 500;
+}
+.octane-mech-formula {
+  background: var(--surf);
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--sig);
+  border-radius: 6px;
+  padding: 22px 26px;
+  margin: 24px 0;
+  font-family: var(--mono); font-size: 13px; line-height: 1.9;
+  color: var(--ink); white-space: pre;
+  overflow-x: auto;
+}
+.octane-mech-formula b {
+  color: var(--sig); font-weight: 600;
+}
+
+@media (max-width: 920px) {
+  .feat-grid { grid-template-columns: 1fr; }
+  .votes { grid-template-columns: 1fr 1fr; }
+  .vote { border-right: none; border-bottom: 1px solid var(--line-2); }
+  .octane-screen { flex: 0 0 calc((100% - 18px) / 2); }
+  .octane-mech-formula { font-size: 11.5px; padding: 18px; }
+}
+@media (max-width: 560px) {
+  .octane-screen { flex: 0 0 70%; }
+  .octane-scroll-btn { display: none; }
+}
+</style>
+<link rel="canonical" href="https://aegis-forge.fr/forge-octane.html">
+<meta property="og:url" content="https://aegis-forge.fr/forge-octane.html">
+</head>
+<body data-screen-label="Octane">
+
+<div class="shell">
+
+  <!-- NAV -->
+  <header class="nav">
+    <a href="aegis-forge.html" class="nav-mark">
+      <img src="rss/aegis-forge-icon.webp" alt="" width="20" height="24">
+      <span class="nav-mark-txt">AEGIS<small class="sig-c">// OCTANE</small></span>
+    </a>
+    <nav class="nav-links">
+      <a href="aegis-forge.html"><span>00</span>Forge</a>
+      <a href="aegis-agora.html"><span>01</span>AGORA</a>
+      <a href="forge-octane.html" class="active"><span>02</span>Octane</a>
+      <a href="actualites.html"><span>03</span>Actualités</a>
+      <a href="#contact"><span>04</span>Contact</a>
+    </nav>
+    <a href="https://play.google.com/store/apps/details?id=com.pleinmalin.app&amp;hl=fr" class="nav-cta" target="_blank" rel="noopener noreferrer">Télécharger l'app</a>
+  </header>
+
+  <!-- BREADCRUMB -->
+  <div class="crumb">
+    <a href="aegis-forge.html">AEGIS FORGE</a>
+    <span class="sep">/</span>
+    <span class="here">Octane</span>
+    <span class="ref"><b>FG-02</b> · APP GRAND PUBLIC</span>
+  </div>
+
+  <!-- HERO -->
+  <section class="fhero" data-screen-label="01 Hero Octane">
+    <div class="rv">
+      <div class="fhero-pre">Application grand public · Android · sans publicité</div>
+      <h1>
+        Comparer les stations.<br>
+        Calculer le détour.<br>
+        <span class="acc">Remplir sans surpayer.</span>
+      </h1>
+      <p class="fhero-lede">
+        <strong>Octane</strong> compare les stations à proximité et calcule si un détour est <em>rentable</em> — en tenant compte de votre consommation réelle. Disponible sur Android, sans publicité, sans revente de données.
+      </p>
+      <div class="fhero-actions">
+        <a href="https://play.google.com/store/apps/details?id=com.pleinmalin.app&amp;hl=fr" class="btn btn-sig" target="_blank" rel="noopener noreferrer">Télécharger sur Google Play</a>
+        <a href="#fonctions" class="btn btn-outline">Voir les fonctions</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- KPI -->
+  <section class="kpi rv">
+    <div class="kpi-cell">
+      <div class="kpi-num">23 000<span>+</span></div>
+      <div class="kpi-lbl"><b>Stations couvertes</b> · France, Luxembourg, Espagne</div>
+    </div>
+    <div class="kpi-cell">
+      <div class="kpi-num">0<span> pub</span></div>
+      <div class="kpi-lbl"><b>Sans publicité</b> · sans revente de données</div>
+    </div>
+    <div class="kpi-cell">
+      <div class="kpi-num">1,99<span> €/mois</span></div>
+      <div class="kpi-lbl"><b>Premium optionnel</b> · essai 7 jours</div>
+    </div>
+  </section>
+
+  <!-- CAPTURES PLAY STORE -->
+  <section style="padding: 96px 0 120px; border-top: 1px solid var(--line)" data-screen-label="02 Captures">
+    <div class="section-head rv">
+      <div class="section-num">§ 02 / Captures Play Store</div>
+      <h2 class="section-title">L'app,<br><span class="sig-c">en pratique</span>.</h2>
+      <div class="section-meta">SIX ÉCRANS<br>VERSION EN LIGNE</div>
+    </div>
+
+    <div class="octane-screens-wrap rv">
+      <button type="button" class="octane-scroll-btn prev" aria-label="Faire défiler vers la gauche" data-dir="-1">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg>
+      </button>
+      <div class="octane-screens" role="list" aria-label="Captures officielles d'Octane sur le Play Store">
+        <div class="octane-screen" role="listitem">
+          <img src="rss/octane-store-map.png" alt="Octane — la carte qui vous fait économiser, classement par couleur des prix des stations" loading="lazy" data-lightbox>
+        </div>
+        <div class="octane-screen" role="listitem">
+          <img src="rss/octane-store-search.png" alt="Octane — recherche par carburant et rayon, stations triées par prix" loading="lazy" data-lightbox>
+        </div>
+        <div class="octane-screen" role="listitem">
+          <img src="rss/octane-store-station.png" alt="Octane — fiche station avec prix carburants et signalements communautaires" loading="lazy" data-lightbox>
+        </div>
+        <div class="octane-screen" role="listitem">
+          <img src="rss/octane-store-detour.png" alt="Octane — calculateur de rentabilité du détour, station de référence vs. moins chère" loading="lazy" data-lightbox>
+        </div>
+        <div class="octane-screen" role="listitem">
+          <img src="rss/octane-store-economies.png" alt="Octane — historique des pleins et suivi des économies par véhicule" loading="lazy" data-lightbox>
+        </div>
+        <div class="octane-screen" role="listitem">
+          <img src="rss/octane-store-premium.png" alt="Octane Premium — fonctions débloquées : calculateur de détour, recherche transfrontalière, historique, alertes prix, export" loading="lazy" data-lightbox>
+        </div>
+      </div>
+      <button type="button" class="octane-scroll-btn next" aria-label="Faire défiler vers la droite" data-dir="1">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
+      </button>
+    </div>
+    <p class="octane-screens-cap rv">Captures officielles d'Octane sur le Play Store — comparateur, fiche station, détour, suivi des économies, et le <em>Premium</em> qui débloque le détour, la recherche transfrontalière et l'historique pour <strong>1,99&nbsp;€/mois</strong>.</p>
+  </section>
+
+  <!-- MÉCANIQUE -->
+  <section style="padding: 96px 0 120px; border-top: 1px solid var(--line)" data-screen-label="03 Mécanique">
+    <div class="section-head rv">
+      <div class="section-num">§ 03 / Sous le capot</div>
+      <h2 class="section-title">Le calcul du<br><span class="sig-c">détour rentable</span>.</h2>
+      <div class="section-meta">SOURCE OFFICIELLE<br>FORMULE EXPLICITE</div>
+    </div>
+
+    <div class="octane-mech rv">
+      <p>L'app récupère les prix officiels des stations dans le rayon configuré — source ouverte <em>prix-carburants.gouv.fr</em>, mise à jour quotidienne. Pour chaque station candidate, elle compare le coût total du plein selon la consommation réelle de votre véhicule et le détour mesuré aller-retour depuis votre trajet.</p>
+
+      <div class="octane-mech-formula"><b>coût total</b> = (prix au litre × volume du plein)
+            + (km détour × 2 × conso ÷ 100 × prix moyen marché)</div>
+
+      <p>Le verdict est en euros et en pourcentage par rapport à la moyenne du secteur. Si aucun détour n'est rentable — cas fréquent en zone urbaine — l'app l'indique explicitement. Le résultat est lisible : un calcul, une réponse, en euros.</p>
+    </div>
+  </section>
+
+  <!-- FONCTIONS -->
+  <section id="fonctions" style="padding: 96px 0 120px; border-top: 1px solid var(--line)" data-screen-label="04 Fonctions">
+    <div class="section-head rv">
+      <div class="section-num">§ 04 / Fonctions principales</div>
+      <h2 class="section-title">Six <span class="sig-c">fonctions</span><br>pour l'usage quotidien.</h2>
+      <div class="section-meta">F.01 → F.06<br>GRATUIT + PREMIUM</div>
+    </div>
+
+    <div class="feat-grid rv">
+      <article class="feat">
+        <div class="feat-ico">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M12 22s8-7 8-13a8 8 0 0 0 -16 0c0 6 8 13 8 13z"/>
+            <circle cx="12" cy="9" r="3"/>
+          </svg>
+        </div>
+        <div class="feat-id">F.01</div>
+        <h3 class="feat-h">Stations <em>à proximité</em></h3>
+        <p class="feat-b">Les stations les moins chères dans un rayon configurable, triées par prix net ou par prix réel (intègre le coût du détour). Filtre par carburant — SP95, SP98, E10, Diesel, GPL, électrique.</p>
+      </article>
+      <article class="feat">
+        <div class="feat-ico">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M3 18 L8 12 L14 16 L21 6"/>
+            <path d="M14 6h7v7"/>
+          </svg>
+        </div>
+        <div class="feat-id">F.02</div>
+        <h3 class="feat-h">Comparateur <em>de détour</em></h3>
+        <p class="feat-b">Calcul de la rentabilité d'un détour&nbsp;: prix de la station × volume du plein, moins le coût des kilomètres supplémentaires (selon la conso de votre véhicule). Verdict immédiat, en euros et en pourcentage.</p>
+      </article>
+      <article class="feat">
+        <div class="feat-ico">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <rect x="3" y="5" width="14" height="14" rx="1"/>
+            <path d="M17 8 h3 v8 h-3"/>
+            <path d="M3 13h14 M7 5v14"/>
+          </svg>
+        </div>
+        <div class="feat-id">F.03</div>
+        <h3 class="feat-h">Suivi <em>de consommation</em></h3>
+        <p class="feat-b">Journal des pleins par véhicule — prix au litre, volume, kilométrage. Calcul de la consommation réelle, comparaison à la conso constructeur, courbe sur 12 mois. Export CSV pour les pros.</p>
+      </article>
+      <article class="feat">
+        <div class="feat-ico">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M3 13 c 0 -5 4 -9 9 -9 s 9 4 9 9"/>
+            <path d="M5 13 v6 a2 2 0 0 0 2 2 h10 a2 2 0 0 0 2 -2 v-6"/>
+            <path d="M9 13 v6 M15 13 v6"/>
+          </svg>
+        </div>
+        <div class="feat-id">F.04</div>
+        <h3 class="feat-h">Alertes <em>de prix</em></h3>
+        <p class="feat-b">Notification quand une station favorite baisse sous un seuil que vous fixez. Pas de spam — uniquement les seuils que vous avez explicitement demandés. Désactivation possible à tout moment.</p>
+      </article>
+      <article class="feat">
+        <div class="feat-ico">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M3 12 a9 9 0 0 1 18 0 a9 9 0 0 1 -18 0z"/>
+            <path d="M3 12 h18 M12 3 c3 3 3 15 0 18 c-3 -3 -3 -15 0 -18z"/>
+          </svg>
+        </div>
+        <div class="feat-id">F.05</div>
+        <h3 class="feat-h">Votes <em>communautaires</em></h3>
+        <p class="feat-b">Les utilisateurs signalent ce que les données officielles ne disent pas&nbsp;: rupture de carburant, file d'attente, présence de pub sonore, propreté. Pondéré par fraîcheur, sans modération arbitraire.</p>
+      </article>
+      <article class="feat">
+        <div class="feat-ico">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <circle cx="12" cy="12" r="9"/>
+            <path d="M9 9 a3 3 0 1 1 4.5 2.6 c -1 0.5 -1.5 1.4 -1.5 2.4"/>
+            <circle cx="12" cy="17" r="0.7" fill="currentColor"/>
+          </svg>
+        </div>
+        <div class="feat-id">F.06</div>
+        <h3 class="feat-h">Filtre <em>tranquillité</em></h3>
+        <p class="feat-b">Filtre dédié aux stations <em>sans pub sonore intrusive</em>. Une nuisance reconnaissable dans certaines stations, signalable et filtrable depuis l'écran principal.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- VOTES -->
+  <section style="padding: 96px 0 120px; border-top: 1px solid var(--line)" data-screen-label="05 Votes">
+    <div class="section-head rv">
+      <div class="section-num">§ 05 / Intelligence communautaire</div>
+      <h2 class="section-title">Ce que les <span class="sig-c">prix</span><br>ne disent pas tout seuls.</h2>
+      <div class="section-meta">V.01 → V.04<br>SIGNALEMENTS LIVE</div>
+    </div>
+
+    <div class="votes rv">
+      <div class="vote v3">
+        <svg class="vote-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <rect x="6" y="3" width="12" height="18" rx="1"/>
+          <path d="M6 10h12 M10 14h4 M10 17h4"/>
+          <circle cx="12" cy="6.5" r="0.7" fill="currentColor"/>
+        </svg>
+        <div class="vote-num">V.01 — Stations</div>
+        <div class="vote-t">Carburant disponible</div>
+        <div class="vote-b">L'utilisateur confirme la disponibilité au moment du plein. Détecte les ruptures plus vite que la mise à jour officielle.</div>
+        <div class="vote-meter"></div>
+      </div>
+      <div class="vote v1">
+        <svg class="vote-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <circle cx="6" cy="12" r="2"/>
+          <circle cx="12" cy="12" r="2"/>
+          <circle cx="18" cy="12" r="2"/>
+        </svg>
+        <div class="vote-num">V.02 — File</div>
+        <div class="vote-t">Affluence</div>
+        <div class="vote-b">Vide / normale / longue file. Signalement en deux clics, agrégé par tranche horaire pour les jours suivants.</div>
+        <div class="vote-meter"></div>
+      </div>
+      <div class="vote v4">
+        <svg class="vote-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M12 4 v16 M8 8 v8 M16 8 v8 M4 11 v2 M20 11 v2"/>
+          <path d="M3 21 l18 -18" stroke-width="2"/>
+        </svg>
+        <div class="vote-num">V.03 — Tranquillité</div>
+        <div class="vote-t">Sans pub sonore</div>
+        <div class="vote-b">Présence ou absence de pub sonore intrusive dans la station. Information ajoutée et confirmée par les utilisateurs.</div>
+        <div class="vote-meter"></div>
+      </div>
+      <div class="vote v2">
+        <svg class="vote-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M3 21 l9 -16 l9 16 z"/>
+          <path d="M12 10 v5 M12 17 v0.5"/>
+        </svg>
+        <div class="vote-num">V.04 — Anomalies</div>
+        <div class="vote-t">Signalement libre</div>
+        <div class="vote-b">Distributeur en panne, paiement CB inopérant, prix affichés faux. Champ court, modération a posteriori.</div>
+        <div class="vote-meter"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="contact" id="contact" data-screen-label="06 Contact">
+    <div class="contact-inner">
+      <div class="contact-grid">
+        <div class="rv">
+          <div class="contact-pre">§ 06 / Contact Octane</div>
+          <h2>Bug, suggestion,<br><em>partenariat</em>&nbsp;?</h2>
+          <p class="contact-lede">Pour les retours d'utilisateurs, vous pouvez aussi laisser un mot dans l'app (Réglages → Nous écrire). Les retours sont traités en direct par la personne en charge du produit.</p>
+          <div class="contact-actions">
+            <a href="mailto:contact@aegis-forge.fr" class="contact-mail js-aegis-contact">Nous contacter</a>
+          </div>
+        </div>
+        <div class="contact-meta rv d1">
+          <b>Store</b><span>Google Play (Android)</span>
+          <b>Couverture</b><span>France · Luxembourg · Espagne</span>
+          <b>Prix</b><span>Gratuit · Premium 1,99 €/mois</span>
+          <b>Données</b><span>Jamais revendues</span>
+          <b>Hébergement</b><span>Europe · FRA / PAR</span>
+          <b>Légal</b><span><a href="mentions.html">Mentions</a> · <a href="mentions.html#confidentialite">Confidentialité</a></span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<!-- FOOT -->
+<footer class="foot">
+  <div class="foot-brand">
+    <img src="rss/aegis-forge-icon.webp" alt="AEGIS Forge" width="30" height="36" class="foot-logo">
+    <span>© <b>2025—2026</b> · Octane · réalisation AEGIS Forge</span>
+  </div>
+  <div>FICHE FG-02 · <b>END OF DOCUMENT</b></div>
+  <div class="foot-ver">
+    <span class="v">v1.1</span> · REV. <b>2026.05.25</b> · BUILD r05 ·
+    <a href="aegis-forge.html">↑ Forge</a>
+  </div>
+</footer>
+
+<script>
+(function(){
+  // Carrousel des captures
+  document.querySelectorAll('.octane-screens-wrap').forEach(function(wrap){
+    var track = wrap.querySelector('.octane-screens');
+    var prev = wrap.querySelector('.octane-scroll-btn.prev');
+    var next = wrap.querySelector('.octane-scroll-btn.next');
+    if (!track || !prev || !next) return;
+    function step(){
+      var card = track.querySelector('.octane-screen');
+      if (!card) return 300;
+      var gap = parseInt(getComputedStyle(track).gap, 10) || 18;
+      return card.getBoundingClientRect().width + gap;
+    }
+    function update(){
+      prev.disabled = track.scrollLeft <= 1;
+      next.disabled = track.scrollLeft >= track.scrollWidth - track.clientWidth - 1;
+    }
+    prev.addEventListener('click', function(){ track.scrollBy({ left: -step(), behavior: 'smooth' }); });
+    next.addEventListener('click', function(){ track.scrollBy({ left: step(), behavior: 'smooth' }); });
+    track.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update);
+    update();
+  });
+
+  // Reveal anim
+  if ('IntersectionObserver' in window){
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if (e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+      });
+    }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+    document.querySelectorAll('.rv').forEach(function(el){ io.observe(el); });
+  } else {
+    document.querySelectorAll('.rv').forEach(function(el){ el.classList.add('in'); });
+  }
+
+  // Smooth scroll
+  document.querySelectorAll('a[href^="#"]').forEach(function(a){
+    a.addEventListener('click', function(e){
+      var href = a.getAttribute('href');
+      if (href.length < 2) return;
+      var target = document.querySelector(href);
+      if (!target) return;
+      e.preventDefault();
+      window.scrollTo({ top: target.offsetTop - 24, behavior: 'smooth' });
+    });
+  });
+})();
+</script>
+
+</body>
+</html>

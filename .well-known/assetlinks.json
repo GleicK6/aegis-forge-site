@@ -1,0 +1,12 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.pleinmalin.app",
+      "sha256_cert_fingerprints": [
+        "97:97:5A:18:C1:34:55:9A:74:F0:33:0E:E3:21:32:27:BC:6E:D5:7D:D8:F1:FA:58:AC:D0:FA:0C:2F:B7:F9:19"
+      ]
+    }
+  }
+]

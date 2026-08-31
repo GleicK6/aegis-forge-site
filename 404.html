@@ -1,0 +1,1019 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:; connect-src 'self' https://formspree.io; frame-ancestors 'none'; form-action 'self' https://formspree.io; base-uri 'self'; object-src 'none'; upgrade-insecure-requests">
+<meta http-equiv="X-Content-Type-Options" content="nosniff">
+<meta http-equiv="X-Frame-Options" content="DENY">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), payment=(), usb=(), accelerometer=(), gyroscope=()">
+
+<meta name="robots" content="index, follow, noimageindex, max-snippet:160, max-image-preview:standard">
+
+<title>AEGIS Forge — Atelier de développement · Applications métier</title>
+<meta name="description" content="AEGIS Forge — atelier de développement pour collectivités et grand public. Code hébergé en Europe, livraison validée en charge réelle.">
+<meta property="og:title" content="AEGIS Forge — Atelier de développement européen">
+<meta property="og:description" content="Atelier de développement français. Outils métier pour collectivités et applications utilitaires grand public. Hébergement européen, données exportables.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="AEGIS Forge">
+<meta property="og:locale" content="fr_FR">
+
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="AEGIS Forge — Atelier de développement européen">
+<meta name="twitter:description" content="Outils métier pour collectivités et applications utilitaires grand public. Hébergement européen, données exportables.">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "AEGIS Forge",
+  "url": "https://aegis-forge.fr/",
+  "logo": "https://aegis-forge.fr/rss/aegis-forge-icon.webp",
+  "description": "Atelier de développement français : applications métier pour collectivités et applications utilitaires grand public. Hébergement et stockage des données en Union européenne, données exportables.",
+  "email": "contact@aegis-forge.fr",
+  "areaServed": "FR",
+  "knowsAbout": ["Souveraineté numérique", "RGPD", "Applications métier pour collectivités"]
+}
+</script>
+
+<link rel="stylesheet" href="_shared/fonts.css">
+<link rel="stylesheet" href="_shared/operational.css">
+<link rel="stylesheet" href="_shared/contact-modal.css">
+<script src="_shared/contact-modal.js" defer></script>
+<link rel="stylesheet" href="_shared/lightbox.css">
+<script src="_shared/lightbox.js" defer></script>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect x='6' y='6' width='20' height='20' fill='none' stroke='%23d96a18' stroke-width='2'/><rect x='12' y='12' width='8' height='8' fill='none' stroke='%23d96a18' stroke-width='1.5' transform='rotate(45 16 16)'/></svg>">
+
+<style>
+/* ─── HERO ─── */
+.fhero {
+  padding: 64px 0 96px;
+  position: relative;
+}
+.fhero-grid {
+  display: grid;
+  grid-template-columns: 1fr 460px;
+  gap: 56px;
+  align-items: start;
+}
+.fhero-pre {
+  font-family: var(--mono);
+  font-size: 11.5px; letter-spacing: 0.18em;
+  color: var(--sig); text-transform: uppercase;
+  margin-bottom: 24px;
+  display: flex; align-items: center; gap: 14px;
+  font-weight: 500;
+}
+.fhero-pre::before {
+  content: ''; width: 32px; height: 1.5px; background: var(--sig);
+}
+.fhero h1 {
+  font-family: var(--display);
+  font-weight: 800;
+  font-size: clamp(52px, 6.5vw, 88px);
+  line-height: 0.95;
+  letter-spacing: -0.04em;
+  color: var(--ink);
+  max-width: 720px;
+}
+.fhero h1 .acc {
+  display: inline-block;
+  position: relative;
+}
+.fhero h1 .acc::after {
+  content: ''; position: absolute;
+  left: 0; right: 0; bottom: 8px;
+  height: 12px;
+  background: var(--sig-ghost);
+  z-index: -1;
+}
+.fhero h1 .ghost { color: var(--ink-3); font-weight: 400; }
+.fhero-lede {
+  margin-top: 32px;
+  font-family: var(--sans);
+  font-size: 17.5px;
+  line-height: 1.6;
+  color: var(--ink-2);
+  max-width: 600px;
+}
+.fhero-lede strong { color: var(--ink); font-weight: 500; }
+.fhero-lede em {
+  font-style: normal; color: var(--sig); font-weight: 500;
+  background: var(--sig-ghost); padding: 1px 4px; border-radius: 2px;
+}
+.fhero-actions {
+  margin-top: 36px;
+  display: flex; gap: 12px;
+}
+
+/* ─── SPRINT DASH (right of hero) ─── */
+.sprint {
+  background: var(--surf-deep);
+  border: 1px solid var(--line-deep);
+  border-radius: 6px;
+  color: #e8eaf0;
+  font-family: var(--mono);
+  overflow: hidden;
+  position: relative;
+}
+.sprint::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  background: var(--sig-2);
+}
+.sprint-head {
+  padding: 14px 20px;
+  border-bottom: 1px solid var(--line-deep);
+  display: flex; justify-content: space-between; align-items: center;
+  font-family: var(--mono); font-size: 10.5px;
+  letter-spacing: 0.16em; text-transform: uppercase;
+  color: var(--ink-4);
+}
+.sprint-head b { color: #fff; font-weight: 500; }
+.sprint-head .live {
+  color: var(--sig-2); display: inline-flex; align-items: center; gap: 6px;
+}
+.sprint-head .live::before {
+  content: ''; width: 7px; height: 7px; background: var(--sig);
+  border-radius: 50%;
+  box-shadow: 0 0 0 0 rgba(217,106,24,0.5);
+  animation: sprint-pulse 2.4s infinite;
+}
+@keyframes sprint-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(217,106,24,0.5); }
+  50% { box-shadow: 0 0 0 5px rgba(217,106,24,0); }
+}
+.sprint-body { padding: 22px 20px 8px; }
+.sprint-title {
+  font-family: var(--display); font-weight: 700;
+  font-size: 14px; color: #fff;
+  letter-spacing: -0.005em;
+  display: flex; justify-content: space-between; align-items: baseline;
+  margin-bottom: 4px;
+}
+.sprint-title small {
+  font-family: var(--mono); font-size: 9.5px; letter-spacing: 0.16em;
+  color: var(--sig-2); font-weight: 500;
+}
+.sprint-sub {
+  font-family: var(--mono); font-size: 10.5px;
+  letter-spacing: 0.04em; color: var(--ink-4);
+  margin-bottom: 18px;
+}
+.sprint-day {
+  padding: 11px 0;
+  border-top: 1px solid var(--line-deep-2);
+  display: grid;
+  grid-template-columns: 56px 1fr;
+  gap: 16px; align-items: baseline;
+  font-size: 11.5px;
+}
+.sprint-day:first-of-type { border-top: none; }
+.sprint-day-d {
+  font-family: var(--mono); font-size: 9.5px;
+  letter-spacing: 0.14em; color: var(--sig-2);
+  text-transform: uppercase; font-weight: 600;
+}
+.sprint-day-t {
+  font-family: var(--mono); color: #fff;
+  letter-spacing: 0.02em; font-weight: 500;
+}
+.sprint-day-t small {
+  display: block;
+  font-family: var(--mono); font-weight: 400;
+  font-size: 10px; letter-spacing: 0.02em;
+  color: var(--ink-4); text-transform: none;
+  margin-top: 3px; line-height: 1.4;
+}
+.sprint-foot {
+  padding: 12px 20px;
+  border-top: 1px solid var(--line-deep);
+  font-family: var(--mono); font-size: 10px;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--ink-4);
+  display: flex; justify-content: space-between;
+}
+
+/* ─── KPI BAR ─── */
+.kpi {
+  background: var(--surf);
+  border: 1px solid var(--line);
+  border-top: 1.5px solid var(--ink);
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  position: relative;
+}
+.kpi::before {
+  content: ''; position: absolute; top: -1.5px; left: 0;
+  width: 80px; height: 3px; background: var(--sig);
+}
+.kpi-cell {
+  padding: 28px 28px;
+  border-right: 1px solid var(--line);
+  display: flex; flex-direction: column; gap: 8px;
+}
+.kpi-cell:last-child { border-right: none; }
+.kpi-num {
+  font-family: var(--display); font-weight: 700;
+  font-size: 44px; line-height: 1; letter-spacing: -0.04em;
+  color: var(--ink);
+}
+.kpi-num span {
+  font-family: var(--mono); font-weight: 500;
+  font-size: 14px; color: var(--ink-3); letter-spacing: 0;
+}
+.kpi-lbl {
+  font-family: var(--mono); font-size: 11px;
+  letter-spacing: 0.14em; color: var(--ink-3);
+  text-transform: uppercase; line-height: 1.55;
+}
+.kpi-lbl b { color: var(--ink); font-weight: 500; }
+
+/* ─── MÉTHODE ─── */
+.meth-sec { padding: 96px 0 120px; border-top: 1px solid var(--line); }
+.meth-intro {
+  max-width: 760px;
+  margin: 0 0 36px;
+  font-family: var(--sans);
+  font-size: 17px;
+  line-height: 1.65;
+  color: var(--ink-2);
+}
+.meth-intro strong { color: var(--ink); font-weight: 500; }
+.meth-chute {
+  margin-top: 36px;
+  padding-top: 24px;
+  border-top: 1px solid var(--line-2);
+  text-align: center;
+}
+.meth-chute p {
+  font-family: var(--mono);
+  font-size: 12.5px;
+  letter-spacing: 0.04em;
+  color: var(--ink-3);
+  line-height: 1.55;
+  margin: 0;
+}
+
+/* ─── ENGAGEMENTS ─── */
+.eng-sec { padding: 96px 0 120px; border-top: 1px solid var(--line); }
+.eng {
+  background: var(--surf);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  overflow: hidden;
+}
+.eng-head {
+  padding: 14px 28px;
+  border-bottom: 1px solid var(--line);
+  background: var(--surf-2);
+  display: flex; justify-content: space-between; align-items: center;
+  font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.16em;
+  color: var(--ink-3); text-transform: uppercase;
+}
+.eng-head b { color: var(--ink); font-weight: 600; }
+.eng-row {
+  display: grid; grid-template-columns: 80px 1fr 1.5fr;
+  gap: 36px; padding: 28px 32px;
+  border-bottom: 1px solid var(--line-2);
+  align-items: baseline;
+  transition: background .15s;
+}
+.eng-row:last-child { border-bottom: none; }
+.eng-row:hover { background: var(--surf-2); }
+.eng-num {
+  font-family: var(--mono); font-weight: 600;
+  font-size: 11px; letter-spacing: 0.18em;
+  color: var(--sig); text-transform: uppercase;
+  display: flex; align-items: center; gap: 10px;
+}
+.eng-num::before {
+  content: ''; width: 18px; height: 1.5px; background: var(--sig);
+}
+.eng-t {
+  font-family: var(--display); font-weight: 700;
+  font-size: 19px; line-height: 1.2;
+  letter-spacing: -0.015em; color: var(--ink);
+}
+.eng-b {
+  font-family: var(--sans); font-size: 15px;
+  line-height: 1.6; color: var(--ink-2);
+}
+
+/* ─── RÉALISATIONS ─── */
+.real-sec { padding: 96px 0 120px; border-top: 1px solid var(--line); }
+.real-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 20px;
+}
+.real {
+  background: var(--surf);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  overflow: hidden;
+  display: flex; flex-direction: column;
+  transition: all .2s var(--ease);
+}
+.real:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 32px rgba(10,22,40,0.08);
+  border-color: var(--ink-4);
+}
+.real-head {
+  padding: 12px 22px;
+  border-bottom: 1px solid var(--line);
+  background: var(--surf-2);
+  display: flex; justify-content: space-between; align-items: center;
+}
+.real-id {
+  font-family: var(--mono); font-size: 10.5px;
+  letter-spacing: 0.18em; font-weight: 600;
+  text-transform: uppercase; color: var(--sig);
+}
+.real-vis {
+  height: 200px;
+  position: relative;
+  border-bottom: 1px solid var(--line);
+  display: flex; align-items: center; justify-content: center;
+}
+.real:nth-child(1) .real-vis {
+  background: linear-gradient(135deg, oklch(0.90 0.04 264), oklch(0.78 0.08 264));
+}
+.real:nth-child(2) .real-vis {
+  background:
+    linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px) 0 0 / 14px 14px,
+    linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px) 0 0 / 14px 14px,
+    var(--surf-deep);
+  padding: 0;
+  overflow: hidden;
+}
+.real-vis-octane-phones {
+  position: relative;
+  width: 100%; height: 100%;
+  display: flex; align-items: center; justify-content: center;
+  gap: 10px;
+  padding: 16px;
+}
+.real-vis-octane-phones img {
+  height: 100%;
+  width: auto;
+  border-radius: 8px;
+  box-shadow: 0 8px 22px rgba(0,0,0,0.4), 0 0 0 1px rgba(255,255,255,0.06);
+  background: #fff;
+  display: block;
+}
+.real-vis-shot { padding: 16px; }
+.real-vis-shot img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: 4px;
+  object-fit: cover;
+  box-shadow: 0 6px 18px rgba(10,22,40,0.18), 0 0 0 1px rgba(255,255,255,0.55);
+  filter: saturate(0.94) contrast(1.02);
+}
+.real-vis-shot.is-desktop img { object-position: top left; }
+.real-vis-shot.is-store {
+  display: flex; align-items: center; justify-content: center;
+  padding: 8px;
+}
+.real-vis-shot.is-store img {
+  width: auto;
+  height: 100%;
+  aspect-ratio: 9 / 19.5;
+  object-fit: cover;
+  object-position: center;
+  border-radius: 6px;
+  box-shadow: 0 10px 24px rgba(28,26,23,0.22), 0 0 0 1px rgba(255,255,255,0.5);
+  filter: none;
+}
+
+.real-body {
+  padding: 24px 26px 24px;
+  display: flex; flex-direction: column; gap: 12px;
+  flex: 1;
+}
+.real-cat {
+  font-family: var(--mono); font-size: 10.5px;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--ink-3); font-weight: 500;
+}
+.real-name {
+  font-family: var(--display); font-weight: 800;
+  font-size: 36px; line-height: 0.95;
+  letter-spacing: -0.04em; color: var(--ink);
+}
+.real-tagline {
+  font-family: var(--mono); font-size: 12px;
+  letter-spacing: 0.04em; font-weight: 500;
+  margin-top: -4px;
+}
+.real:nth-child(1) .real-tagline { color: var(--pri); }
+.real:nth-child(2) .real-tagline { color: var(--sig); }
+.real-desc {
+  font-family: var(--sans); font-size: 14.5px;
+  line-height: 1.6; color: var(--ink-2);
+  flex: 1;
+}
+.real-foot {
+  margin-top: 8px; padding-top: 14px;
+  border-top: 1px solid var(--line-2);
+  display: flex; justify-content: space-between; align-items: center;
+}
+.real-link {
+  font-family: var(--mono); font-size: 11.5px;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--ink); font-weight: 600;
+  display: inline-flex; align-items: center; gap: 8px;
+  transition: gap .15s;
+}
+.real-link::after { content: '→'; font-size: 13px; }
+.real-link:hover { gap: 12px; }
+.real-tech {
+  font-family: var(--mono); font-size: 10px;
+  letter-spacing: 0.14em; color: var(--ink-4);
+  text-transform: uppercase;
+}
+
+/* ─── STACK ─── */
+.stack-sec { padding: 96px 0 120px; border-top: 1px solid var(--line); }
+.stack {
+  background: var(--surf);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  overflow: hidden;
+}
+.stack-head {
+  padding: 14px 28px;
+  border-bottom: 1px solid var(--line);
+  background: var(--surf-2);
+  display: flex; justify-content: space-between; align-items: center;
+  font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.16em;
+  color: var(--ink-3); text-transform: uppercase;
+}
+.stack-head b { color: var(--ink); font-weight: 600; }
+.stack-grid {
+  display: grid; grid-template-columns: repeat(4, 1fr);
+}
+.stack-cell {
+  padding: 22px 24px 24px;
+  border-right: 1px solid var(--line-2);
+  border-top: 1px solid var(--line-2);
+  display: flex; flex-direction: column; gap: 6px;
+  transition: background .15s;
+}
+.stack-cell:hover { background: var(--surf-2); }
+.stack-cell:nth-child(4n) { border-right: none; }
+.stack-cell:nth-child(-n+4) { border-top: none; }
+.stack-cell-cat {
+  font-family: var(--mono); font-size: 10px;
+  letter-spacing: 0.18em;
+  color: var(--sig); text-transform: uppercase;
+  font-weight: 600;
+}
+.stack-cell-name {
+  font-family: var(--display); font-weight: 700;
+  font-size: 17px; letter-spacing: -0.015em;
+  color: var(--ink); line-height: 1.15;
+}
+.stack-cell-n {
+  font-family: var(--sans); font-size: 13px;
+  line-height: 1.5; color: var(--ink-2);
+  margin-top: 4px;
+}
+
+/* ─── AUDIENCES ─── */
+.aud-sec { padding: 96px 0 120px; border-top: 1px solid var(--line); }
+.aud-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 0;
+  border: 1px solid var(--line);
+  background: var(--line);
+  border-radius: 6px;
+  overflow: hidden;
+}
+.aud-cell {
+  background: var(--surf);
+  padding: 30px 30px 32px;
+  display: flex; flex-direction: column; gap: 14px;
+  transition: background .2s;
+  min-height: 240px;
+}
+.aud-cell:hover { background: var(--surf-2); }
+.aud-cell-num {
+  font-family: var(--display); font-weight: 800;
+  font-size: 38px; line-height: 1;
+  letter-spacing: -0.04em; color: var(--sig);
+  display: flex; align-items: baseline; gap: 10px;
+}
+.aud-cell-num span {
+  font-family: var(--mono); font-size: 10.5px;
+  font-weight: 500; color: var(--ink-3);
+  letter-spacing: 0.18em; text-transform: uppercase;
+}
+.aud-cell-h {
+  font-family: var(--display); font-weight: 700;
+  font-size: 22px; line-height: 1.15;
+  letter-spacing: -0.02em; color: var(--ink);
+}
+.aud-cell-b {
+  font-family: var(--sans); font-size: 14.5px;
+  line-height: 1.6; color: var(--ink-2);
+  flex: 1;
+}
+
+/* ─── CONTACT ─── */
+.contact {
+  padding: 96px 0 80px;
+  border-top: 1px solid var(--line);
+  background: var(--surf-deep);
+  color: #e8eaf0;
+  margin: 0 -48px;
+  padding-left: 48px; padding-right: 48px;
+  position: relative;
+}
+.contact::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  background: var(--sig-2);
+}
+.contact-inner { max-width: 1144px; margin: 0 auto; }
+.contact-grid {
+  display: grid; grid-template-columns: 1.4fr 1fr;
+  gap: 80px; align-items: end;
+}
+.contact-pre {
+  font-family: var(--mono); font-size: 11.5px;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--sig-2); font-weight: 500;
+  margin-bottom: 24px;
+  display: flex; align-items: center; gap: 14px;
+}
+.contact-pre::before {
+  content: ''; width: 32px; height: 1.5px; background: var(--sig-2);
+}
+.contact h2 {
+  font-family: var(--display); font-weight: 800;
+  font-size: clamp(40px, 5vw, 56px);
+  line-height: 0.98; letter-spacing: -0.04em;
+  color: #fff;
+}
+.contact h2 em {
+  font-style: normal; color: var(--sig-2);
+}
+.contact-lede {
+  margin-top: 28px;
+  font-family: var(--sans); font-size: 17px;
+  line-height: 1.6; color: var(--ink-5);
+  max-width: 520px;
+}
+.contact-actions {
+  margin-top: 32px;
+  display: flex; gap: 12px;
+}
+.contact-mail {
+  display: inline-flex; align-items: center; gap: 12px;
+  padding: 16px 26px;
+  background: var(--sig); color: #0a1628;
+  font-family: var(--mono); font-size: 13px;
+  letter-spacing: 0.1em; font-weight: 600;
+  border-radius: 4px;
+  transition: all .15s;
+}
+.contact-mail:hover { background: #fff; }
+.contact-mail::after { content: '→'; font-size: 14px; }
+
+.contact-meta {
+  display: grid; grid-template-columns: auto 1fr;
+  gap: 10px 18px;
+  font-family: var(--mono); font-size: 11px;
+  letter-spacing: 0.12em; color: var(--ink-5);
+  text-transform: uppercase;
+}
+.contact-meta b { color: var(--ink-4); font-weight: 500; }
+.contact-meta a { color: #fff; border-bottom: 1px solid var(--ink-3); padding-bottom: 1px; }
+
+@media (max-width: 920px) {
+  .fhero-grid { grid-template-columns: 1fr; }
+  .real-grid { grid-template-columns: 1fr; }
+  .stack-grid { grid-template-columns: 1fr 1fr; }
+  .aud-grid { grid-template-columns: 1fr; }
+  .eng-row { grid-template-columns: 1fr; gap: 12px; }
+  .kpi { grid-template-columns: 1fr 1fr; }
+  .contact-grid { grid-template-columns: 1fr; gap: 40px; }
+  .contact { margin: 0 -28px; padding-left: 28px; padding-right: 28px; }
+}
+@media (max-width: 600px) {
+  .kpi { grid-template-columns: 1fr; }
+  .stack-grid { grid-template-columns: 1fr; }
+  .stack-cell { border-right: none; }
+  .contact { margin: 0 -20px; padding-left: 20px; padding-right: 20px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rv { opacity: 1; transform: none; transition: none; }
+  .sprint-head .live::before { animation: none; }
+}
+</style>
+<link rel="canonical" href="https://aegis-forge.fr/">
+<meta property="og:url" content="https://aegis-forge.fr/">
+</head>
+<body data-screen-label="Forge">
+
+<div class="shell">
+
+  <!-- NAV -->
+  <header class="nav">
+    <a href="aegis-forge.html" class="nav-mark">
+      <img src="rss/aegis-forge-icon.webp" alt="" width="20" height="24">
+      <span class="nav-mark-txt">AEGIS<small class="sig-c">// FORGE</small></span>
+    </a>
+    <nav class="nav-links">
+      <a href="aegis-forge.html" class="active"><span>00</span>Forge</a>
+      <a href="aegis-agora.html"><span>01</span>AGORA</a>
+      <a href="forge-octane.html"><span>02</span>Octane</a>
+      <a href="actualites.html"><span>03</span>Actualités</a>
+      <a href="#contact"><span>04</span>Contact</a>
+    </nav>
+    <a href="#contact" class="nav-cta">Ouvrir un canal</a>
+  </header>
+
+  <!-- HERO -->
+  <section class="fhero" data-screen-label="01 Hero">
+    <div class="fhero-grid">
+      <div class="rv">
+        <div class="fhero-pre">Atelier de développement · Applications métier &amp; grand public</div>
+        <h1>
+          Applications <span class="acc">métier</span><br>
+          pour collectivités<br>
+          et <span class="ghost">grand public</span>.
+        </h1>
+        <p class="fhero-lede">
+          <strong>AEGIS Forge</strong> est un atelier de développement français. Outils métier pour les collectivités, applications utilitaires pour le grand public.
+        </p>
+        <p class="fhero-lede">
+          Méthode standardisée : <em>cadrage</em> avec les futurs utilisateurs, livraisons jalonnées selon un cycle de livraison standard (alpha → bêta → mise en service), suivi en cours de projet selon les besoins.
+        </p>
+        <div class="fhero-actions">
+          <a href="#realisations" class="btn btn-sig">Voir les réalisations</a>
+          <a href="#contact" class="btn btn-outline">Ouvrir un canal</a>
+        </div>
+      </div>
+
+      <!-- release lifecycle -->
+      <aside class="sprint rv d2">
+        <div class="sprint-head">
+          <span><b>FIG. 01</b> · Cycle de livraison</span>
+          <span class="live">PROTOCOLE</span>
+        </div>
+        <div class="sprint-body">
+          <div class="sprint-title">
+            Étapes de livraison<small>// 5 PHASES</small>
+          </div>
+          <div class="sprint-sub">// Alpha → Bêta → RC → Mise en service → Suivi</div>
+
+          <div class="sprint-day">
+            <div class="sprint-day-d">α</div>
+            <div class="sprint-day-t">Alpha<small>Périmètre minimal fonctionnel, usage interne</small></div>
+          </div>
+          <div class="sprint-day">
+            <div class="sprint-day-d">β</div>
+            <div class="sprint-day-t">Bêta<small>Périmètre stabilisé, retours utilisateurs pilotes</small></div>
+          </div>
+          <div class="sprint-day">
+            <div class="sprint-day-d">RC</div>
+            <div class="sprint-day-t">Version candidate (RC)<small>Vérifications en conditions d'usage</small></div>
+          </div>
+          <div class="sprint-day">
+            <div class="sprint-day-d">1.0</div>
+            <div class="sprint-day-t">Mise en service<small>Version livrée, ouverte aux utilisateurs</small></div>
+          </div>
+          <div class="sprint-day">
+            <div class="sprint-day-d">1.x</div>
+            <div class="sprint-day-t">Suivi<small>Correctifs, ajustements, versions ultérieures</small></div>
+          </div>
+        </div>
+        <div class="sprint-foot">
+          <span>SYS · NOMINAL</span>
+          <span>UPDATED <span id="now-foot">14:23</span> CET</span>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <!-- KPI -->
+  <section class="kpi rv">
+    <div class="kpi-cell">
+      <div class="kpi-num">2</div>
+      <div class="kpi-lbl"><b>Produits en service</b> · AGORA &amp; Octane</div>
+    </div>
+    <div class="kpi-cell">
+      <div class="kpi-num">100<span>%</span></div>
+      <div class="kpi-lbl"><b>Hébergement Europe</b> · Frankfurt / Paris</div>
+    </div>
+    <div class="kpi-cell">
+      <div class="kpi-num">8</div>
+      <div class="kpi-lbl"><b>Briques d'atelier</b> · ensemble d'outils maîtrisé</div>
+    </div>
+  </section>
+
+  <!-- MÉTHODE -->
+  <section class="meth-sec" id="methode" data-screen-label="02 Méthode">
+    <div class="section-head rv">
+      <div class="section-num">§ 02 / Méthode FORGE</div>
+      <h2 class="section-title">Un <span class="sig-c">protocole</span>,<br>écrit.</h2>
+      <div class="section-meta">PROTOCOLE INTERNE<br>SOCLE DE LIVRAISON</div>
+    </div>
+
+    <div class="meth-intro rv">
+      <p>Un projet démarre par un <strong>cadrage écrit</strong>, des décisions d'architecture tracées et des garde-fous documentés. La méthode tient sur les mêmes principes qu'un dispositif opérationnel : phases nommées, traçabilité des décisions, anticipation des défaillances.</p>
+    </div>
+
+    <div class="eng rv">
+      <div class="eng-head">
+        <span>// Trois piliers structurants</span>
+        <span><b>3 / 3</b> · socle</span>
+      </div>
+      <div class="eng-row">
+        <div class="eng-num">i</div>
+        <div class="eng-t">Cadrage avant code</div>
+        <div class="eng-b">Brief écrit, architecture délibérée en amont, décisions techniques tracées et datées. Chaque choix structurant laisse une trace consultable au cours de la vie du projet.</div>
+      </div>
+      <div class="eng-row">
+        <div class="eng-num">ii</div>
+        <div class="eng-t">Garde-fous explicites</div>
+        <div class="eng-b">Règles de sécurité documentées, audits automatisés intégrés au cycle de livraison, gestion des dépendances tracée. Ces règles sont fixées au cadrage du projet et s'appliquent à chaque mise en service.</div>
+      </div>
+      <div class="eng-row">
+        <div class="eng-num">iii</div>
+        <div class="eng-t">Résilience par défaut</div>
+        <div class="eng-b">Plans de bascule fournisseur, données exportables, dépendances cartographiées. Ces éléments sont définis à la conception du projet et tenus à jour pendant la vie de l'outil.</div>
+      </div>
+    </div>
+
+    <div class="meth-chute rv">
+      <p>La méthode s'inscrit dans la même logique qu'un plan de sauvegarde opérationnel.</p>
+    </div>
+  </section>
+
+  <!-- ENGAGEMENTS -->
+  <section class="eng-sec" id="engagements" data-screen-label="03 Engagements">
+    <div class="section-head rv">
+      <div class="section-num">§ 03 / Engagements</div>
+      <h2 class="section-title">Six règles,<br><span class="sig-c">écrites au contrat</span>.</h2>
+      <div class="section-meta">NON NÉGOCIABLES<br>PROTECTION CLIENT</div>
+    </div>
+
+    <div class="eng rv">
+      <div class="eng-head">
+        <span>// Engagements contractuels — atelier Forge</span>
+        <span><b>6 / 6</b> · structurants</span>
+      </div>
+      <div class="eng-row">
+        <div class="eng-num">i</div>
+        <div class="eng-t">Code auditable et reprenable</div>
+        <div class="eng-b">Le code est auditable et reprenable par une autre équipe. Il est exportable de sa plateforme d'origine. La documentation des décisions techniques est tenue à jour en parallèle du développement.</div>
+      </div>
+      <div class="eng-row">
+        <div class="eng-num">ii</div>
+        <div class="eng-t">Hébergement Europe, export libre</div>
+        <div class="eng-b">Frankfurt ou Paris selon le projet. Hébergement et stockage exclusivement en Union européenne. Export complet des données disponible à toute date, dans un format ouvert.</div>
+      </div>
+      <div class="eng-row">
+        <div class="eng-num">iii</div>
+        <div class="eng-t">Suivi en cours de projet</div>
+        <div class="eng-b">Échanges en visioconférence ou par téléphone selon les besoins, au fil du projet. L'avancement se constate sur l'outil en fonctionnement, fonctionnalité par fonctionnalité.</div>
+      </div>
+      <div class="eng-row">
+        <div class="eng-num">iv</div>
+        <div class="eng-t">Un interlocuteur unique, du cadrage au suivi</div>
+        <div class="eng-b">La même personne assure le cadrage, le développement, le déploiement et le suivi correctif. Le contact direct est inclus dans la prestation.</div>
+      </div>
+      <div class="eng-row">
+        <div class="eng-num">v</div>
+        <div class="eng-t">Cadre d'utilisation de l'IA</div>
+        <div class="eng-b">L'intelligence artificielle est utilisée en accélération sur la production : génération de premières versions, audits techniques, vérifications de cohérence. Les décisions structurantes — architecture, sécurité, périmètre fonctionnel — sont prises et tracées par le développeur.</div>
+      </div>
+      <div class="eng-row">
+        <div class="eng-num">vi</div>
+        <div class="eng-t">Validation en conditions d'usage</div>
+        <div class="eng-b">Le nouvel outil est mis en service en parallèle de l'outil existant sur plusieurs semaines. Le basculement définitif intervient une fois la stabilité confirmée en conditions d'usage.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- RÉALISATIONS -->
+  <section class="real-sec" id="realisations" data-screen-label="04 Réalisations">
+    <div class="section-head rv">
+      <div class="section-num">§ 04 / Réalisations en service</div>
+      <h2 class="section-title">Deux <span class="sig-c">produits publics</span>,<br>deux audiences distinctes.</h2>
+      <div class="section-meta">FG-01 · AGORA<br>FG-02 · OCTANE</div>
+    </div>
+
+    <div class="real-grid">
+
+      <article class="real rv">
+        <div class="real-head">
+          <div class="real-id">FG-01 · AGORA</div>
+          <span class="chip live">En service</span>
+        </div>
+        <div class="real-vis real-vis-shot is-desktop">
+          <img src="rss/agora-screen-planning.png" alt="AGORA — vue planning mensuel en production" loading="lazy" decoding="async" data-lightbox>
+        </div>
+        <div class="real-body">
+          <div class="real-cat">Outil municipal · Multi-commune</div>
+          <div class="real-name">AGORA</div>
+          <div class="real-tagline">// Planning · Matériel · Véhicules · Congés</div>
+          <p class="real-desc">L'outil municipal du quotidien — planning des agents, suivi matériel, flotte de véhicules, gestion des congés. Chaque commune voit uniquement ses données. En release candidate dans une commune partenaire depuis mai 2026.</p>
+          <div class="real-foot">
+            <a href="aegis-agora.html" class="real-link">Voir la fiche</a>
+            <span class="real-tech">Web · React · Postgres</span>
+          </div>
+        </div>
+      </article>
+
+      <article class="real rv d1">
+        <div class="real-head">
+          <div class="real-id">FG-02 · OCTANE</div>
+          <span class="chip live">En service</span>
+        </div>
+        <div class="real-vis">
+          <div class="real-vis-octane-phones">
+            <img src="rss/octane-store-map.png" alt="Octane — carte des stations colorées par prix" loading="lazy" decoding="async" data-lightbox>
+            <img src="rss/octane-store-search.png" alt="Octane — recherche par carburant et rayon" loading="lazy" decoding="async" data-lightbox>
+            <img src="rss/octane-store-detour.png" alt="Octane — calculateur de rentabilité du détour" loading="lazy" decoding="async" data-lightbox>
+          </div>
+        </div>
+        <div class="real-body">
+          <div class="real-cat">Application grand public · Android</div>
+          <div class="real-name">Octane</div>
+          <div class="real-tagline">// carburants &amp; détours · 3 pays</div>
+          <p class="real-desc">23 000+ stations en France, Luxembourg et Espagne. Comparateur, calcul de détour rentable, suivi conso, alertes prix, votes communautaires. Application utilitaire sans publicité ni revente de données. Premium optionnel à 1,99 €/mois. Données ouvertes valorisées.</p>
+          <div class="real-foot">
+            <a href="forge-octane.html" class="real-link">Voir la fiche</a>
+            <span class="real-tech">Mobile · RN · Expo · Open Data</span>
+          </div>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- STACK -->
+  <section class="stack-sec" id="stack" data-screen-label="05 Stack">
+    <div class="section-head rv">
+      <div class="section-num">§ 05 / Outils d'atelier</div>
+      <h2 class="section-title">Boîte <span class="sig-c">restreinte</span>,<br>maîtrise complète.</h2>
+      <div class="section-meta">8 BRIQUES<br>SPÉC. ATELIER</div>
+    </div>
+
+    <div class="stack rv">
+      <div class="stack-head">
+        <span>// Spécification technique d'atelier</span>
+        <span><b>8</b> · briques principales</span>
+      </div>
+      <div class="stack-grid">
+        <div class="stack-cell">
+          <div class="stack-cell-cat">DB · 01</div>
+          <div class="stack-cell-name">PostgreSQL</div>
+          <div class="stack-cell-n">Standard de l'industrie, données isolées par client, historique conservé.</div>
+        </div>
+        <div class="stack-cell">
+          <div class="stack-cell-cat">BACKEND · 02</div>
+          <div class="stack-cell-name">Supabase</div>
+          <div class="stack-cell-n">Postgres hébergé en Europe. Migrable hors Supabase à tout moment.</div>
+        </div>
+        <div class="stack-cell">
+          <div class="stack-cell-cat">WEB · 03</div>
+          <div class="stack-cell-name">React · TypeScript</div>
+          <div class="stack-cell-n">Interfaces modernes et typées, déploiements continus, code maintenable.</div>
+        </div>
+        <div class="stack-cell">
+          <div class="stack-cell-cat">MOBILE · 04</div>
+          <div class="stack-cell-name">React Native + Expo</div>
+          <div class="stack-cell-n">Android en priorité, TypeScript, NativeWind. Base de code partagée avec l'interface web.</div>
+        </div>
+        <div class="stack-cell">
+          <div class="stack-cell-cat">HOST · 05</div>
+          <div class="stack-cell-name">Vercel · Europe</div>
+          <div class="stack-cell-n">Frankfurt, déploiement instantané, retour arrière possible à tout moment.</div>
+        </div>
+        <div class="stack-cell">
+          <div class="stack-cell-cat">VCS · 06</div>
+          <div class="stack-cell-name">Git · GitHub</div>
+          <div class="stack-cell-n">Historique des modifications conservé, revue de chaque changement.</div>
+        </div>
+        <div class="stack-cell">
+          <div class="stack-cell-cat">CI/CD · 07</div>
+          <div class="stack-cell-name">GitHub Actions</div>
+          <div class="stack-cell-n">Tests automatisés, audit sécurité, validation avant chaque mise en service.</div>
+        </div>
+        <div class="stack-cell">
+          <div class="stack-cell-cat">IA · 08</div>
+          <div class="stack-cell-name">Claude Code</div>
+          <div class="stack-cell-n">Génération de premières versions, audits techniques, vérifications de cohérence. Décisions structurantes tracées par le développeur.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- AUDIENCES -->
+  <section class="aud-sec" id="audiences" data-screen-label="06 Audiences">
+    <div class="section-head rv">
+      <div class="section-num">§ 06 / À qui s'adresse Forge</div>
+      <h2 class="section-title">Trois <span class="sig-c">profils</span><br>d'interlocuteurs.</h2>
+      <div class="section-meta">A · B · C<br>FORMAT ATELIER</div>
+    </div>
+
+    <div class="aud-grid rv">
+      <div class="aud-cell">
+        <div class="aud-cell-num">A<span>// COLLECTIVITÉS</span></div>
+        <h3 class="aud-cell-h">Mairies &amp; intercommunalités.</h3>
+        <p class="aud-cell-b">Communes qui n'ont pas trouvé leur outil dans les catalogues éditeurs (Berger-Levrault, JVS, AFI…). Outils métier (planning agents, suivi matériel, gestion des salles, registre des arrêtés). Multi-commune possible.</p>
+      </div>
+      <div class="aud-cell">
+        <div class="aud-cell-num">B<span>// GRAND PUBLIC</span></div>
+        <h3 class="aud-cell-h">Applications utilitaires.</h3>
+        <p class="aud-cell-b">Outils du quotidien pour utilisateurs grand public. Mobile principalement (Android via React Native + Expo). Modèle économique transparent : pas de publicité intrusive, pas d'interface trompeuse. Données ouvertes valorisées.</p>
+      </div>
+      <div class="aud-cell">
+        <div class="aud-cell-num">C<span>// MÉTIERS NICHE</span></div>
+        <h3 class="aud-cell-h">Industriels &amp; indépendants.</h3>
+        <p class="aud-cell-b">Petits éditeurs métier, artisans, professions libérales avec un besoin précis (atelier, suivi de pièces, facturation spécifique). Travail au plus près du métier réel des utilisateurs concernés.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="contact" id="contact" data-screen-label="07 Contact">
+    <div class="contact-inner">
+      <div class="contact-grid">
+        <div class="rv">
+          <div class="contact-pre">§ 07 / Ouvrir un canal</div>
+          <h2>Un outil à <em>construire</em>&nbsp;?<br>Cadrage initial <em>sans engagement.</em></h2>
+          <p class="contact-lede">Un temps de cadrage initial pour qualifier le besoin et préciser le périmètre du projet. Au terme du cadrage, devis détaillé si le projet se poursuit, ou arrêt sans facture.</p>
+          <div class="contact-actions">
+            <a href="mailto:contact@aegis-forge.fr" class="contact-mail js-aegis-contact">Nous contacter</a>
+          </div>
+        </div>
+        <div class="contact-meta rv d1">
+          <b>Zones</b><span>France · télétravail possible</span>
+          <b>Atelier</b><span>France métropolitaine</span>
+          <b>SIRET</b><span>879 190 080 00025</span>
+          <b>RC pro</b><span>Décennale développement souscrite</span>
+          <b>Hébergement</b><span>Europe · FRA / PAR</span>
+          <b>Légal</b><span><a href="mentions.html">Mentions</a> · <a href="mentions.html#confidentialite">Confidentialité</a></span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<!-- FOOT -->
+<footer class="foot">
+  <div class="foot-brand">
+    <img src="rss/aegis-forge-icon.webp" alt="AEGIS Forge" width="30" height="36" class="foot-logo">
+    <span>© <b>2025—2026</b> · AEGIS Forge</span>
+  </div>
+  <div>SHEET 07 / 07 · <b>END OF DOCUMENT</b></div>
+  <div class="foot-ver"><span class="v">v1.1</span> · REV. <b>2026.05.15</b> · BUILD r04</div>
+</footer>
+
+<script>
+(function(){
+  function pad(n){ return String(n).padStart(2,'0'); }
+  function tick(){
+    var d = new Date();
+    var full = d.getFullYear()+'.'+pad(d.getMonth()+1)+'.'+pad(d.getDate())+' · '+pad(d.getHours())+':'+pad(d.getMinutes());
+    var hm = pad(d.getHours())+':'+pad(d.getMinutes());
+    var el = document.getElementById('now'); if(el) el.textContent = full;
+    var ef = document.getElementById('now-foot'); if(ef) ef.textContent = hm;
+  }
+  tick();
+  setInterval(tick, 30000);
+
+  if ('IntersectionObserver' in window){
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if (e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+      });
+    }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+    document.querySelectorAll('.rv').forEach(function(el){ io.observe(el); });
+  } else {
+    document.querySelectorAll('.rv').forEach(function(el){ el.classList.add('in'); });
+  }
+
+  document.querySelectorAll('a[href^="#"]').forEach(function(a){
+    a.addEventListener('click', function(e){
+      var href = a.getAttribute('href');
+      if (href.length < 2) return;
+      var target = document.querySelector(href);
+      if (!target) return;
+      e.preventDefault();
+      window.scrollTo({ top: target.offsetTop - 24, behavior: 'smooth' });
+    });
+  });
+})();
+</script>
+
+</body>
+</html>

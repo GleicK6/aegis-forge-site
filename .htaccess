@@ -1,0 +1,86 @@
+# ─────────────────────────────────────────────────────────────
+# AEGIS — Configuration Apache (OVH mutualisé)
+# Variante : aegis-forge.fr (pôle Forge / produits)
+# Sécurité · Cache · Compression
+# Aucun redirect 301 historique : pas d'ancien site sur ce domaine.
+# ─────────────────────────────────────────────────────────────
+
+# ─── Page d'accueil servie sur / ─────────────────────────────
+DirectoryIndex aegis-forge.html
+
+# ─── HTTPS forcé ─────────────────────────────────────────────
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+
+  # Force HTTPS
+  RewriteCond %{HTTPS} !=on
+  RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+  # Optionnel : strip www → naked domain (décommenter si voulu)
+  # RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]
+  # RewriteRule ^ https://%{REQUEST_URI} [L,R=301]
+</IfModule>
+
+# ─── HEADERS sécurité ────────────────────────────────────────
+# Note : la CSP est définie en <meta http-equiv> dans chaque page
+# afin de rester par-page (et pas globale). On ne la redéfinit
+# pas ici pour éviter les conflits.
+#
+# Si OVH mutualisé n'expose pas mod_headers, commenter ce bloc.
+# La CSP en <meta> continue à fonctionner ; on perd HSTS et headers
+# secondaires, à compenser éventuellement via le panel OVH.
+
+<IfModule mod_headers.c>
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set X-Frame-Options "DENY"
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+  Header always set Permissions-Policy "camera=(), microphone=(), geolocation=(), payment=(), usb=(), accelerometer=(), gyroscope=()"
+
+  # HSTS : 1 an. À activer APRÈS avoir confirmé que Let's Encrypt
+  # est bien actif sur le domaine, sinon risque de blocage des visiteurs.
+  Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains"
+
+  # Cache assets statiques
+  <FilesMatch "\.(woff2|woff)$">
+    Header set Cache-Control "public, max-age=31536000, immutable"
+    Header set Access-Control-Allow-Origin "*"
+  </FilesMatch>
+  <FilesMatch "\.(png|jpg|jpeg|webp|svg|ico)$">
+    Header set Cache-Control "public, max-age=2592000"
+  </FilesMatch>
+  <FilesMatch "\.(css|js)$">
+    Header set Cache-Control "public, max-age=2592000"
+  </FilesMatch>
+  <FilesMatch "\.(html)$">
+    Header set Cache-Control "public, max-age=3600, must-revalidate"
+  </FilesMatch>
+</IfModule>
+
+# ─── COMPRESSION ─────────────────────────────────────────────
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/css text/javascript
+  AddOutputFilterByType DEFLATE application/javascript application/json
+  AddOutputFilterByType DEFLATE image/svg+xml
+  AddOutputFilterByType DEFLATE text/xml application/xml
+  AddOutputFilterByType DEFLATE text/plain
+</IfModule>
+
+# ─── TYPES MIME ──────────────────────────────────────────────
+<IfModule mod_mime.c>
+  AddType image/webp                  .webp
+  AddType image/svg+xml               .svg
+  AddType font/woff2                  .woff2
+  AddType font/woff                   .woff
+  AddType application/manifest+json   .webmanifest
+</IfModule>
+
+# ─── PROTECTION FICHIERS SENSIBLES ───────────────────────────
+<FilesMatch "^\.(htaccess|gitignore|env)$">
+  Require all denied
+</FilesMatch>
+
+# ─── ERREUR 404 ──────────────────────────────────────────────
+ErrorDocument 404 /aegis-forge.html
+
+# ─── DÉSACTIVATION listing répertoires ───────────────────────
+Options -Indexes

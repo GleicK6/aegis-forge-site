@@ -1,0 +1,93 @@
+# AEGIS — politique de crawl
+# Site statique vitrine. Indexation autorisée par les moteurs légitimes.
+# Les collecteurs LLM sont bloqués par défaut SAUF sur la page Octane et
+# son llms.txt — Octane a besoin d'une visibilité IA pour l'acquisition.
+# Côté aegis-resilience.com, l'allowlist Octane est sans effet (page absente).
+
+User-agent: *
+Allow: /
+Disallow: /rss/.orig$
+Disallow: /rss/*.orig
+Crawl-delay: 5
+
+# ── Collecteurs LLM — allowlist Octane uniquement ─────────────────
+# La règle Allow plus spécifique (path complet) prime sur le Disallow racine
+# pour les agents qui respectent la spec étendue Google/OpenAI.
+
+User-agent: GPTBot
+Allow: /forge-octane.html
+Allow: /llms.txt
+Allow: /octane-og.png
+Disallow: /
+
+User-agent: ChatGPT-User
+Allow: /forge-octane.html
+Allow: /llms.txt
+Disallow: /
+
+User-agent: OAI-SearchBot
+Allow: /forge-octane.html
+Allow: /llms.txt
+Disallow: /
+
+User-agent: anthropic-ai
+Allow: /forge-octane.html
+Allow: /llms.txt
+Disallow: /
+
+User-agent: ClaudeBot
+Allow: /forge-octane.html
+Allow: /llms.txt
+Disallow: /
+
+User-agent: Claude-Web
+Allow: /forge-octane.html
+Allow: /llms.txt
+Disallow: /
+
+User-agent: PerplexityBot
+Allow: /forge-octane.html
+Allow: /llms.txt
+Disallow: /
+
+User-agent: Google-Extended
+Allow: /forge-octane.html
+Allow: /llms.txt
+Disallow: /
+
+# ── LLM crawlers bloqués sans allowlist (sources d'entraînement opaques) ──
+User-agent: CCBot
+Disallow: /
+
+# ── Bots scrapers/SEO non souhaités ──────────────────────────────
+User-agent: Bytespider
+Disallow: /
+
+User-agent: ImagesiftBot
+Disallow: /
+
+User-agent: Diffbot
+Disallow: /
+
+User-agent: Omgili
+Disallow: /
+
+User-agent: FacebookBot
+Disallow: /
+
+User-agent: SemrushBot
+Disallow: /
+
+User-agent: AhrefsBot
+Disallow: /
+
+User-agent: MJ12bot
+Disallow: /
+
+User-agent: DotBot
+Disallow: /
+
+User-agent: PetalBot
+Disallow: /
+
+Sitemap: https://aegis-forge.fr/sitemap.xml

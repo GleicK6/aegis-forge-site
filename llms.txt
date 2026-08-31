@@ -1,0 +1,32 @@
+# AEGIS Forge
+
+> Atelier d'apps souveraines pour collectivités territoriales et grand public. Hébergement et stockage 100 % UE.
+
+## À propos
+
+AEGIS Forge conçoit des outils numériques pour les collectivités locales (communes, EPCI) et publie sous la même marque des apps utilitaires grand public. Une exigence stricte de souveraineté s'applique à l'ensemble : conformité CNIL/RGPD native, hébergement en France (Scaleway, Paris), aucun cloud nord-américain, données exportables.
+
+## Apps actives
+
+### Octane — Prix Carburant
+- Page : [forge-octane.html](forge-octane.html)
+- Description : application mobile Android qui compare en temps réel les prix du carburant aux stations-service environnantes. Couverture France, Luxembourg, Espagne, Italie. Cible : automobilistes frontaliers et conducteurs cherchant à optimiser le coût d'un plein ou la rentabilité d'un détour.
+- Fonctionnalités : recherche géolocalisée, carte des stations, recherche transfrontalière, calcul de rentabilité du détour en euros, alertes prix personnalisées, rappels au rythme des pleins, votes communautaires sur les nuisances (publicités sonores, attentes excessives).
+- Modèle : gratuit pour les fonctions de base, Premium à 1,99 EUR/mois ou 14,99 EUR/an (calcul de détour, alertes, rappels, recherche transfrontalière).
+- Sources de données : data.economie.gouv.fr (France), petrol.lu (Luxembourg), MITECO (Espagne), MIMIT (Italie). Toutes des sources publiques officielles.
+- Stack : React Native (Expo), Supabase (PostgreSQL + PostGIS), TypeScript, NativeWind.
+- Téléchargement : [Google Play Store](https://play.google.com/store/apps/details?id=com.pleinmalin.app)
+
+### AGORA — outil municipal
+- Page : [aegis-agora.html](aegis-agora.html)
+- Description : application web de gestion pour les services techniques des communes et EPCI : planning des agents, suivi du matériel, gestion de la flotte de véhicules, congés. Une seule interface pour le quotidien des services. Multi-tenant. En release candidate, pilote en commune partenaire depuis mai 2026.
+- Souveraineté : hébergement Scaleway (France), stockage Supabase EU, aucune dépendance à un cloud nord-américain, export complet des données sans frais.
+
+## Pages institutionnelles
+
+- Atelier : [aegis-forge.html](aegis-forge.html)
+- Mentions légales et confidentialité : [mentions.html](mentions.html)
+
+## Politique d'accès des crawlers IA
+
+Les collecteurs LLM identifiés (GPTBot, ChatGPT-User, OAI-SearchBot, ClaudeBot, Claude-Web, anthropic-ai, PerplexityBot, Google-Extended) ont accès uniquement à la page Octane et à ce fichier (voir /robots.txt). Le reste du site reste fermé aux crawlers d'entraînement. Cette politique vise à donner de la visibilité à Octane dans les réponses IA tout en préservant le travail éditorial des autres pages.

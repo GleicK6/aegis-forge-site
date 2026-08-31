@@ -1,0 +1,224 @@
+/* ─────────────────────────────────────────────────────────────
+   AEGIS — Modal de contact (Formspree)
+   Charte neutre, herite des couleurs du parent via variables CSS
+   avec fallback noir/blanc institutionnel.
+   ───────────────────────────────────────────────────────────── */
+
+.aegis-cm {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: none;
+  font-family: inherit;
+}
+
+.aegis-cm[aria-hidden="false"] {
+  display: block;
+}
+
+.aegis-cm__overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  animation: aegis-cm-fade 200ms ease-out;
+}
+
+.aegis-cm__dialog {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: min(560px, calc(100vw - 32px));
+  max-height: calc(100vh - 64px);
+  overflow-y: auto;
+  background: var(--surf, #fff);
+  color: var(--ink, #111);
+  border: 1px solid var(--ink, #111);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  padding: 32px;
+  animation: aegis-cm-slide 250ms ease-out;
+}
+
+@media (max-width: 600px) {
+  .aegis-cm__dialog {
+    padding: 24px 20px;
+  }
+}
+
+.aegis-cm__close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 36px;
+  height: 36px;
+  background: transparent;
+  border: 1px solid transparent;
+  color: inherit;
+  cursor: pointer;
+  font-size: 24px;
+  line-height: 1;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.aegis-cm__close:hover,
+.aegis-cm__close:focus-visible {
+  border-color: currentColor;
+  outline: none;
+}
+
+.aegis-cm__header {
+  margin-bottom: 20px;
+}
+
+.aegis-cm__eyebrow {
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  opacity: 0.7;
+  display: block;
+  margin-bottom: 6px;
+}
+
+.aegis-cm__title {
+  font-size: 22px;
+  font-weight: 600;
+  margin: 0 0 4px 0;
+  line-height: 1.25;
+}
+
+.aegis-cm__lede {
+  font-size: 14px;
+  line-height: 1.5;
+  margin: 0;
+  opacity: 0.8;
+}
+
+.aegis-cm__form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.aegis-cm__field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.aegis-cm__label {
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+.aegis-cm__input,
+.aegis-cm__textarea {
+  font: inherit;
+  font-size: 14px;
+  padding: 10px 12px;
+  border: 1px solid var(--ink, #111);
+  background: var(--surf, #fff);
+  color: inherit;
+  border-radius: 0;
+}
+
+.aegis-cm__input:focus-visible,
+.aegis-cm__textarea:focus-visible {
+  outline: 2px solid var(--accent, #000);
+  outline-offset: -2px;
+}
+
+.aegis-cm__textarea {
+  min-height: 120px;
+  resize: vertical;
+  font-family: inherit;
+}
+
+.aegis-cm__actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 4px;
+}
+
+.aegis-cm__submit {
+  font: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  padding: 12px 22px;
+  background: var(--ink, #111);
+  color: var(--surf, #fff);
+  border: 1px solid var(--ink, #111);
+  cursor: pointer;
+}
+
+.aegis-cm__submit:hover:not(:disabled),
+.aegis-cm__submit:focus-visible {
+  background: transparent;
+  color: var(--ink, #111);
+  outline: none;
+}
+
+.aegis-cm__submit:disabled {
+  opacity: 0.5;
+  cursor: wait;
+}
+
+.aegis-cm__fallback {
+  font-size: 12px;
+  opacity: 0.7;
+  margin: 0;
+}
+
+.aegis-cm__fallback a {
+  color: inherit;
+  text-decoration: underline;
+}
+
+.aegis-cm__status {
+  margin: 12px 0 0 0;
+  padding: 12px 14px;
+  font-size: 13px;
+  line-height: 1.4;
+  border-left: 3px solid currentColor;
+  background: rgba(0, 0, 0, 0.04);
+  display: none;
+}
+
+.aegis-cm__status--ok {
+  color: #0a6e2c;
+  display: block;
+}
+
+.aegis-cm__status--err {
+  color: #a01818;
+  display: block;
+}
+
+@keyframes aegis-cm-fade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes aegis-cm-slide {
+  from { opacity: 0; transform: translate(-50%, -45%); }
+  to { opacity: 1; transform: translate(-50%, -50%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .aegis-cm__overlay,
+  .aegis-cm__dialog {
+    animation: none;
+  }
+}
+
+body.aegis-cm-open {
+  overflow: hidden;
+}
