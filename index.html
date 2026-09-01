@@ -10,7 +10,7 @@
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), payment=(), usb=(), accelerometer=(), gyroscope=()">
 
-<meta name="robots" content="index, follow, noimageindex, max-snippet:160, max-image-preview:standard">
+<meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
 
 <title>AEGIS Forge — Atelier de développement · Applications métier</title>
 <meta name="description" content="AEGIS Forge — atelier de développement pour collectivités et grand public. Code hébergé en Europe, livraison validée en charge réelle.">
@@ -19,8 +19,13 @@
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="AEGIS Forge">
 <meta property="og:locale" content="fr_FR">
+<meta property="og:image" content="https://aegis-forge.fr/rss/og-forge.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="AEGIS Forge — atelier d'applications souveraines pour les collectivités">
 
-<meta name="twitter:card" content="summary">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://aegis-forge.fr/rss/og-forge.png">
 <meta name="twitter:title" content="AEGIS Forge — Atelier de développement européen">
 <meta name="twitter:description" content="Outils métier pour collectivités et applications utilitaires grand public. Hébergement européen, données exportables.">
 
@@ -44,7 +49,7 @@
 <script src="_shared/contact-modal.js" defer></script>
 <link rel="stylesheet" href="_shared/lightbox.css">
 <script src="_shared/lightbox.js" defer></script>
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect x='6' y='6' width='20' height='20' fill='none' stroke='%23d96a18' stroke-width='2'/><rect x='12' y='12' width='8' height='8' fill='none' stroke='%23d96a18' stroke-width='1.5' transform='rotate(45 16 16)'/></svg>">
+<link rel="icon" type="image/webp" href="rss/aegis-forge-icon.webp">
 
 <style>
 /* ─── HERO ─── */
@@ -424,7 +429,7 @@
   font-family: var(--mono); font-size: 11.5px;
   letter-spacing: 0.14em; text-transform: uppercase;
   color: var(--ink); font-weight: 600;
-  display: inline-flex; align-items: center; gap: 8px;
+  display: inline-flex; align-items: center; gap: 8px; min-height: 44px;
   transition: gap .15s;
 }
 .real-link::after { content: '→'; font-size: 13px; }
@@ -433,6 +438,63 @@
   font-family: var(--mono); font-size: 10px;
   letter-spacing: 0.14em; color: var(--ink-4);
   text-transform: uppercase;
+}
+
+/* ─── RETOURS CLIENTS ─── */
+.feedback-sec { padding: 96px 0 120px; border-top: 1px solid var(--line); }
+.feedback-intro {
+  max-width: 720px;
+  margin: 0 0 36px;
+  font-family: var(--sans);
+  font-size: 17px;
+  line-height: 1.65;
+  color: var(--ink-2);
+}
+.feedback-panel {
+  display: grid;
+  grid-template-columns: 1.15fr 1fr;
+  gap: 32px;
+  padding: 32px;
+  background: var(--surf);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+}
+.feedback-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--sig);
+  font-weight: 600;
+}
+.feedback-status::before { content: ''; width: 20px; height: 1.5px; background: currentColor; }
+.feedback-panel h3 {
+  margin-top: 18px;
+  font-family: var(--display);
+  font-size: 25px;
+  line-height: 1.12;
+  letter-spacing: -.025em;
+}
+.feedback-panel p { margin-top: 14px; color: var(--ink-2); line-height: 1.6; }
+.feedback-rules {
+  display: grid;
+  gap: 12px;
+  align-content: start;
+  padding: 4px 0 4px 28px;
+  border-left: 1px solid var(--line-2);
+  list-style: none;
+}
+.feedback-rules li {
+  position: relative;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--ink-2);
+}
+.feedback-rules li::before {
+  content: '—'; position: absolute; left: -20px; color: var(--sig); font-weight: 600;
 }
 
 /* ─── STACK ─── */
@@ -572,7 +634,7 @@
 .contact-mail {
   display: inline-flex; align-items: center; gap: 12px;
   padding: 16px 26px;
-  background: var(--sig); color: #0a1628;
+  background: var(--sig); color: var(--surf);
   font-family: var(--mono); font-size: 13px;
   letter-spacing: 0.1em; font-weight: 600;
   border-radius: 4px;
@@ -594,17 +656,32 @@
 @media (max-width: 920px) {
   .fhero-grid { grid-template-columns: 1fr; }
   .real-grid { grid-template-columns: 1fr; }
+  .feedback-panel { grid-template-columns: 1fr; gap: 24px; }
+  .feedback-rules { padding: 24px 0 0; border-left: none; border-top: 1px solid var(--line-2); }
   .stack-grid { grid-template-columns: 1fr 1fr; }
   .aud-grid { grid-template-columns: 1fr; }
   .eng-row { grid-template-columns: 1fr; gap: 12px; }
   .kpi { grid-template-columns: 1fr 1fr; }
+  .kpi-cell:nth-child(2n) { border-right: none; }
+  .kpi-cell:last-child { grid-column: 1 / -1; border-top: 1px solid var(--line-2); }
+  .stack-cell:nth-child(2n) { border-right: none; }
+  .stack-cell:nth-child(-n+2) { border-top: none; }
+  .stack-cell:nth-child(n+3) { border-top: 1px solid var(--line-2); }
   .contact-grid { grid-template-columns: 1fr; gap: 40px; }
   .contact { margin: 0 -28px; padding-left: 28px; padding-right: 28px; }
 }
 @media (max-width: 600px) {
+  .fhero h1 { font-size: clamp(42px, 13vw, 52px); }
+  .fhero-pre { gap: 8px; letter-spacing: 0.1em; }
+  .fhero-pre::before { width: 18px; }
   .kpi { grid-template-columns: 1fr; }
+  .kpi-cell { border-right: none; border-bottom: 1px solid var(--line-2); }
+  .kpi-cell:last-child { grid-column: auto; border-bottom: none; }
   .stack-grid { grid-template-columns: 1fr; }
   .stack-cell { border-right: none; }
+  .stack-cell:not(:first-child) { border-top: 1px solid var(--line-2); }
+  .stack-cell:first-child { border-top: none; }
+  .real-foot { align-items: flex-start; flex-direction: column; gap: 10px; }
   .contact { margin: 0 -20px; padding-left: 20px; padding-right: 20px; }
 }
 
@@ -618,6 +695,8 @@
 </head>
 <body data-screen-label="Forge">
 
+<a class="skip-link" href="#main-content">Aller au contenu principal</a>
+
 <div class="shell">
 
   <!-- NAV -->
@@ -626,35 +705,37 @@
       <img src="rss/aegis-forge-icon.webp" alt="" width="20" height="24">
       <span class="nav-mark-txt">AEGIS<small class="sig-c">// FORGE</small></span>
     </a>
-    <nav class="nav-links">
-      <a href="aegis-forge.html" class="active"><span>00</span>Forge</a>
+    <nav class="nav-links" aria-label="Navigation principale">
+      <a href="aegis-forge.html" class="active" aria-current="page"><span>00</span>Forge</a>
       <a href="aegis-agora.html"><span>01</span>AGORA</a>
       <a href="forge-octane.html"><span>02</span>Octane</a>
       <a href="actualites.html"><span>03</span>Actualités</a>
       <a href="#contact"><span>04</span>Contact</a>
     </nav>
-    <a href="#contact" class="nav-cta">Ouvrir un canal</a>
+    <a href="#contact" class="nav-cta">Parler du projet</a>
   </header>
+
+  <main id="main-content">
 
   <!-- HERO -->
   <section class="fhero" data-screen-label="01 Hero">
     <div class="fhero-grid">
       <div class="rv">
-        <div class="fhero-pre">Atelier de développement · Applications métier &amp; grand public</div>
+        <div class="fhero-pre">Atelier de développement · Collectivités &amp; équipes terrain</div>
         <h1>
-          Applications <span class="acc">métier</span><br>
-          pour collectivités<br>
-          et <span class="ghost">grand public</span>.
+          Des applications<br>
+          <span class="acc">métier</span>, pensées<br>
+          pour le <span class="ghost">terrain</span>.
         </h1>
         <p class="fhero-lede">
-          <strong>AEGIS Forge</strong> est un atelier de développement français. Outils métier pour les collectivités, applications utilitaires pour le grand public.
+          <strong>AEGIS Forge</strong> conçoit des outils sur mesure pour les collectivités, les petites équipes et les services utiles au public : simples à adopter, sûrs à exploiter et reprenables dans le temps.
         </p>
         <p class="fhero-lede">
           Méthode standardisée : <em>cadrage</em> avec les futurs utilisateurs, livraisons jalonnées selon un cycle de livraison standard (alpha → bêta → mise en service), suivi en cours de projet selon les besoins.
         </p>
         <div class="fhero-actions">
-          <a href="#realisations" class="btn btn-sig">Voir les réalisations</a>
-          <a href="#contact" class="btn btn-outline">Ouvrir un canal</a>
+          <a href="#realisations" class="btn btn-sig">Voir des cas concrets</a>
+          <a href="#contact" class="btn btn-outline">Échanger sur votre besoin</a>
         </div>
       </div>
 
@@ -703,7 +784,7 @@
   <section class="kpi rv">
     <div class="kpi-cell">
       <div class="kpi-num">2</div>
-      <div class="kpi-lbl"><b>Produits en service</b> · AGORA &amp; Octane</div>
+      <div class="kpi-lbl"><b>Produits publics</b> · AGORA &amp; Octane</div>
     </div>
     <div class="kpi-cell">
       <div class="kpi-num">100<span>%</span></div>
@@ -719,33 +800,33 @@
   <section class="meth-sec" id="methode" data-screen-label="02 Méthode">
     <div class="section-head rv">
       <div class="section-num">§ 02 / Méthode FORGE</div>
-      <h2 class="section-title">Un <span class="sig-c">protocole</span>,<br>écrit.</h2>
-      <div class="section-meta">PROTOCOLE INTERNE<br>SOCLE DE LIVRAISON</div>
+      <h2 class="section-title">Du besoin terrain<br>à l'<span class="sig-c">outil utilisé</span>.</h2>
+      <div class="section-meta">DU CADRAGE<br>À LA MISE EN SERVICE</div>
     </div>
 
     <div class="meth-intro rv">
-      <p>Un projet démarre par un <strong>cadrage écrit</strong>, des décisions d'architecture tracées et des garde-fous documentés. La méthode tient sur les mêmes principes qu'un dispositif opérationnel : phases nommées, traçabilité des décisions, anticipation des défaillances.</p>
+      <p>Un projet ne se limite pas à livrer du code. Il doit donner à une équipe un outil qu'elle sait utiliser, faire évoluer et transmettre. Chaque mission produit donc un <strong>périmètre clair</strong>, un outil testé avec ses futurs utilisateurs et les repères nécessaires à sa mise en service.</p>
     </div>
 
     <div class="eng rv">
       <div class="eng-head">
-        <span>// Trois piliers structurants</span>
-        <span><b>3 / 3</b> · socle</span>
+        <span>// Trois livrables qui font avancer le projet</span>
+        <span><b>3 / 3</b> · étapes</span>
       </div>
       <div class="eng-row">
         <div class="eng-num">i</div>
-        <div class="eng-t">Cadrage avant code</div>
-        <div class="eng-b">Brief écrit, architecture délibérée en amont, décisions techniques tracées et datées. Chaque choix structurant laisse une trace consultable au cours de la vie du projet.</div>
+        <div class="eng-t">Un périmètre lisible</div>
+        <div class="eng-b">Le cadrage transforme le besoin en priorités, parcours utilisateurs et critères de réussite. Les choix structurants sont rédigés avant le développement, afin que chacun sache ce qui est livré et pourquoi.</div>
       </div>
       <div class="eng-row">
         <div class="eng-num">ii</div>
-        <div class="eng-t">Garde-fous explicites</div>
-        <div class="eng-b">Règles de sécurité documentées, audits automatisés intégrés au cycle de livraison, gestion des dépendances tracée. Ces règles sont fixées au cadrage du projet et s'appliquent à chaque mise en service.</div>
+        <div class="eng-t">Une version à tester</div>
+        <div class="eng-b">Les utilisateurs concernés manipulent une version concrète avant la mise en service. Leurs retours servent à ajuster les écrans, les règles de gestion et les cas qui comptent vraiment au quotidien.</div>
       </div>
       <div class="eng-row">
         <div class="eng-num">iii</div>
-        <div class="eng-t">Résilience par défaut</div>
-        <div class="eng-b">Plans de bascule fournisseur, données exportables, dépendances cartographiées. Ces éléments sont définis à la conception du projet et tenus à jour pendant la vie de l'outil.</div>
+        <div class="eng-t">Un passage en service maîtrisé</div>
+        <div class="eng-b">La mise en service est préparée : données, accès, documentation utile et suivi des premiers usages. Le code et les données restent reprenables afin que l'outil puisse durer au-delà du projet.</div>
       </div>
     </div>
 
@@ -803,8 +884,8 @@
   <!-- RÉALISATIONS -->
   <section class="real-sec" id="realisations" data-screen-label="04 Réalisations">
     <div class="section-head rv">
-      <div class="section-num">§ 04 / Réalisations en service</div>
-      <h2 class="section-title">Deux <span class="sig-c">produits publics</span>,<br>deux audiences distinctes.</h2>
+      <div class="section-num">§ 04 / Réalisations</div>
+      <h2 class="section-title">Deux <span class="sig-c">outils concrets</span>,<br>deux usages distincts.</h2>
       <div class="section-meta">FG-01 · AGORA<br>FG-02 · OCTANE</div>
     </div>
 
@@ -813,16 +894,16 @@
       <article class="real rv">
         <div class="real-head">
           <div class="real-id">FG-01 · AGORA</div>
-          <span class="chip live">En service</span>
+          <span class="chip dev">Pilote en cours</span>
         </div>
         <div class="real-vis real-vis-shot is-desktop">
-          <img src="rss/agora-screen-planning.png" alt="AGORA — vue planning mensuel en production" loading="lazy" decoding="async" data-lightbox>
+          <img src="rss/agora-screen-planning.webp" alt="AGORA — vue du planning mensuel" width="1280" height="1140" loading="lazy" decoding="async" data-lightbox>
         </div>
         <div class="real-body">
           <div class="real-cat">Outil municipal · Multi-commune</div>
           <div class="real-name">AGORA</div>
           <div class="real-tagline">// Planning · Matériel · Véhicules · Congés</div>
-          <p class="real-desc">L'outil municipal du quotidien — planning des agents, suivi matériel, flotte de véhicules, gestion des congés. Chaque commune voit uniquement ses données. En release candidate dans une commune partenaire depuis mai 2026.</p>
+          <p class="real-desc">L'outil municipal du quotidien — planning des agents, suivi du matériel, flotte de véhicules, gestion des congés. Chaque commune voit uniquement ses données. La version pilote est testée dans une commune partenaire depuis mai 2026.</p>
           <div class="real-foot">
             <a href="aegis-agora.html" class="real-link">Voir la fiche</a>
             <span class="real-tech">Web · React · Postgres</span>
@@ -837,9 +918,9 @@
         </div>
         <div class="real-vis">
           <div class="real-vis-octane-phones">
-            <img src="rss/octane-store-map.png" alt="Octane — carte des stations colorées par prix" loading="lazy" decoding="async" data-lightbox>
-            <img src="rss/octane-store-search.png" alt="Octane — recherche par carburant et rayon" loading="lazy" decoding="async" data-lightbox>
-            <img src="rss/octane-store-detour.png" alt="Octane — calculateur de rentabilité du détour" loading="lazy" decoding="async" data-lightbox>
+            <img src="rss/octane-store-map.webp" alt="Octane — carte des stations colorées par prix" width="1242" height="2208" loading="lazy" decoding="async" data-lightbox>
+            <img src="rss/octane-store-search.webp" alt="Octane — recherche par carburant et rayon" width="1242" height="2208" loading="lazy" decoding="async" data-lightbox>
+            <img src="rss/octane-store-detour.webp" alt="Octane — calculateur de rentabilité du détour" width="1242" height="2208" loading="lazy" decoding="async" data-lightbox>
           </div>
         </div>
         <div class="real-body">
@@ -858,9 +939,42 @@
   </section>
 
   <!-- STACK -->
-  <section class="stack-sec" id="stack" data-screen-label="05 Stack">
+  <section class="feedback-sec" id="retours" data-screen-label="05 Retours clients">
     <div class="section-head rv">
-      <div class="section-num">§ 05 / Outils d'atelier</div>
+      <div class="section-num">§ 05 / Retours clients</div>
+      <h2 class="section-title">Des retours<br><span class="sig-c">vérifiables</span>.</h2>
+      <div class="section-meta">PUBLIÉS<br>APRÈS ACCORD</div>
+    </div>
+
+    <p class="feedback-intro rv">La confiance ne se simule pas. Les premiers témoignages seront publiés ici après la fin des projets, avec l'accord explicite des personnes et organisations concernées.</p>
+
+    <div class="feedback-panel rv">
+      <div>
+        <div class="feedback-status">Espace en préparation</div>
+        <h3>Les premiers retours arriveront du terrain.</h3>
+        <p>AEGIS Forge ne publie ni avis fictif, ni note fabriquée. En attendant les premiers retours autorisés, les réalisations et leur état d'avancement restent présentés de façon factuelle.</p>
+      </div>
+      <ul class="feedback-rules">
+        <li>Le contexte du projet et le rôle de la personne sont précisés.</li>
+        <li>Chaque citation est relue et validée avant publication.</li>
+        <li>Un retour négatif ou nuancé n'est pas écarté pour embellir la vitrine.</li>
+      </ul>
+    </div>
+
+    <!--
+      Gabarit de témoignage à dupliquer après validation écrite du client.
+      Ne pas afficher de note, de citation ou d'identité sans accord explicite.
+      <figure class="testimonial">
+        <blockquote>« Citation validée par le client. »</blockquote>
+        <figcaption>Prénom NOM · Fonction · Organisation · Projet concerné</figcaption>
+      </figure>
+    -->
+  </section>
+
+  <!-- STACK -->
+  <section class="stack-sec" id="stack" data-screen-label="06 Stack">
+    <div class="section-head rv">
+      <div class="section-num">§ 06 / Outils d'atelier</div>
       <h2 class="section-title">Boîte <span class="sig-c">restreinte</span>,<br>maîtrise complète.</h2>
       <div class="section-meta">8 BRIQUES<br>SPÉC. ATELIER</div>
     </div>
@@ -916,9 +1030,9 @@
   </section>
 
   <!-- AUDIENCES -->
-  <section class="aud-sec" id="audiences" data-screen-label="06 Audiences">
+  <section class="aud-sec" id="audiences" data-screen-label="07 Audiences">
     <div class="section-head rv">
-      <div class="section-num">§ 06 / À qui s'adresse Forge</div>
+      <div class="section-num">§ 07 / À qui s'adresse Forge</div>
       <h2 class="section-title">Trois <span class="sig-c">profils</span><br>d'interlocuteurs.</h2>
       <div class="section-meta">A · B · C<br>FORMAT ATELIER</div>
     </div>
@@ -943,28 +1057,30 @@
   </section>
 
   <!-- CONTACT -->
-  <section class="contact" id="contact" data-screen-label="07 Contact">
+  <section class="contact" id="contact" data-screen-label="08 Contact">
     <div class="contact-inner">
       <div class="contact-grid">
         <div class="rv">
-          <div class="contact-pre">§ 07 / Ouvrir un canal</div>
-          <h2>Un outil à <em>construire</em>&nbsp;?<br>Cadrage initial <em>sans engagement.</em></h2>
+          <div class="contact-pre">§ 08 / Ouvrir un canal</div>
+          <h2>Un outil à <em>construire</em>&nbsp;?<br>Parlons de votre <em>besoin réel.</em></h2>
           <p class="contact-lede">Un temps de cadrage initial pour qualifier le besoin et préciser le périmètre du projet. Au terme du cadrage, devis détaillé si le projet se poursuit, ou arrêt sans facture.</p>
           <div class="contact-actions">
-            <a href="mailto:contact@aegis-forge.fr" class="contact-mail js-aegis-contact">Nous contacter</a>
+            <a href="mailto:contact@aegis-forge.fr" class="contact-mail js-aegis-contact">Échanger sur le projet</a>
           </div>
         </div>
         <div class="contact-meta rv d1">
           <b>Zones</b><span>France · télétravail possible</span>
           <b>Atelier</b><span>France métropolitaine</span>
           <b>SIRET</b><span>879 190 080 00025</span>
-          <b>RC pro</b><span>Décennale développement souscrite</span>
+          <b>RC pro</b><span>Souscrite auprès de Hiscox</span>
           <b>Hébergement</b><span>Europe · FRA / PAR</span>
           <b>Légal</b><span><a href="mentions.html">Mentions</a> · <a href="mentions.html#confidentialite">Confidentialité</a></span>
         </div>
       </div>
     </div>
   </section>
+
+  </main>
 
 </div>
 
@@ -974,7 +1090,7 @@
     <img src="rss/aegis-forge-icon.webp" alt="AEGIS Forge" width="30" height="36" class="foot-logo">
     <span>© <b>2025—2026</b> · AEGIS Forge</span>
   </div>
-  <div>SHEET 07 / 07 · <b>END OF DOCUMENT</b></div>
+  <div>SHEET 08 / 08 · <b>END OF DOCUMENT</b></div>
   <div class="foot-ver"><span class="v">v1.1</span> · REV. <b>2026.05.15</b> · BUILD r04</div>
 </footer>
 

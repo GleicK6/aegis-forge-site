@@ -1,18 +1,45 @@
 # AEGIS — politique de crawl
 # Site statique vitrine. Indexation autorisée par les moteurs légitimes.
-# Les collecteurs LLM sont bloqués par défaut SAUF sur la page Octane et
-# son llms.txt — Octane a besoin d'une visibilité IA pour l'acquisition.
+#
+# Doctrine : la citation est ouverte, l'entraînement reste fermé.
+# Depuis février 2026, OpenAI et Anthropic exposent des user-agents distincts
+# pour l'entraînement, l'indexation de recherche et le fetch déclenché par un
+# utilisateur. On distingue les trois au lieu de tout bloquer :
+#   - recherche + fetch utilisateur : autorisés sur tout le site (visibilité)
+#   - entraînement de modèles       : restreint à la page Octane (acquisition)
+#   - collecteurs opaques / SEO     : bloqués
 # Côté aegis-resilience.com, l'allowlist Octane est sans effet (page absente).
 
 User-agent: *
 Allow: /
 Disallow: /rss/.orig$
 Disallow: /rss/*.orig
-Crawl-delay: 5
 
-# ── Collecteurs LLM — allowlist Octane uniquement ─────────────────
+# ── Recherche IA & fetch utilisateur — accès complet ──────────────
+# Ces agents alimentent les réponses citées (ChatGPT Search, Claude,
+# Perplexity). Les bloquer revient à se rendre invisible sur le canal
+# où les collectivités formulent leurs recherches.
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: Claude-SearchBot
+Allow: /
+
+User-agent: Claude-User
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+# ── Entraînement de modèles — allowlist Octane uniquement ─────────
 # La règle Allow plus spécifique (path complet) prime sur le Disallow racine
 # pour les agents qui respectent la spec étendue Google/OpenAI.
+# Octane a besoin d'une visibilité IA pour l'acquisition ; le travail
+# éditorial des autres pages reste hors des corpus d'entraînement.
 
 User-agent: GPTBot
 Allow: /forge-octane.html
@@ -20,22 +47,14 @@ Allow: /llms.txt
 Allow: /octane-og.png
 Disallow: /
 
-User-agent: ChatGPT-User
-Allow: /forge-octane.html
-Allow: /llms.txt
-Disallow: /
-
-User-agent: OAI-SearchBot
-Allow: /forge-octane.html
-Allow: /llms.txt
-Disallow: /
-
-User-agent: anthropic-ai
-Allow: /forge-octane.html
-Allow: /llms.txt
-Disallow: /
-
 User-agent: ClaudeBot
+Allow: /forge-octane.html
+Allow: /llms.txt
+Disallow: /
+
+# Noms hérités des anciennes documentations Anthropic — conservés par
+# précaution tant que d'anciens clients les émettent encore.
+User-agent: anthropic-ai
 Allow: /forge-octane.html
 Allow: /llms.txt
 Disallow: /
@@ -45,11 +64,16 @@ Allow: /forge-octane.html
 Allow: /llms.txt
 Disallow: /
 
-User-agent: PerplexityBot
+User-agent: meta-externalagent
 Allow: /forge-octane.html
 Allow: /llms.txt
 Disallow: /
 
+# Google-Extended couvre Gemini et le grounding Vertex AI. Google ne sépare
+# pas entraînement et citation sur cet agent : l'ouvrir donnerait des
+# citations Gemini au prix de l'entraînement. Choix actuel = restreint à
+# Octane, cohérent avec la ligne ci-dessus. Passer en "Allow: /" si la
+# visibilité Gemini devient prioritaire.
 User-agent: Google-Extended
 Allow: /forge-octane.html
 Allow: /llms.txt

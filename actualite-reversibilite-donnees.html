@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Réversibilité des données — vos données doivent pouvoir partir avec vous · AEGIS Forge</title>
+
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:; connect-src 'self' https://formspree.io; frame-ancestors 'none'; form-action 'self' https://formspree.io; base-uri 'self'; object-src 'none'; upgrade-insecure-requests">
+<meta http-equiv="X-Content-Type-Options" content="nosniff">
+<meta http-equiv="X-Frame-Options" content="DENY">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), payment=(), usb=(), accelerometer=(), gyroscope=()">
+<meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
+<meta name="description" content="La bonne question à poser à un éditeur n'est pas « que fait votre outil ? » mais « comment en sort-on ? ». Format, périmètre et coût de l'export : les trois points qui se vérifient avant signature.">
+
+<!-- SEO : Open Graph, Twitter Card, Schema.org BlogPosting + BreadcrumbList.
+     URL canonique et og:url sont injectées au build par tools/build-sites.mjs. -->
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="AEGIS Forge">
+<meta property="og:title" content="Réversibilité : vos données doivent pouvoir partir avec vous">
+<meta property="og:description" content="La bonne question à poser à un éditeur n'est pas « que fait votre outil ? » mais « comment en sort-on ? ». Format, périmètre et coût de l'export : les trois points qui se vérifient avant signature.">
+<meta property="og:locale" content="fr_FR">
+<meta property="article:published_time" content="2026-04-15">
+<meta property="og:image" content="https://aegis-forge.fr/rss/og-forge.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="AEGIS Forge — atelier d'applications souveraines pour les collectivités">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://aegis-forge.fr/rss/og-forge.png">
+<meta name="twitter:title" content="Réversibilité : vos données doivent pouvoir partir avec vous">
+<meta name="twitter:description" content="La bonne question à poser à un éditeur n'est pas « que fait votre outil ? » mais « comment en sort-on ? ». Format, périmètre et coût de l'export : les trois points qui se vérifient avant signature.">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Réversibilité : vos données doivent pouvoir partir avec vous",
+  "description": "La bonne question à poser à un éditeur n'est pas « que fait votre outil ? » mais « comment en sort-on ? ». Format, périmètre et coût de l'export : les trois points qui se vérifient avant signature.",
+  "datePublished": "2026-04-15",
+  "inLanguage": "fr",
+  "url": "https://aegis-forge.fr/actualite-reversibilite-donnees.html",
+  "image": "https://aegis-forge.fr/rss/og-forge.png",
+  "author": {
+    "@type": "Organization",
+    "name": "AEGIS Forge",
+    "url": "https://aegis-forge.fr/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "AEGIS Forge",
+    "url": "https://aegis-forge.fr/"
+  },
+  "isPartOf": {
+    "@type": "Blog",
+    "name": "Actualités AEGIS Forge",
+    "url": "https://aegis-forge.fr/actualites.html"
+  }
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Forge",
+      "item": "https://aegis-forge.fr/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Actualités",
+      "item": "https://aegis-forge.fr/actualites.html"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Réversibilité : vos données doivent pouvoir partir avec vous",
+      "item": "https://aegis-forge.fr/actualite-reversibilite-donnees.html"
+    }
+  ]
+}
+</script>
+
+<link rel="stylesheet" href="_shared/fonts.css">
+<link rel="stylesheet" href="_shared/operational.css">
+<link rel="stylesheet" href="_shared/contact-modal.css">
+<script src="_shared/contact-modal.js" defer></script>
+<link rel="icon" type="image/webp" href="rss/aegis-forge-icon.webp">
+
+<style>
+/* ─── Article (page-local) ─── */
+.art-wrap { max-width: 780px; margin: 0 auto; padding: 56px 24px 48px; }
+.art-crumb {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  margin-bottom: 26px;
+}
+.art-crumb a { color: var(--sig); text-decoration: none; }
+.art-crumb a:hover { text-decoration: underline; }
+.art-crumb span { margin: 0 8px; color: var(--ink-4); }
+.art-date {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  color: var(--sig);
+  margin-bottom: 12px;
+}
+.art h1 {
+  font-family: var(--display);
+  font-size: clamp(28px, 4.4vw, 40px);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.14;
+  color: var(--ink);
+  margin: 0 0 26px;
+}
+.art p {
+  font-size: 16px;
+  line-height: 1.72;
+  color: var(--ink-2);
+  margin: 0 0 18px;
+}
+.art-rep {
+  margin-top: 34px;
+  padding: 26px 30px;
+  background: var(--surf-2);
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--sig);
+  border-radius: 4px;
+}
+.art-rep h2 {
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--sig);
+  margin: 0 0 14px;
+}
+.art-rep ul { margin: 0; padding-left: 18px; }
+.art-rep li {
+  font-size: 14.5px;
+  line-height: 1.62;
+  color: var(--ink-2);
+  margin-bottom: 9px;
+}
+.art-rep li:last-child { margin-bottom: 0; }
+.art-nav {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 40px;
+  padding-top: 22px;
+  border-top: 1px solid var(--line);
+  font-size: 13.5px;
+}
+.art-nav a { color: var(--ink-2); text-decoration: none; max-width: 46%; }
+.art-nav a:hover { color: var(--sig); }
+.art-nav .art-nav-next { text-align: right; margin-left: auto; }
+@media (max-width: 640px) {
+  .art-rep { padding: 20px 18px; }
+  .art-nav { flex-direction: column; }
+  .art-nav .art-nav-next { text-align: left; margin-left: 0; }
+}
+.news-contact {
+  margin-top: 52px;
+  padding: 34px;
+  background: var(--surf-deep);
+  border-radius: 6px;
+  color: #fff;
+}
+.news-contact h2 {
+  font-family: var(--display);
+  font-size: 24px;
+  font-weight: 700;
+  margin: 0 0 10px;
+}
+.news-contact p {
+  font-size: 14.5px;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.75);
+  margin: 0 0 20px;
+  max-width: 58ch;
+}
+@media (max-width: 640px) {
+  .news-contact { padding: 26px 20px; }
+}
+</style>
+<link rel="canonical" href="https://aegis-forge.fr/actualite-reversibilite-donnees.html">
+<meta property="og:url" content="https://aegis-forge.fr/actualite-reversibilite-donnees.html">
+</head>
+<body>
+
+<a class="skip-link" href="#main-content">Aller au contenu principal</a>
+
+<div class="shell">
+
+  <header class="nav">
+    <a href="aegis-forge.html" class="nav-mark">
+      <img src="rss/aegis-forge-icon.webp" alt="" width="20" height="24">
+      <span class="nav-mark-txt">AEGIS<small class="sig-c">// ACTUALITÉS</small></span>
+    </a>
+    <nav class="nav-links" aria-label="Navigation principale">
+      <a href="aegis-forge.html"><span>00</span>Forge</a>
+      <a href="aegis-agora.html"><span>01</span>AGORA</a>
+      <a href="forge-octane.html"><span>02</span>Octane</a>
+      <a href="actualites.html" class="active" aria-current="location"><span>03</span>Actualités</a>
+      <a href="#contact"><span>04</span>Contact</a>
+    </nav>
+  </header>
+
+  <main class="art-wrap" id="main-content">
+
+    <nav class="art-crumb" aria-label="Fil d'Ariane">
+      <a href="actualites.html">Actualités</a><span>/</span>04 / 2026
+    </nav>
+
+    <article class="art">
+      <div class="art-date">04 / 2026</div>
+      <h1>Réversibilité : vos données doivent pouvoir partir avec vous</h1>
+      <p>La question à poser à tout éditeur de logiciel n'est pas « que fait votre outil ? » mais « comment en sort-on ? ». Un service dont on ne peut pas sortir proprement n'est pas un outil : c'est une dépendance.</p>
+      <p>La réversibilité se vérifie sur trois points concrets. Le format : les données doivent être exportables dans des formats ouverts et documentés — CSV, JSON, formats standards du métier — exploitables sans l'outil d'origine. Le périmètre : l'export doit couvrir toutes les données, pas seulement une partie présentable. Le coût : une clause de réversibilité facturée au prix fort revient à une pénalité de sortie déguisée.</p>
+      <p>Le bon réflexe s'acquiert avant la signature : demander un export d'essai pendant la période de test, et faire figurer la réversibilité dans le contrat plutôt que dans une promesse orale. C'est aussi l'engagement que nous prenons sur nos propres outils : l'export complet des données fait partie du service, sans frais de sortie.</p>
+
+      <aside class="art-rep">
+        <h2>Repères</h2>
+        <ul>
+          <li>L'article 20 du RGPD crée un droit à la portabilité des données, dans un format structuré, couramment utilisé et lisible par machine. Il bénéficie aux personnes concernées, pas à la collectivité en tant que cliente.</li>
+          <li>La réversibilité contractuelle est donc un sujet distinct du droit à la portabilité : elle ne va pas de soi et doit être écrite au contrat.</li>
+          <li>L'article 28 du RGPD impose en revanche au sous-traitant d'effacer ou de restituer les données en fin de prestation. C'est le point d'appui le plus solide en négociation.</li>
+        </ul>
+      </aside>
+    </article>
+
+    <nav class="art-nav" aria-label="Articles adjacents">
+      <a href="actualite-heberger-en-europe.html">&larr; Héberger en Europe n'est pas un détail technique</a>
+      <a class="art-nav-next" href="actualite-ia-services-publics.html">IA dans les services publics : des usages utiles, des garde-fous indispensables &rarr;</a>
+    </nav>
+
+    <section class="news-contact" id="contact">
+      <h2>Une question sur ce sujet ?</h2>
+      <p>L'atelier répond volontiers aux questions des collectivités sur la souveraineté, l'hébergement ou la conformité de leurs outils. Réponse sous 48 h ouvrées.</p>
+      <a href="mailto:contact@aegis-forge.fr" class="contact-mail js-aegis-contact">Nous contacter</a>
+    </section>
+
+  </main>
+
+</div>
+
+<!-- FOOT -->
+<footer class="foot">
+  <div class="foot-brand">
+    <img src="rss/aegis-forge-icon.webp" alt="AEGIS Forge" width="30" height="36" class="foot-logo">
+    <span>&copy; <b>2025&mdash;2026</b> &middot; AEGIS Forge</span>
+  </div>
+  <div>JOURNAL &middot; <b>04 / 2026</b></div>
+  <div class="foot-ver">
+    <span class="v">v1.0</span> &middot; REV. <b>2026.07.26</b> &middot; BUILD r01 &middot;
+    <a href="actualites.html">&uarr; Actualités</a>
+  </div>
+</footer>
+
+</body>
+</html>

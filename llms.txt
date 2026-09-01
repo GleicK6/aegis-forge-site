@@ -20,7 +20,7 @@ AEGIS Forge conçoit des outils numériques pour les collectivités locales (com
 ### AGORA — outil municipal
 - Page : [aegis-agora.html](aegis-agora.html)
 - Description : application web de gestion pour les services techniques des communes et EPCI : planning des agents, suivi du matériel, gestion de la flotte de véhicules, congés. Une seule interface pour le quotidien des services. Multi-tenant. En release candidate, pilote en commune partenaire depuis mai 2026.
-- Souveraineté : hébergement Scaleway (France), stockage Supabase EU, aucune dépendance à un cloud nord-américain, export complet des données sans frais.
+- Hébergement : données stockées chez Supabase en région Frankfurt (Union européenne), application servie depuis une région européenne. Export complet des données sans frais, dans un format ouvert.
 
 ## Pages institutionnelles
 
@@ -29,4 +29,9 @@ AEGIS Forge conçoit des outils numériques pour les collectivités locales (com
 
 ## Politique d'accès des crawlers IA
 
-Les collecteurs LLM identifiés (GPTBot, ChatGPT-User, OAI-SearchBot, ClaudeBot, Claude-Web, anthropic-ai, PerplexityBot, Google-Extended) ont accès uniquement à la page Octane et à ce fichier (voir /robots.txt). Le reste du site reste fermé aux crawlers d'entraînement. Cette politique vise à donner de la visibilité à Octane dans les réponses IA tout en préservant le travail éditorial des autres pages.
+Deux régimes distincts. /robots.txt fait foi ; ce paragraphe en donne la lecture.
+
+- Recherche IA et récupération déclenchée par un utilisateur : accès complet au site (OAI-SearchBot, ChatGPT-User, Claude-SearchBot, Claude-User, PerplexityBot). La citation de nos contenus dans les réponses assistées est recherchée.
+- Entraînement de modèles : accès restreint à la page Octane, à ce fichier et à l'image Open Graph associée (GPTBot, ClaudeBot, anthropic-ai, Claude-Web, Google-Extended, meta-externalagent). Octane a besoin d'une visibilité IA pour l'acquisition ; le travail éditorial des autres pages reste hors des corpus d'entraînement.
+
+Google-Extended ne sépare pas citation et entraînement : il relève du second régime tant que Google n'expose pas d'agent dédié.

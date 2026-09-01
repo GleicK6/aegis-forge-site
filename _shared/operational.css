@@ -35,7 +35,7 @@
   --pri-ghost: rgba(30,58,138,0.08);
 
   /* Orange tactique — signal */
-  --sig:       #d96a18;
+  --sig:       #a84612;
   --sig-2:     #ea7c2a;
   --sig-soft:  #fbe7d0;
   --sig-ghost: rgba(217,106,24,0.10);
@@ -43,7 +43,7 @@
   /* Critique / nominal */
   --crit:      #c43838;
   --crit-soft: #fcdcdc;
-  --ok:        #2d7a4e;
+  --ok:        #236b45;
   --ok-soft:   #d4e9da;
 
   /* Typo */
@@ -54,6 +54,7 @@
   --ease:    cubic-bezier(0.22, 1, 0.36, 1);
 }
 
+html { scroll-behavior: smooth; }
 html, body { background: var(--bg); color: var(--ink); }
 body {
   font-family: var(--sans);
@@ -66,6 +67,28 @@ body {
 a { color: inherit; text-decoration: none; }
 em { font-style: normal; }
 strong { font-weight: 400; }
+
+/* Accessibilité : le focus clavier doit être visible sur chaque parcours. */
+:where(a, button, input, textarea, select, [tabindex]):focus-visible {
+  outline: 3px solid var(--pri-2);
+  outline-offset: 3px;
+}
+
+.skip-link {
+  position: fixed;
+  top: 12px;
+  left: 12px;
+  z-index: 10000;
+  padding: 10px 14px;
+  background: var(--ink);
+  color: var(--surf);
+  border-radius: 4px;
+  font: 600 12px/1 var(--mono);
+  letter-spacing: 0.04em;
+  transform: translateY(-160%);
+  transition: transform .15s var(--ease);
+}
+.skip-link:focus { transform: translateY(0); }
 
 /* ─── Glyphe AEGIS récurrent ─── */
 .glyph {
@@ -122,7 +145,7 @@ strong { font-weight: 400; }
   gap: 32px;
   border-bottom: 1px solid var(--line);
 }
-.nav-mark { display: flex; align-items: center; gap: 12px; color: var(--ink); }
+.nav-mark { display: flex; align-items: center; gap: 12px; min-height: 44px; color: var(--ink); }
 .nav-mark .glyph { color: var(--ink); }
 .nav-mark-txt {
   font-family: var(--display);
@@ -146,9 +169,10 @@ strong { font-weight: 400; }
   font-family: var(--mono); font-size: 11.5px;
   letter-spacing: 0.14em; text-transform: uppercase;
   color: var(--ink-2); font-weight: 500;
+  min-height: 44px;
   padding: 8px 14px;
   border-radius: 4px;
-  display: flex; gap: 8px; align-items: center;
+  display: flex; gap: 8px; align-items: center; justify-content: center;
   transition: all .15s;
 }
 .nav-links a span {
@@ -157,7 +181,7 @@ strong { font-weight: 400; }
 .nav-links a:hover { background: var(--surf); color: var(--ink); }
 .nav-links a.active { color: var(--ink); background: var(--surf); }
 .nav-cta {
-  display: inline-flex; align-items: center; gap: 10px;
+  display: inline-flex; align-items: center; gap: 10px; min-height: 44px;
   padding: 11px 18px;
   background: var(--ink); color: var(--surf);
   font-family: var(--mono); font-size: 11.5px;
@@ -340,7 +364,7 @@ strong { font-weight: 400; }
   text-transform: uppercase;
 }
 .foot b { color: var(--ink); font-weight: 500; }
-.foot a { color: var(--ink-2); transition: color .15s; }
+.foot a { color: var(--ink-2); display: inline-flex; align-items: center; min-height: 24px; transition: color .15s; }
 .foot a:hover { color: var(--ink); }
 .foot > div:nth-child(2) { text-align: center; }
 .foot > div:last-child { text-align: right; }
@@ -517,7 +541,7 @@ strong { font-weight: 400; }
 .contact-mail {
   display: inline-flex; align-items: center; gap: 12px;
   padding: 16px 26px;
-  background: var(--sig); color: #0a1628;
+  background: var(--sig); color: var(--surf);
   font-family: var(--mono); font-size: 13px;
   letter-spacing: 0.1em; font-weight: 600;
   border-radius: 4px;
@@ -549,7 +573,21 @@ strong { font-weight: 400; }
   .shell { padding: 0 28px; }
   .section-head { grid-template-columns: 1fr; gap: 20px; }
   .section-meta { text-align: left; }
-  .nav-links { display: none; }
+  .nav {
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 16px;
+  }
+  .nav-links {
+    display: flex;
+    grid-column: 1 / -1;
+    grid-row: 2;
+    justify-content: flex-start;
+    gap: 4px;
+    overflow-x: auto;
+    padding: 2px 0 4px;
+    scrollbar-width: thin;
+  }
+  .nav-links a { flex: 0 0 auto; }
   .fhero-grid { grid-template-columns: 1fr; gap: 40px; }
   .kpi { grid-template-columns: 1fr 1fr; }
   .contact-grid { grid-template-columns: 1fr; gap: 40px; }
@@ -557,6 +595,22 @@ strong { font-weight: 400; }
 }
 @media (max-width: 600px) {
   .shell { padding: 0 20px; }
+  .nav { padding: 16px 0; }
+  .nav-mark-txt { font-size: 18px; }
+  .nav-mark-txt small { display: none; }
+  .nav-cta { padding: 10px 12px; font-size: 10px; }
+  .nav-links { margin: 0 -4px; padding-left: 4px; padding-right: 4px; }
   .kpi { grid-template-columns: 1fr; }
   .contact { margin: 0 -20px; padding-left: 20px; padding-right: 20px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { scroll-behavior: auto !important; }
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+  }
+  .rv { opacity: 1; transform: none; transition: none; }
 }

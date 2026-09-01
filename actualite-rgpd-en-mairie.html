@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RGPD en mairie — les obligations qui comptent vraiment · AEGIS Forge</title>
+
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:; connect-src 'self' https://formspree.io; frame-ancestors 'none'; form-action 'self' https://formspree.io; base-uri 'self'; object-src 'none'; upgrade-insecure-requests">
+<meta http-equiv="X-Content-Type-Options" content="nosniff">
+<meta http-equiv="X-Frame-Options" content="DENY">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), payment=(), usb=(), accelerometer=(), gyroscope=()">
+<meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
+<meta name="description" content="Registre des traitements, délégué à la protection des données, contrat de sous-traitance, notification des violations : les quatre obligations qui structurent la conformité d'une commune.">
+
+<!-- SEO : Open Graph, Twitter Card, Schema.org BlogPosting + BreadcrumbList.
+     URL canonique et og:url sont injectées au build par tools/build-sites.mjs. -->
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="AEGIS Forge">
+<meta property="og:title" content="RGPD en mairie : les obligations qui comptent vraiment">
+<meta property="og:description" content="Registre des traitements, délégué à la protection des données, contrat de sous-traitance, notification des violations : les quatre obligations qui structurent la conformité d'une commune.">
+<meta property="og:locale" content="fr_FR">
+<meta property="article:published_time" content="2026-02-15">
+<meta property="og:image" content="https://aegis-forge.fr/rss/og-forge.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="AEGIS Forge — atelier d'applications souveraines pour les collectivités">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://aegis-forge.fr/rss/og-forge.png">
+<meta name="twitter:title" content="RGPD en mairie : les obligations qui comptent vraiment">
+<meta name="twitter:description" content="Registre des traitements, délégué à la protection des données, contrat de sous-traitance, notification des violations : les quatre obligations qui structurent la conformité d'une commune.">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "RGPD en mairie : les obligations qui comptent vraiment",
+  "description": "Registre des traitements, délégué à la protection des données, contrat de sous-traitance, notification des violations : les quatre obligations qui structurent la conformité d'une commune.",
+  "datePublished": "2026-02-15",
+  "inLanguage": "fr",
+  "url": "https://aegis-forge.fr/actualite-rgpd-en-mairie.html",
+  "image": "https://aegis-forge.fr/rss/og-forge.png",
+  "author": {
+    "@type": "Organization",
+    "name": "AEGIS Forge",
+    "url": "https://aegis-forge.fr/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "AEGIS Forge",
+    "url": "https://aegis-forge.fr/"
+  },
+  "isPartOf": {
+    "@type": "Blog",
+    "name": "Actualités AEGIS Forge",
+    "url": "https://aegis-forge.fr/actualites.html"
+  }
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Forge",
+      "item": "https://aegis-forge.fr/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Actualités",
+      "item": "https://aegis-forge.fr/actualites.html"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "RGPD en mairie : les obligations qui comptent vraiment",
+      "item": "https://aegis-forge.fr/actualite-rgpd-en-mairie.html"
+    }
+  ]
+}
+</script>
+
+<link rel="stylesheet" href="_shared/fonts.css">
+<link rel="stylesheet" href="_shared/operational.css">
+<link rel="stylesheet" href="_shared/contact-modal.css">
+<script src="_shared/contact-modal.js" defer></script>
+<link rel="icon" type="image/webp" href="rss/aegis-forge-icon.webp">
+
+<style>
+/* ─── Article (page-local) ─── */
+.art-wrap { max-width: 780px; margin: 0 auto; padding: 56px 24px 48px; }
+.art-crumb {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  margin-bottom: 26px;
+}
+.art-crumb a { color: var(--sig); text-decoration: none; }
+.art-crumb a:hover { text-decoration: underline; }
+.art-crumb span { margin: 0 8px; color: var(--ink-4); }
+.art-date {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  color: var(--sig);
+  margin-bottom: 12px;
+}
+.art h1 {
+  font-family: var(--display);
+  font-size: clamp(28px, 4.4vw, 40px);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.14;
+  color: var(--ink);
+  margin: 0 0 26px;
+}
+.art p {
+  font-size: 16px;
+  line-height: 1.72;
+  color: var(--ink-2);
+  margin: 0 0 18px;
+}
+.art-rep {
+  margin-top: 34px;
+  padding: 26px 30px;
+  background: var(--surf-2);
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--sig);
+  border-radius: 4px;
+}
+.art-rep h2 {
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--sig);
+  margin: 0 0 14px;
+}
+.art-rep ul { margin: 0; padding-left: 18px; }
+.art-rep li {
+  font-size: 14.5px;
+  line-height: 1.62;
+  color: var(--ink-2);
+  margin-bottom: 9px;
+}
+.art-rep li:last-child { margin-bottom: 0; }
+.art-nav {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 40px;
+  padding-top: 22px;
+  border-top: 1px solid var(--line);
+  font-size: 13.5px;
+}
+.art-nav a { color: var(--ink-2); text-decoration: none; max-width: 46%; }
+.art-nav a:hover { color: var(--sig); }
+.art-nav .art-nav-next { text-align: right; margin-left: auto; }
+@media (max-width: 640px) {
+  .art-rep { padding: 20px 18px; }
+  .art-nav { flex-direction: column; }
+  .art-nav .art-nav-next { text-align: left; margin-left: 0; }
+}
+.news-contact {
+  margin-top: 52px;
+  padding: 34px;
+  background: var(--surf-deep);
+  border-radius: 6px;
+  color: #fff;
+}
+.news-contact h2 {
+  font-family: var(--display);
+  font-size: 24px;
+  font-weight: 700;
+  margin: 0 0 10px;
+}
+.news-contact p {
+  font-size: 14.5px;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.75);
+  margin: 0 0 20px;
+  max-width: 58ch;
+}
+@media (max-width: 640px) {
+  .news-contact { padding: 26px 20px; }
+}
+</style>
+<link rel="canonical" href="https://aegis-forge.fr/actualite-rgpd-en-mairie.html">
+<meta property="og:url" content="https://aegis-forge.fr/actualite-rgpd-en-mairie.html">
+</head>
+<body>
+
+<a class="skip-link" href="#main-content">Aller au contenu principal</a>
+
+<div class="shell">
+
+  <header class="nav">
+    <a href="aegis-forge.html" class="nav-mark">
+      <img src="rss/aegis-forge-icon.webp" alt="" width="20" height="24">
+      <span class="nav-mark-txt">AEGIS<small class="sig-c">// ACTUALITÉS</small></span>
+    </a>
+    <nav class="nav-links" aria-label="Navigation principale">
+      <a href="aegis-forge.html"><span>00</span>Forge</a>
+      <a href="aegis-agora.html"><span>01</span>AGORA</a>
+      <a href="forge-octane.html"><span>02</span>Octane</a>
+      <a href="actualites.html" class="active" aria-current="location"><span>03</span>Actualités</a>
+      <a href="#contact"><span>04</span>Contact</a>
+    </nav>
+  </header>
+
+  <main class="art-wrap" id="main-content">
+
+    <nav class="art-crumb" aria-label="Fil d'Ariane">
+      <a href="actualites.html">Actualités</a><span>/</span>02 / 2026
+    </nav>
+
+    <article class="art">
+      <div class="art-date">02 / 2026</div>
+      <h1>RGPD en mairie : les obligations qui comptent vraiment</h1>
+      <p>Une commune traite des données personnelles en permanence : état civil, inscriptions scolaires et périscolaires, listes électorales, action sociale, vidéoprotection. Le RGPD ne lui demande pas la perfection ; il lui demande une organisation démontrable.</p>
+      <p>Quatre obligations structurent l'essentiel. Tenir un registre des traitements — la cartographie de ce que la commune fait des données. Désigner un délégué à la protection des données, obligatoire pour tout organisme public, et mutualisable via l'intercommunalité ou le centre de gestion. Encadrer chaque prestataire qui manipule des données par le contrat prévu à l'article 28. Et savoir réagir à une violation : identifier, documenter, et notifier la CNIL sous 72 heures lorsque c'est requis.</p>
+      <p>S'y ajoute un principe transversal : la minimisation. Ne collecter que ce qui est nécessaire, ne conserver que le temps utile, n'ouvrir l'accès qu'aux agents qui en ont besoin. La plupart des difficultés rencontrées par les communes viennent moins d'une mauvaise volonté que d'outils qui ne permettent pas d'appliquer ces principes simplement — c'est précisément là que le choix des logiciels devient une décision de conformité.</p>
+
+      <aside class="art-rep">
+        <h2>Repères</h2>
+        <ul>
+          <li>Registre des traitements : article 30 du RGPD. Désignation d'un délégué à la protection des données : article 37, obligatoire pour les autorités et organismes publics.</li>
+          <li>Notification d'une violation à la CNIL : article 33, dans les 72 heures après en avoir pris connaissance, sauf si la violation est peu susceptible d'engendrer un risque.</li>
+          <li>Information des personnes concernées : article 34, lorsque la violation est susceptible d'engendrer un risque élevé pour leurs droits et libertés.</li>
+          <li>Minimisation des données : article 5. C'est un principe, donc opposable même là où aucune procédure précise n'est écrite.</li>
+        </ul>
+      </aside>
+    </article>
+
+    <nav class="art-nav" aria-label="Articles adjacents">
+      <a href="actualite-cloud-act-rgpd.html">&larr; Cloud Act contre RGPD : ce que dit le droit, ce que ça change pour une collectivité</a>
+      <a class="art-nav-next" href="actualite-heberger-en-europe.html">Héberger en Europe n'est pas un détail technique &rarr;</a>
+    </nav>
+
+    <section class="news-contact" id="contact">
+      <h2>Une question sur ce sujet ?</h2>
+      <p>L'atelier répond volontiers aux questions des collectivités sur la souveraineté, l'hébergement ou la conformité de leurs outils. Réponse sous 48 h ouvrées.</p>
+      <a href="mailto:contact@aegis-forge.fr" class="contact-mail js-aegis-contact">Nous contacter</a>
+    </section>
+
+  </main>
+
+</div>
+
+<!-- FOOT -->
+<footer class="foot">
+  <div class="foot-brand">
+    <img src="rss/aegis-forge-icon.webp" alt="AEGIS Forge" width="30" height="36" class="foot-logo">
+    <span>&copy; <b>2025&mdash;2026</b> &middot; AEGIS Forge</span>
+  </div>
+  <div>JOURNAL &middot; <b>02 / 2026</b></div>
+  <div class="foot-ver">
+    <span class="v">v1.0</span> &middot; REV. <b>2026.07.26</b> &middot; BUILD r01 &middot;
+    <a href="actualites.html">&uarr; Actualités</a>
+  </div>
+</footer>
+
+</body>
+</html>

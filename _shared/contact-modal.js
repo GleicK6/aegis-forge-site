@@ -30,9 +30,9 @@
       '    <div class="aegis-cm__header">',
       '      <span class="aegis-cm__eyebrow">Nous contacter</span>',
       '      <h2 class="aegis-cm__title" id="aegis-cm-title">Demande de contact</h2>',
-      '      <p class="aegis-cm__lede">Réponse sous 48 h ouvrées. Vos données ne sont ni stockées en base, ni transmises à des tiers.</p>',
+      '      <p class="aegis-cm__lede">Réponse sous 48 h ouvrées. Vos coordonnées servent uniquement à traiter votre demande.</p>',
       '    </div>',
-      '    <form class="aegis-cm__form" novalidate>',
+      '    <form class="aegis-cm__form">',
       '      <div class="aegis-cm__field">',
       '        <label class="aegis-cm__label" for="aegis-cm-name">Nom</label>',
       '        <input class="aegis-cm__input" type="text" id="aegis-cm-name" name="name" required autocomplete="name">',
@@ -43,12 +43,17 @@
       '      </div>',
       '      <div class="aegis-cm__field">',
       '        <label class="aegis-cm__label" for="aegis-cm-message">Message</label>',
-      '        <textarea class="aegis-cm__textarea" id="aegis-cm-message" name="message" required></textarea>',
+      '        <textarea class="aegis-cm__textarea" id="aegis-cm-message" name="message" minlength="10" required aria-describedby="aegis-cm-message-help"></textarea>',
+      '        <p class="aegis-cm__help" id="aegis-cm-message-help">Décrivez le besoin, le contexte et les personnes qui utiliseront l\'outil.</p>',
       '      </div>',
       '      <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" style="position:absolute;left:-9999px;width:1px;height:1px;">',
+      '      <div class="aegis-cm__consent">',
+      '        <input type="checkbox" id="aegis-cm-consent" name="consent" value="yes" required>',
+      '        <label for="aegis-cm-consent">J\'accepte que mes données soient traitées pour répondre à ma demande, selon la <a href="mentions.html#confidentialite">politique de confidentialité</a>.</label>',
+      '      </div>',
       '      <div class="aegis-cm__actions">',
       '        <button type="submit" class="aegis-cm__submit">Envoyer</button>',
-      '        <p class="aegis-cm__fallback">ou écrivez à <a href="mailto:' + FALLBACK_EMAIL + '">' + FALLBACK_EMAIL + '</a></p>',
+      '        <p class="aegis-cm__fallback">ou écrivez à <a href="mailto:' + FALLBACK_EMAIL + '">' + FALLBACK_EMAIL + '</a><button type="button" class="aegis-cm__copy" data-copy-email>Copier l’adresse</button></p>',
       '      </div>',
       '      <p class="aegis-cm__status" role="status" aria-live="polite"></p>',
       '    </form>',
@@ -142,9 +147,38 @@
     return FORMSPREE_ENDPOINT.indexOf('REPLACE_WITH_REAL_ENDPOINT') !== -1;
   }
 
+  function copyEmail() {
+    function copied() {
+      showStatus('ok', 'Adresse email copiée.');
+    }
+
+    if (navigator.clipboard && window.isSecureContext) {
+      navigator.clipboard.writeText(FALLBACK_EMAIL).then(copied).catch(function () {
+        showStatus('err', 'Copie impossible. Sélectionnez l’adresse email ci-dessus.');
+      });
+      return;
+    }
+
+    var field = document.createElement('textarea');
+    field.value = FALLBACK_EMAIL;
+    field.setAttribute('readonly', '');
+    field.style.cssText = 'position:fixed;opacity:0;pointer-events:none;';
+    document.body.appendChild(field);
+    field.select();
+    var success = document.execCommand('copy');
+    document.body.removeChild(field);
+    if (success) copied();
+    else showStatus('err', 'Copie impossible. Sélectionnez l’adresse email ci-dessus.');
+  }
+
   function onSubmit(e) {
     e.preventDefault();
     var form = e.target;
+
+    if (!form.checkValidity()) {
+      form.reportValidity();
+      return;
+    }
 
     if (isPlaceholderEndpoint()) {
       showStatus('err', 'Le formulaire n\'est pas encore configuré. Écrivez directement à ' + FALLBACK_EMAIL + '.');
@@ -161,6 +195,7 @@
       name: form.elements.name.value.trim(),
       email: form.elements.email.value.trim(),
       message: form.elements.message.value.trim(),
+      consent: form.elements.consent.checked,
       _gotcha: form.elements._gotcha.value
     };
 
@@ -180,7 +215,8 @@
       body: JSON.stringify({
         name: data.name,
         email: data.email,
-        message: data.message
+        message: data.message,
+        consent: data.consent ? 'yes' : 'no'
       })
     })
       .then(function (res) {
@@ -209,6 +245,12 @@
 
   function attachTriggers() {
     document.addEventListener('click', function (e) {
+      var copy = e.target.closest('[data-copy-email]');
+      if (copy) {
+        e.preventDefault();
+        copyEmail();
+        return;
+      }
       var trigger = e.target.closest('.js-aegis-contact');
       if (trigger) {
         e.preventDefault();

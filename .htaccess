@@ -35,6 +35,7 @@ DirectoryIndex aegis-forge.html
   Header always set X-Frame-Options "DENY"
   Header always set Referrer-Policy "strict-origin-when-cross-origin"
   Header always set Permissions-Policy "camera=(), microphone=(), geolocation=(), payment=(), usb=(), accelerometer=(), gyroscope=()"
+  Header always set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:; connect-src 'self' https://formspree.io; frame-ancestors 'none'; form-action 'self' https://formspree.io; base-uri 'self'; object-src 'none'; upgrade-insecure-requests"
 
   # HSTS : 1 an. À activer APRÈS avoir confirmé que Let's Encrypt
   # est bien actif sur le domaine, sinon risque de blocage des visiteurs.
@@ -80,7 +81,7 @@ DirectoryIndex aegis-forge.html
 </FilesMatch>
 
 # ─── ERREUR 404 ──────────────────────────────────────────────
-ErrorDocument 404 /aegis-forge.html
+ErrorDocument 404 /404.html
 
 # ─── DÉSACTIVATION listing répertoires ───────────────────────
 Options -Indexes

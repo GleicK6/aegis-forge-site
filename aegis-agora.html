@@ -10,7 +10,7 @@
 <meta http-equiv="X-Frame-Options" content="DENY">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), payment=(), usb=(), accelerometer=(), gyroscope=()">
-<meta name="robots" content="index, follow, noimageindex, max-snippet:160, max-image-preview:standard">
+<meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
 <meta name="description" content="AGORA — outil municipal en release candidate : planning agents, suivi matériel, flotte de véhicules, congés. Pilote en commune partenaire depuis mai 2026. Multi-tenant, hébergé en Europe.">
 
 <!-- SEO : Open Graph, Twitter Card et Schema.org WebApplication.
@@ -19,13 +19,13 @@
 <meta property="og:site_name" content="AEGIS Forge">
 <meta property="og:title" content="AGORA — Outil municipal : planning, matériel, flotte, congés">
 <meta property="og:description" content="Une seule interface pour le quotidien des services techniques municipaux. Multi-tenant, hébergé en Europe, données exportables. Pilote en commune partenaire depuis mai 2026.">
-<meta property="og:image" content="https://aegis-forge.fr/rss/agora-screen-planning.png">
+<meta property="og:image" content="https://aegis-forge.fr/rss/agora-screen-planning.webp">
 <meta property="og:locale" content="fr_FR">
 
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="AGORA — Outil municipal : planning, matériel, flotte, congés">
 <meta name="twitter:description" content="Une seule interface pour le quotidien des services techniques municipaux. Multi-tenant, hébergé en Europe, données exportables.">
-<meta name="twitter:image" content="https://aegis-forge.fr/rss/agora-screen-planning.png">
+<meta name="twitter:image" content="https://aegis-forge.fr/rss/agora-screen-planning.webp">
 
 <script type="application/ld+json">
 {
@@ -36,7 +36,7 @@
   "operatingSystem": "Web",
   "description": "Outil municipal multi-tenant : planning des agents, suivi du matériel, flotte de véhicules, congés. Hébergé en Union européenne, données exportables. En release candidate, pilote en commune partenaire depuis mai 2026.",
   "url": "https://aegis-forge.fr/aegis-agora.html",
-  "image": "https://aegis-forge.fr/rss/agora-screen-planning.png",
+  "image": "https://aegis-forge.fr/rss/agora-screen-planning.webp",
   "inLanguage": "fr",
   "publisher": {
     "@type": "Organization",
@@ -60,7 +60,7 @@
 <script src="_shared/contact-modal.js" defer></script>
 <link rel="stylesheet" href="_shared/lightbox.css">
 <script src="_shared/lightbox.js" defer></script>
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect x='6' y='6' width='20' height='20' fill='none' stroke='%231e3a8a' stroke-width='2'/><rect x='12' y='12' width='8' height='8' fill='none' stroke='%231e3a8a' stroke-width='1.5' transform='rotate(45 16 16)'/></svg>">
+<link rel="icon" type="image/webp" href="rss/aegis-forge-icon.webp">
 
 <style>
 /* ─── Bridge clair → operational tokens (page-local) ─── */
@@ -463,6 +463,8 @@
 </head>
 <body data-screen-label="AGORA">
 
+<a class="skip-link" href="#main-content">Aller au contenu principal</a>
+
 <div class="shell">
 
   <!-- NAV -->
@@ -471,15 +473,17 @@
       <img src="rss/aegis-forge-icon.webp" alt="" width="20" height="24">
       <span class="nav-mark-txt">AEGIS<small class="sig-c">// AGORA</small></span>
     </a>
-    <nav class="nav-links">
+    <nav class="nav-links" aria-label="Navigation principale">
       <a href="aegis-forge.html"><span>00</span>Forge</a>
-      <a href="aegis-agora.html" class="active"><span>01</span>AGORA</a>
+      <a href="aegis-agora.html" class="active" aria-current="page"><span>01</span>AGORA</a>
       <a href="forge-octane.html"><span>02</span>Octane</a>
       <a href="actualites.html"><span>03</span>Actualités</a>
       <a href="#contact"><span>04</span>Contact</a>
     </nav>
     <a href="#contact" class="nav-cta">Demander une présentation</a>
   </header>
+
+  <main id="main-content">
 
   <!-- BREADCRUMB -->
   <div class="crumb">
@@ -516,7 +520,7 @@
     </div>
     <div class="kpi-cell">
       <div class="kpi-num">4</div>
-      <div class="kpi-lbl"><b>Modules en service</b> · planning, matériel, flotte, congés</div>
+      <div class="kpi-lbl"><b>Modules testés en pilote</b> · planning, matériel, flotte, congés</div>
     </div>
     <div class="kpi-cell">
       <div class="kpi-num">100<span>%</span></div>
@@ -524,11 +528,11 @@
     </div>
   </section>
 
-  <!-- CAPTURES (interface en production) -->
+  <!-- CAPTURES D’INTERFACE -->
   <section style="padding: 96px 0 120px; border-top: 1px solid var(--line)" data-screen-label="02 Captures">
     <div class="section-head rv">
-      <div class="section-num">§ 02 / Captures de production</div>
-      <h2 class="section-title">L'interface, <span class="sig-c">en service</span>.</h2>
+      <div class="section-num">§ 02 / Captures d’interface</div>
+      <h2 class="section-title">L'interface, <span class="sig-c">en pilote</span>.</h2>
       <div class="section-meta">TROIS ÉCRANS<br>COMMUNE PARTENAIRE</div>
     </div>
 
@@ -539,7 +543,7 @@
             <span class="dot"></span><span class="dot"></span><span class="dot"></span>
             <span class="agora-screen-url">agora · planning · avril 2026</span>
           </div>
-          <img src="rss/agora-screen-planning.png" alt="AGORA — vue planning mensuel, tâches ponctuelles, congés, événements colorés par catégorie" loading="lazy" data-lightbox>
+          <img src="rss/agora-screen-planning.webp" alt="AGORA — vue planning mensuel, tâches ponctuelles, congés, événements colorés par catégorie" width="1280" height="1140" loading="lazy" data-lightbox>
         </div>
         <figcaption class="agora-screen-cap"><b>FIG. 01 · Planning</b> — vue mensuelle multi-services. Tâches ponctuelles, cycliques et fériés en un seul écran.</figcaption>
       </figure>
@@ -550,7 +554,7 @@
             <span class="dot"></span><span class="dot"></span><span class="dot"></span>
             <span class="agora-screen-url">agora · matériel · stock</span>
           </div>
-          <img src="rss/agora-screen-materiel.png" alt="AGORA — inventaire matériel avec stocks disponibles et réservations" loading="lazy" data-lightbox>
+          <img src="rss/agora-screen-materiel.webp" alt="AGORA — inventaire matériel avec stocks disponibles et réservations" width="1280" height="1155" loading="lazy" data-lightbox>
         </div>
         <figcaption class="agora-screen-cap"><b>FIG. 02 · Matériel</b> — inventaire, état du stock en temps réel, calendrier de prêts avec disponibilité par jour.</figcaption>
       </figure>
@@ -561,12 +565,12 @@
             <span class="dot"></span><span class="dot"></span><span class="dot"></span>
             <span class="agora-screen-url">agora · engins · contrôles techniques</span>
           </div>
-          <img src="rss/agora-screen-engins.png" alt="AGORA — gestion flotte véhicules, suivi contrôles techniques et entretiens" loading="lazy" data-lightbox>
+          <img src="rss/agora-screen-engins.webp" alt="AGORA — gestion flotte véhicules, suivi contrôles techniques et entretiens" width="1280" height="995" loading="lazy" data-lightbox>
         </div>
         <figcaption class="agora-screen-cap"><b>FIG. 03 · Engins</b> — flotte de véhicules, suivi des contrôles techniques avec alerte avant expiration, entretiens datés.</figcaption>
       </figure>
     </div>
-    <p class="agora-screens-note">Trois captures réelles de l'interface AGORA en production pour une commune partenaire. Multi-commune : chaque commune voit uniquement ses données.</p>
+    <p class="agora-screens-note">Trois captures réelles de l'interface AGORA utilisée lors du pilote avec une commune partenaire. Multi-commune : chaque commune voit uniquement ses données.</p>
   </section>
 
   <!-- MODULES -->
@@ -686,7 +690,7 @@
         <div class="sec-num">SEC.02 · Données</div>
         <h3 class="sec-h">RGPD &amp; <em>portabilité</em></h3>
         <p class="sec-b">Données hébergées en Europe (Frankfurt et Paris). Export complet des données à tout moment, dans un format ouvert (CSV / JSON), sans pénalité contractuelle.</p>
-        <div class="sec-row"><b>Hôte</b><span>Frankfurt &amp; Paris · 100 % UE</span></div>
+        <div class="sec-row"><b>Hôte</b><span>Frankfurt &amp; Paris · serveurs UE</span></div>
         <div class="sec-row"><b>Export</b><span>CSV / JSON · à tout moment</span></div>
         <div class="sec-row"><b>Registre</b><span>Tenu à jour, accessible DPO</span></div>
       </div>
@@ -715,7 +719,7 @@
       <div class="aud-cell now">
         <div class="aud-cell-num">03<span>// 05 / 2026 · ACTIF</span></div>
         <h3 class="aud-cell-h">Pilote en commune partenaire.</h3>
-        <p class="aud-cell-b">Mise en production chez la première commune partenaire. Les agents et services techniques utilisent AGORA au quotidien. Les retours sont intégrés au fil de l'eau.</p>
+        <p class="aud-cell-b">Déploiement pilote auprès de la première commune partenaire. Les agents et services techniques utilisent AGORA au quotidien. Les retours sont intégrés au fil de l'eau.</p>
       </div>
     </div>
   </section>
@@ -744,6 +748,7 @@
     </div>
   </section>
 
+  </main>
 </div>
 
 <!-- FOOT -->
