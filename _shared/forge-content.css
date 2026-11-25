@@ -1,0 +1,14 @@
+.parcours-grid{display:grid;grid-template-columns:1.2fr 1fr;gap:48px;padding:32px 0 0}
+.parcours-grid p{max-width:65ch;line-height:1.75;color:var(--ink-2);margin-bottom:18px}
+.parcours-grid .parcours-lede{font-size:22px;color:var(--ink)}
+.parcours-note{padding:28px;background:var(--surf);border:1px solid var(--line);border-top:3px solid var(--sig)}
+.parcours-note h3{font-size:18px;margin-bottom:16px}
+.parcours-note ul{padding-left:20px;margin-bottom:24px;color:var(--ink-2)}
+.parcours-note li{margin:12px 0;line-height:1.65}
+.forge-faq{padding:64px 0;border-top:1px solid var(--line)}
+.forge-faq details{border-bottom:1px solid var(--line);max-width:900px}
+.forge-faq summary{padding:22px 4px;cursor:pointer;font-size:18px;font-weight:600;line-height:1.45}
+.forge-faq summary:focus-visible{outline:2px solid var(--sig);outline-offset:3px}
+.forge-faq details p{padding:0 4px 22px;max-width:75ch;line-height:1.75;color:var(--ink-2)}
+.forge-faq details a{color:var(--pri);text-decoration:underline;text-underline-offset:3px}
+@media(max-width:760px){.parcours-grid{grid-template-columns:1fr;gap:20px}.parcours-note{padding:22px}.parcours-grid .parcours-lede{font-size:20px}.forge-faq{padding:44px 0}}

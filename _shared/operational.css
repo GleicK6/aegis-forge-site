@@ -69,7 +69,7 @@ em { font-style: normal; }
 strong { font-weight: 400; }
 
 /* Accessibilité : le focus clavier doit être visible sur chaque parcours. */
-:where(a, button, input, textarea, select, [tabindex]):focus-visible {
+:where(a, button, input, textarea, select, summary, [tabindex]):focus-visible {
   outline: 3px solid var(--pri-2);
   outline-offset: 3px;
 }
@@ -547,7 +547,7 @@ strong { font-weight: 400; }
   border-radius: 4px;
   transition: all .15s;
 }
-.contact-mail:hover { background: #fff; }
+.contact-mail:hover { background: #fff; color: var(--ink); }
 .contact-mail::after { content: '→'; font-size: 14px; }
 
 .contact-meta {
@@ -561,12 +561,10 @@ strong { font-weight: 400; }
 .contact-meta a { color: #fff; border-bottom: 1px solid var(--ink-3); padding-bottom: 1px; }
 
 /* ─── REVEAL anim ─── */
-.rv { opacity: 0; transform: translateY(20px); transition: opacity .7s var(--ease), transform .7s var(--ease); }
-.rv.in { opacity: 1; transform: translateY(0); }
-.rv.d1 { transition-delay: 80ms; }
-.rv.d2 { transition-delay: 160ms; }
-.rv.d3 { transition-delay: 240ms; }
-.rv.d4 { transition-delay: 320ms; }
+/* Le contenu reste lisible si JavaScript est absent ou interrompu. */
+.rv { opacity: 1; transform: none; }
+.rv.in { animation: aegis-reveal .45s var(--ease); }
+@keyframes aegis-reveal { from { transform: translateY(12px); } to { transform: none; } }
 
 /* ─── RESPONSIVE ─── */
 @media (max-width: 920px) {
@@ -583,9 +581,8 @@ strong { font-weight: 400; }
     grid-row: 2;
     justify-content: flex-start;
     gap: 4px;
-    overflow-x: auto;
+    flex-wrap: wrap;
     padding: 2px 0 4px;
-    scrollbar-width: thin;
   }
   .nav-links a { flex: 0 0 auto; }
   .fhero-grid { grid-template-columns: 1fr; gap: 40px; }

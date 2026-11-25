@@ -4,12 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:; connect-src 'self'; frame-ancestors 'none'; form-action 'self'; base-uri 'self'; object-src 'none'; upgrade-insecure-requests">
-<meta http-equiv="X-Content-Type-Options" content="nosniff">
-<meta http-equiv="X-Frame-Options" content="DENY">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' ; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:; connect-src 'self'; form-action 'self'; base-uri 'self'; object-src 'none'; upgrade-insecure-requests">
 <meta name="referrer" content="strict-origin-when-cross-origin">
-<meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), payment=(), usb=(), accelerometer=(), gyroscope=()">
-
 <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
 
 <title>Mentions légales &amp; confidentialité — AEGIS</title>
@@ -17,8 +13,8 @@
 <meta property="og:title" content="Mentions légales — AEGIS">
 <meta property="og:type" content="website">
 
-<link rel="stylesheet" href="_shared/fonts.css">
-<link rel="stylesheet" href="_shared/blueprint.css">
+<link rel="stylesheet" href="_shared/fonts.css?v=f6b8a55ffea1">
+<link rel="stylesheet" href="_shared/blueprint.css?v=2d479197b10a">
 <link rel="icon" type="image/webp" href="rss/aegis-forge-icon.webp">
 
 <style>
@@ -50,32 +46,32 @@
   .legal-meta b:first-child{padding-top: 0}
 }
 </style>
+<link rel="stylesheet" href="_shared/forge-vitrine.css?v=ff34c1564444">
 <link rel="canonical" href="https://aegis-forge.fr/mentions.html">
 <meta property="og:url" content="https://aegis-forge.fr/mentions.html">
 </head>
-<body data-screen-label="Mentions">
+<body class="forge-site forge-mentions" data-screen-label="Mentions">
 
 <a class="skip-link" href="#main-content">Aller au contenu principal</a>
+<header class="forge-top">
+  <div class="frame forge-top-inner">
+    <a class="wordmark" href="aegis-forge.html">
+      <img src="rss/aegis-forge-icon.webp" alt="" width="27" height="32">
+      <span>AEGIS<span class="wordmark-forge"> Forge</span></span>
+    </a>
+    <nav class="forge-nav" aria-label="Navigation principale">
+        <a href="aegis-forge.html#methode">Méthode</a>
+        <a href="aegis-agora.html">AGORA</a>
+        <a href="forge-octane.html">Octane</a>
+        <a href="actualites.html">Actualités</a>
+        <a class="forge-nav-contact" href="aegis-forge.html#contact">Contact</a>
+    </nav>
+  </div>
+</header>
 
 <div class="shell">
 
-  <header class="hdr">
-    <a href="aegis-forge.html" class="hdr-mark">
-      <div class="hdr-mark-glyph"></div>
-      <div class="hdr-mark-txt">AEGIS <small>// MENTIONS</small></div>
-    </a>
-    <nav class="hdr-nav" aria-label="Navigation principale">
-      <a href="aegis-forge.html"><span>00</span>Forge</a>
-      <a href="aegis-agora.html"><span>01</span>AGORA</a>
-      <a href="forge-octane.html"><span>02</span>Octane</a>
-    </nav>
-    <div class="hdr-meta">
-      <div><b>REV.</b> 2026.05.14</div>
-      <div class="hdr-meta-status">DOC LÉGAL</div>
-    </div>
-  </header>
-
-  <main id="main-content">
+<main id="main-content">
 
   <div class="crumb">
     <a href="aegis-forge.html">AEGIS FORGE</a>
@@ -123,8 +119,8 @@
     <div class="legal-section" id="hebergement">
       <div class="legal-id">§ 03 · HÉBERGEMENT</div>
       <h2>Hébergeur</h2>
-      <p><strong>Scaleway SAS</strong> — 8 rue de la Ville l'Évêque, 75008 Paris, France. RCS Paris 433&nbsp;115&nbsp;904. Téléphone&nbsp;: +33&nbsp;(0)1&nbsp;84&nbsp;13&nbsp;00&nbsp;00. Site&nbsp;: <a href="https://www.scaleway.com" target="_blank" rel="noopener noreferrer">scaleway.com</a>.</p>
-      <p>Les polices de caractères (Fraunces, Inter, JetBrains Mono, Space Grotesk) sont <strong>auto-hébergées</strong> sur le site lui-même. Aucune requête vers un service tiers (Google Fonts, CDN externe, analytics) n'est émise lors du chargement des pages.</p>
+      <p>Cette vitrine est hébergée par <strong>GitHub, Inc.</strong>, via GitHub Pages — 88 Colin P. Kelly Jr. Street, San Francisco, CA 94107, États-Unis. Site : <a href="https://github.com" target="_blank" rel="noopener noreferrer">github.com</a>. Les applications présentées disposent de leurs propres conditions d’hébergement.</p>
+      <p>Les polices de caractères (Fraunces, Inter, JetBrains Mono, Space Grotesk) sont <strong>auto-hébergées</strong> sur le site lui-même. Les pages ne chargent ni Google Fonts ni outil de mesure d'audience externe.</p>
     </div>
 
     <div class="legal-section" id="propriete">
@@ -137,8 +133,10 @@
     <div class="legal-section" id="confidentialite">
       <div class="legal-id">§ 05 · CONFIDENTIALITÉ &amp; RGPD</div>
       <h2>Protection des données personnelles</h2>
-      <p>Ce site ne dépose <strong>aucun cookie</strong>. Aucun traceur analytique n'est utilisé. Aucune donnée de navigation n'est collectée côté serveur au-delà des logs techniques anonymisés strictement nécessaires à l'exploitation (adresse IP tronquée, conservation 30 jours).</p>
-      <p>Les données transmises par email à <a href="mailto:contact@aegis-forge.fr">contact@aegis-forge.fr</a> ou par le formulaire de contact (nom, email et message) sont utilisées exclusivement pour répondre à la demande. Le formulaire est acheminé par le prestataire technique Formspree, qui enregistre les soumissions dans sa boîte de réception ; sa <a href="https://formspree.io/legal/privacy-policy/" target="_blank" rel="noopener noreferrer">politique de confidentialité</a> s'applique à ce traitement. Ces données ne sont pas utilisées à des fins de prospection commerciale.</p>
+      <p>Le code de cette vitrine ne dépose pas de cookie de suivi et ne charge pas de traceur analytique. GitHub Pages traite des données techniques, notamment les adresses IP, pour fournir et sécuriser l’hébergement, selon la <a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement" target="_blank" rel="noopener noreferrer">politique de GitHub</a>.</p>
+      <p><strong>Demandes de contact.</strong> Clément Bidal, éditeur d’AEGIS, utilise le nom, l’adresse e-mail et le message pour répondre à votre demande et, le cas échéant, préparer une proposition à votre initiative. Le formulaire recueille votre accord avant l’envoi. Vous pouvez demander le retrait de cet accord à <a href="mailto:contact@aegis-forge.fr">contact@aegis-forge.fr</a>. Ces coordonnées ne sont pas utilisées pour une campagne de prospection.</p>
+      <p><strong>Prestataires et transferts.</strong> Le formulaire passe par Formspree, qui conserve les soumissions et utilise des infrastructures aux États-Unis. Les modalités de traitement et de transferts sont décrites dans sa <a href="https://formspree.io/legal/privacy-policy/" target="_blank" rel="noopener noreferrer">politique de confidentialité</a>. La messagerie du domaine utilise les services OVHcloud. Ce canal de contact ne bénéficie donc pas d’une garantie de traitement exclusivement dans l’Union européenne. Merci de ne pas transmettre de données sensibles dans votre premier message.</p>
+      <p><strong>Conservation.</strong> Les échanges sont conservés le temps nécessaire au traitement et au suivi de la demande. Si une prestation débute, les pièces utiles au contrat et aux obligations de conservation sont gérées dans le dossier client.</p>
       <p>Conformément au <strong>RGPD</strong> et à la <strong>loi Informatique et Libertés modifiée</strong>, tout visiteur dispose d'un droit d'accès, de rectification, d'effacement, de limitation et de portabilité des données le concernant. Pour exercer ces droits&nbsp;: <a href="mailto:contact@aegis-forge.fr">contact@aegis-forge.fr</a>. En cas de réclamation, recours possible auprès de la <a href="https://www.cnil.fr" target="_blank" rel="noopener noreferrer">CNIL</a>.</p>
       <p>Dans le cadre des missions de prévention (AEGIS Prévention), les annuaires de crise et registres opérationnels constituent des traitements de données personnelles distincts, encadrés par convention avec chaque commune cliente — registre tenu, durées de conservation explicites, accès limité aux personnes habilitées.</p>
     </div>
@@ -168,13 +166,16 @@
 
   </main>
 
-  <footer class="foot">
-    <div>© <b>2025 — 2026</b> · AEGIS · SIRET 879 190 080 00025</div>
-    <div>DOC.LEGAL · REV.2026.05.14</div>
-    <div><a href="aegis-forge.html">↑ Retour à l'atelier</a></div>
-  </footer>
-
 </div>
 
+<footer class="forge-footer">
+  <div class="frame forge-footer-inner">
+    <a class="wordmark" href="aegis-forge.html">AEGIS Forge</a>
+    <nav aria-label="Informations légales">
+      <a href="mentions.html">Mentions légales</a>
+      <a href="mentions.html#confidentialite">Confidentialité</a>
+    </nav>
+  </div>
+</footer>
 </body>
 </html>

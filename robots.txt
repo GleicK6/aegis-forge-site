@@ -38,8 +38,9 @@ Allow: /
 # ── Entraînement de modèles — allowlist Octane uniquement ─────────
 # La règle Allow plus spécifique (path complet) prime sur le Disallow racine
 # pour les agents qui respectent la spec étendue Google/OpenAI.
-# Octane a besoin d'une visibilité IA pour l'acquisition ; le travail
-# éditorial des autres pages reste hors des corpus d'entraînement.
+# Cette autorisation d’entraînement est indépendante de la recherche.
+# Elle ne garantit ni indexation ni citation. Les restrictions supposent
+# que le robot respecte les directives.
 
 User-agent: GPTBot
 Allow: /forge-octane.html

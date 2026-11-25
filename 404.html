@@ -6,9 +6,9 @@
 <meta name="robots" content="noindex, follow">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:; base-uri 'self'; object-src 'none'; frame-ancestors 'none'">
 <title>Page introuvable — AEGIS Forge</title>
-<link rel="stylesheet" href="_shared/fonts.css">
-<link rel="stylesheet" href="_shared/operational.css">
-<link rel="icon" type="image/webp" href="rss/aegis-forge-icon.webp">
+<link rel="stylesheet" href="/_shared/fonts.css?v=f6b8a55ffea1">
+<link rel="stylesheet" href="/_shared/operational.css?v=af11021fd2ce">
+<link rel="icon" type="image/webp" href="/rss/aegis-forge-icon.webp">
 <style>
   .not-found { min-height: 68vh; display: grid; place-items: center; padding: 72px 0 112px; }
   .not-found-card { width: min(720px, 100%); padding: clamp(28px, 6vw, 64px); background: var(--surf); border: 1px solid var(--line); border-top: 3px solid var(--sig); border-radius: 6px; }
@@ -17,34 +17,46 @@
   .not-found p { max-width: 48ch; margin-top: 22px; font-size: 17px; line-height: 1.65; color: var(--ink-2); }
   .not-found-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 32px; }
 </style>
+<link rel="stylesheet" href="/_shared/forge-vitrine.css?v=ff34c1564444">
 </head>
-<body>
+<body class="forge-site forge-erreur">
 <a class="skip-link" href="#main-content">Aller au contenu principal</a>
-<div class="shell">
-  <header class="nav">
-    <a href="aegis-forge.html" class="nav-mark">
-      <img src="rss/aegis-forge-icon.webp" alt="" width="20" height="24">
-      <span class="nav-mark-txt">AEGIS<small class="sig-c">// FORGE</small></span>
+<header class="forge-top">
+  <div class="frame forge-top-inner">
+    <a class="wordmark" href="/aegis-forge.html">
+      <img src="/rss/aegis-forge-icon.webp" alt="" width="27" height="32">
+      <span>AEGIS<span class="wordmark-forge"> Forge</span></span>
     </a>
-    <nav class="nav-links" aria-label="Navigation principale">
-      <a href="aegis-forge.html"><span>00</span>Forge</a>
-      <a href="aegis-agora.html"><span>01</span>AGORA</a>
-      <a href="forge-octane.html"><span>02</span>Octane</a>
-      <a href="actualites.html"><span>03</span>Actualités</a>
+    <nav class="forge-nav" aria-label="Navigation principale">
+        <a href="/aegis-forge.html#methode">Méthode</a>
+        <a href="/aegis-agora.html">AGORA</a>
+        <a href="/forge-octane.html">Octane</a>
+        <a href="/actualites.html">Actualités</a>
+        <a class="forge-nav-contact" href="/aegis-forge.html#contact">Contact</a>
     </nav>
-    <a href="mailto:contact@aegis-forge.fr" class="nav-cta">Nous contacter</a>
-  </header>
-  <main class="not-found" id="main-content">
+  </div>
+</header>
+<div class="shell">
+<main class="not-found" id="main-content">
     <section class="not-found-card" aria-labelledby="not-found-title">
-      <p class="not-found-code">ERR. 404 · Ressource introuvable</p>
+      <p class="not-found-code">Erreur 404</p>
       <h1 id="not-found-title">Cette page n'existe pas.</h1>
       <p>L'adresse a peut-être changé, ou le lien est incomplet. Vous pouvez revenir à l'accueil de l'atelier ou consulter les réalisations.</p>
       <div class="not-found-actions">
-        <a href="aegis-forge.html" class="btn btn-sig">Retour à l'accueil</a>
-        <a href="aegis-agora.html" class="btn btn-outline">Voir les réalisations</a>
+        <a href="/aegis-forge.html" class="btn btn-sig">Retour à l'accueil</a>
+        <a href="/aegis-forge.html#realisations" class="btn btn-outline">Voir les réalisations</a>
       </div>
     </section>
   </main>
 </div>
+<footer class="forge-footer">
+  <div class="frame forge-footer-inner">
+    <a class="wordmark" href="/aegis-forge.html">AEGIS Forge</a>
+    <nav aria-label="Informations légales">
+      <a href="/mentions.html">Mentions légales</a>
+      <a href="/mentions.html#confidentialite">Confidentialité</a>
+    </nav>
+  </div>
+</footer>
 </body>
 </html>

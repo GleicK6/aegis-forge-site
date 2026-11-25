@@ -5,11 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Octane — Comparateur de prix carburant en temps réel</title>
 
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:; connect-src 'self' https://formspree.io; frame-ancestors 'none'; form-action 'self' https://formspree.io; base-uri 'self'; object-src 'none'; upgrade-insecure-requests">
-<meta http-equiv="X-Content-Type-Options" content="nosniff">
-<meta http-equiv="X-Frame-Options" content="DENY">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-x0MB//lBxkth1iTpwHDQn9INNem1Dw7z24IUdjklmbk=' 'sha256-XrQiNfxfRj/O0nRvB+b0mdx/mzjbuE8+iUEcX4p6C4Q='; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:; connect-src 'self' https://formspree.io; form-action 'self' https://formspree.io; base-uri 'self'; object-src 'none'; upgrade-insecure-requests">
 <meta name="referrer" content="strict-origin-when-cross-origin">
-<meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), payment=(), usb=(), accelerometer=(), gyroscope=()">
 <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
 <meta name="description" content="Octane — app utilitaire grand public : comparateur de stations carburant en France, Luxembourg et Espagne. Calcul de détour rentable, suivi conso, alertes prix, votes communautaires.">
 
@@ -18,13 +15,13 @@
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="AEGIS Forge">
 <meta property="og:title" content="Octane — comparateur de carburant transfrontalier">
-<meta property="og:description" content="App mobile Android pour comparer le prix du carburant en France, Luxembourg, Espagne et Italie. Calcul de détour rentable, alertes prix, votes communautaires.">
+<meta property="og:description" content="App mobile Android pour comparer le prix du carburant en France, Luxembourg et Espagne. Calcul de détour rentable, alertes prix, votes communautaires.">
 <meta property="og:image" content="https://aegis-forge.fr/octane-og.png">
 <meta property="og:locale" content="fr_FR">
 
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Octane — comparateur de carburant transfrontalier">
-<meta name="twitter:description" content="App mobile Android. Comparateur transfrontalier France / Luxembourg / Espagne / Italie, calcul de détour, alertes prix.">
+<meta name="twitter:description" content="App mobile Android. Comparateur transfrontalier France, Luxembourg et Espagne, calcul de détour, alertes prix.">
 <meta name="twitter:image" content="https://aegis-forge.fr/octane-og.png">
 
 <script type="application/ld+json">
@@ -36,7 +33,7 @@
   "operatingSystem": "Android",
   "applicationCategory": "TravelApplication",
   "applicationSubCategory": "Navigation",
-  "description": "App mobile Android pour comparer le prix du carburant en France, Luxembourg, Espagne et Italie. Calcul de détour rentable, alertes prix, votes communautaires.",
+  "description": "App mobile Android pour comparer le prix du carburant en France, Luxembourg et Espagne. Calcul de détour rentable, alertes prix, votes communautaires.",
   "url": "https://aegis-forge.fr/forge-octane.html",
   "downloadUrl": "https://play.google.com/store/apps/details?id=com.pleinmalin.app",
   "image": "https://aegis-forge.fr/octane-og.png",
@@ -53,7 +50,7 @@
   },
   "featureList": [
     "Comparateur de stations carburant géolocalisées",
-    "Recherche transfrontalière France / Luxembourg / Espagne / Italie",
+    "Recherche transfrontalière France, Luxembourg et Espagne",
     "Calcul de rentabilité du détour en euros",
     "Alertes prix personnalisées",
     "Rappels au rythme des pleins",
@@ -62,12 +59,12 @@
 }
 </script>
 
-<link rel="stylesheet" href="_shared/fonts.css">
-<link rel="stylesheet" href="_shared/operational.css">
-<link rel="stylesheet" href="_shared/contact-modal.css">
-<script src="_shared/contact-modal.js" defer></script>
-<link rel="stylesheet" href="_shared/lightbox.css">
-<script src="_shared/lightbox.js" defer></script>
+<link rel="stylesheet" href="_shared/fonts.css?v=f6b8a55ffea1">
+<link rel="stylesheet" href="_shared/operational.css?v=af11021fd2ce">
+<link rel="stylesheet" href="_shared/contact-modal.css?v=d048da4ac8a4">
+<script src="_shared/contact-modal.js?v=2c56a9a7f6f6" defer></script>
+<link rel="stylesheet" href="_shared/lightbox.css?v=212a4388583c">
+<script src="_shared/lightbox.js?v=8662fa380ef3" defer></script>
 <link rel="icon" type="image/webp" href="rss/aegis-forge-icon.webp">
 
 <style>
@@ -306,65 +303,55 @@
   .octane-scroll-btn { display: none; }
 }
 </style>
+<link rel="stylesheet" href="_shared/product-pages.css?v=c2cb389d1a98">
+<link rel="stylesheet" href="_shared/forge-vitrine.css?v=ff34c1564444">
 <link rel="canonical" href="https://aegis-forge.fr/forge-octane.html">
 <meta property="og:url" content="https://aegis-forge.fr/forge-octane.html">
 </head>
-<body data-screen-label="Octane">
+<body class="forge-site forge-octane product-page octane-product" data-screen-label="Octane" data-contact-context="octane">
 
 <a class="skip-link" href="#main-content">Aller au contenu principal</a>
+<header class="forge-top">
+  <div class="frame forge-top-inner">
+    <a class="wordmark" href="aegis-forge.html">
+      <img src="rss/aegis-forge-icon.webp" alt="" width="27" height="32">
+      <span>AEGIS<span class="wordmark-forge"> Forge</span></span>
+    </a>
+    <nav class="forge-nav" aria-label="Navigation principale">
+        <a href="aegis-forge.html#methode">Méthode</a>
+        <a href="aegis-agora.html">AGORA</a>
+        <a href="forge-octane.html" aria-current="page">Octane</a>
+        <a href="actualites.html">Actualités</a>
+        <a class="forge-nav-contact" href="#contact">Contact</a>
+    </nav>
+  </div>
+</header>
 
 <div class="shell">
 
   <!-- NAV -->
-  <header class="nav">
-    <a href="aegis-forge.html" class="nav-mark">
-      <img src="rss/aegis-forge-icon.webp" alt="" width="20" height="24">
-      <span class="nav-mark-txt">AEGIS<small class="sig-c">// OCTANE</small></span>
-    </a>
-    <nav class="nav-links" aria-label="Navigation principale">
-      <a href="aegis-forge.html"><span>00</span>Forge</a>
-      <a href="aegis-agora.html"><span>01</span>AGORA</a>
-      <a href="forge-octane.html" class="active" aria-current="page"><span>02</span>Octane</a>
-      <a href="actualites.html"><span>03</span>Actualités</a>
-      <a href="#contact"><span>04</span>Contact</a>
-    </nav>
-    <a href="https://play.google.com/store/apps/details?id=com.pleinmalin.app&amp;hl=fr" class="nav-cta" target="_blank" rel="noopener noreferrer">Télécharger l'app</a>
-  </header>
+<main id="main-content">
 
-  <main id="main-content">
-
+  <div class="forge-product-intro">
   <!-- BREADCRUMB -->
-  <div class="crumb">
-    <a href="aegis-forge.html">AEGIS FORGE</a>
-    <span class="sep">/</span>
-    <span class="here">Octane</span>
-    <span class="ref"><b>FG-02</b> · APP GRAND PUBLIC</span>
-  </div>
+  <nav class="product-breadcrumb" aria-label="Fil d’Ariane">
+    <a href="aegis-forge.html">AEGIS Forge</a>
+    <span aria-hidden="true">/</span>
+    <span aria-current="page">Octane</span>
+  </nav>
 
   <!-- HERO -->
-  <section class="fhero" data-screen-label="01 Hero Octane">
-    <div class="rv">
-      <div class="fhero-pre">Application grand public · Android · sans publicité</div>
-      <h1>
-        Comparer les stations.<br>
-        Calculer le détour.<br>
-        <span class="acc">Remplir sans surpayer.</span>
-      </h1>
-      <p class="fhero-lede">
-        <strong>Octane</strong> compare les stations à proximité et calcule si un détour est <em>rentable</em> — en tenant compte de votre consommation réelle. Disponible sur Android, sans publicité, sans revente de données.
-      </p>
-      <div class="fhero-actions">
-        <a href="https://play.google.com/store/apps/details?id=com.pleinmalin.app&amp;hl=fr" class="btn btn-sig" target="_blank" rel="noopener noreferrer">Télécharger sur Google Play</a>
-        <a href="#fonctions" class="btn btn-outline">Voir les fonctions</a>
-      </div>
-    </div>
+  <section class="product-hero" aria-labelledby="octane-heading">
+    <div><p class="product-eyebrow">Octane · Application Android</p><span class="product-badge">Disponible sur Google Play</span><h1 id="octane-heading">Le bon plein.<br><span>Le bon détour.</span></h1><p class="product-lede">Comparez les prix du carburant autour de vous et vérifiez si le détour jusqu’à une station vaut vraiment le coût.</p><div class="product-actions"><a href="https://play.google.com/store/apps/details?id=com.pleinmalin.app&amp;hl=fr" class="btn btn-ink" target="_blank" rel="noopener noreferrer">Télécharger sur Google Play</a><a href="#fonctions" class="product-link">Découvrir les fonctions <span aria-hidden="true">↓</span></a></div><p class="product-note">France, Luxembourg et Espagne.<br>Sans publicité · Gratuit avec Premium optionnel à 1,99 €/mois.</p></div>
+    <figure class="octane-hero-visual"><img src="rss/octane-store-map.webp" alt="Octane : les stations et leurs prix sur la carte" width="1242" height="2208" fetchpriority="high" decoding="async" data-lightbox><img src="rss/octane-store-detour.webp" alt="Octane : la comparaison du coût d’un détour" width="1242" height="2208" decoding="async" data-lightbox><figcaption>Repérer une station, puis comparer le détour. Sélectionnez une capture pour l’agrandir.</figcaption></figure>
   </section>
+  </div>
 
   <!-- KPI -->
   <section class="kpi rv">
     <div class="kpi-cell">
       <div class="kpi-num">23 000<span>+</span></div>
-      <div class="kpi-lbl"><b>Stations couvertes</b> · France, Luxembourg, Espagne</div>
+      <div class="kpi-lbl"><b>Stations couvertes</b> · France, Luxembourg et Espagne</div>
     </div>
     <div class="kpi-cell">
       <div class="kpi-num">0<span> pub</span></div>
@@ -582,10 +569,10 @@
         </div>
         <div class="contact-meta rv d1">
           <b>Store</b><span>Google Play (Android)</span>
-          <b>Couverture</b><span>France · Luxembourg · Espagne</span>
+          <b>Couverture</b><span>France, Luxembourg et Espagne</span>
           <b>Prix</b><span>Gratuit · Premium 1,99 €/mois</span>
           <b>Données</b><span>Jamais revendues</span>
-          <b>Hébergement</b><span>Europe · FRA / PAR</span>
+          <b>Confidentialité</b><span>Conditions propres à l’application et à cette vitrine</span>
           <b>Légal</b><span><a href="mentions.html">Mentions</a> · <a href="mentions.html#confidentialite">Confidentialité</a></span>
         </div>
       </div>
@@ -596,18 +583,6 @@
 </div>
 
 <!-- FOOT -->
-<footer class="foot">
-  <div class="foot-brand">
-    <img src="rss/aegis-forge-icon.webp" alt="AEGIS Forge" width="30" height="36" class="foot-logo">
-    <span>© <b>2025—2026</b> · Octane · réalisation AEGIS Forge</span>
-  </div>
-  <div>FICHE FG-02 · <b>END OF DOCUMENT</b></div>
-  <div class="foot-ver">
-    <span class="v">v1.1</span> · REV. <b>2026.05.25</b> · BUILD r05 ·
-    <a href="aegis-forge.html">↑ Forge</a>
-  </div>
-</footer>
-
 <script>
 (function(){
   // Carrousel des captures
@@ -626,8 +601,8 @@
       prev.disabled = track.scrollLeft <= 1;
       next.disabled = track.scrollLeft >= track.scrollWidth - track.clientWidth - 1;
     }
-    prev.addEventListener('click', function(){ track.scrollBy({ left: -step(), behavior: 'smooth' }); });
-    next.addEventListener('click', function(){ track.scrollBy({ left: step(), behavior: 'smooth' }); });
+    prev.addEventListener('click', function(){ track.scrollBy({ left: -step(), behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' }); });
+    next.addEventListener('click', function(){ track.scrollBy({ left: step(), behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' }); });
     track.addEventListener('scroll', update, { passive: true });
     window.addEventListener('resize', update);
     update();
@@ -653,11 +628,20 @@
       var target = document.querySelector(href);
       if (!target) return;
       e.preventDefault();
-      window.scrollTo({ top: target.offsetTop - 24, behavior: 'smooth' });
+      window.scrollTo({ top: target.offsetTop - 24, behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
     });
   });
 })();
 </script>
 
+<footer class="forge-footer">
+  <div class="frame forge-footer-inner">
+    <a class="wordmark" href="aegis-forge.html">AEGIS Forge</a>
+    <nav aria-label="Informations légales">
+      <a href="mentions.html">Mentions légales</a>
+      <a href="mentions.html#confidentialite">Confidentialité</a>
+    </nav>
+  </div>
+</footer>
 </body>
 </html>

@@ -1,37 +1,55 @@
 # AEGIS Forge
 
-> Atelier d'apps souveraines pour collectivités territoriales et grand public. Hébergement et stockage 100 % UE.
+> Atelier français de développement d'applications métier pour collectivités et petites équipes. Cadrage, documentation, reprise des données et suivi.
 
 ## À propos
 
-AEGIS Forge conçoit des outils numériques pour les collectivités locales (communes, EPCI) et publie sous la même marque des apps utilitaires grand public. Une exigence stricte de souveraineté s'applique à l'ensemble : conformité CNIL/RGPD native, hébergement en France (Scaleway, Paris), aucun cloud nord-américain, données exportables.
+AEGIS Forge est porté par Clément Bidal. Son expérience en environnement industriel à fortes exigences de sûreté et de sécurité nourrit une approche centrée sur les usages, les décisions documentées et le fonctionnement dans la durée. Les engagements de région de stockage, d'accès et d'export sont précisés pour chaque application.
+
+La vitrine est hébergée sur GitHub Pages ; son formulaire de contact utilise Formspree, avec des traitements possibles aux États-Unis. La messagerie du domaine utilise OVHcloud. Les engagements applicatifs ne constituent pas une garantie de localisation UE pour tous ces services. Voir les mentions et la confidentialité.
 
 ## Apps actives
 
 ### Octane — Prix Carburant
 - Page : [forge-octane.html](forge-octane.html)
-- Description : application mobile Android qui compare en temps réel les prix du carburant aux stations-service environnantes. Couverture France, Luxembourg, Espagne, Italie. Cible : automobilistes frontaliers et conducteurs cherchant à optimiser le coût d'un plein ou la rentabilité d'un détour.
+- Description : application mobile Android qui compare en temps réel les prix du carburant aux stations-service environnantes. Couverture France, Luxembourg et Espagne. Cible : automobilistes frontaliers et conducteurs cherchant à optimiser le coût d'un plein ou la rentabilité d'un détour.
 - Fonctionnalités : recherche géolocalisée, carte des stations, recherche transfrontalière, calcul de rentabilité du détour en euros, alertes prix personnalisées, rappels au rythme des pleins, votes communautaires sur les nuisances (publicités sonores, attentes excessives).
 - Modèle : gratuit pour les fonctions de base, Premium à 1,99 EUR/mois ou 14,99 EUR/an (calcul de détour, alertes, rappels, recherche transfrontalière).
-- Sources de données : data.economie.gouv.fr (France), petrol.lu (Luxembourg), MITECO (Espagne), MIMIT (Italie). Toutes des sources publiques officielles.
+- Sources de données : data.economie.gouv.fr (France), petrol.lu (Luxembourg), MITECO (Espagne).
 - Stack : React Native (Expo), Supabase (PostgreSQL + PostGIS), TypeScript, NativeWind.
 - Téléchargement : [Google Play Store](https://play.google.com/store/apps/details?id=com.pleinmalin.app)
 
 ### AGORA — outil municipal
 - Page : [aegis-agora.html](aegis-agora.html)
-- Description : application web de gestion pour les services techniques des communes et EPCI : planning des agents, suivi du matériel, gestion de la flotte de véhicules, congés. Une seule interface pour le quotidien des services. Multi-tenant. En release candidate, pilote en commune partenaire depuis mai 2026.
-- Hébergement : données stockées chez Supabase en région Frankfurt (Union européenne), application servie depuis une région européenne. Export complet des données sans frais, dans un format ouvert.
+- Description : application web qui fluidifie le lien entre l’élu qui pilote les missions et l’agent qui les réalise sur le terrain. Le suivi comprend les photos et la géolocalisation des interventions. Les retours du terrain sont pris en compte dans le planning pour adapter les missions et prévoir les prochaines interventions. Pilote en cours, dans une commune partenaire depuis mai 2026.
+- Fonctions complémentaires : matériel, véhicules, congés et absences pour organiser les moyens nécessaires aux missions. Un espace de données propre à chaque commune.
+- Hébergement : données de l’application hébergées en Europe. La région, les prestataires et les conditions d’export dans un format ouvert sont précisés au contrat. Les services de la vitrine et du formulaire sont décrits séparément dans les informations de confidentialité.
 
 ## Pages institutionnelles
 
-- Atelier : [aegis-forge.html](aegis-forge.html)
+- Atelier : [Accueil](https://aegis-forge.fr/)
+- Parcours : [Clément Bidal](https://aegis-forge.fr/#parcours)
+- Projet, livrables et suivi : [Questions fréquentes](https://aegis-forge.fr/#questions)
+- Journal : [Actualités](https://aegis-forge.fr/actualites.html)
 - Mentions légales et confidentialité : [mentions.html](mentions.html)
+
+## Articles
+
+- [Septembre 2026 : transparence de l’IA en mairie](https://aegis-forge.fr/actualite-ia-transparence-mairie-septembre-2026.html)
+
+- [Choisir un prestataire souverain](https://aegis-forge.fr/actualite-choisir-prestataire-souverain.html)
+- [Cloud Act et RGPD](https://aegis-forge.fr/actualite-cloud-act-rgpd.html)
+- [Cloud souverain et hébergement européen](https://aegis-forge.fr/actualite-cloud-souverain-hebergement-europeen.html)
+- [Héberger en Europe](https://aegis-forge.fr/actualite-heberger-en-europe.html)
+- [IA et services publics](https://aegis-forge.fr/actualite-ia-services-publics.html)
+- [Réversibilité des données](https://aegis-forge.fr/actualite-reversibilite-donnees.html)
+- [RGPD en mairie](https://aegis-forge.fr/actualite-rgpd-en-mairie.html)
 
 ## Politique d'accès des crawlers IA
 
 Deux régimes distincts. /robots.txt fait foi ; ce paragraphe en donne la lecture.
 
 - Recherche IA et récupération déclenchée par un utilisateur : accès complet au site (OAI-SearchBot, ChatGPT-User, Claude-SearchBot, Claude-User, PerplexityBot). La citation de nos contenus dans les réponses assistées est recherchée.
-- Entraînement de modèles : accès restreint à la page Octane, à ce fichier et à l'image Open Graph associée (GPTBot, ClaudeBot, anthropic-ai, Claude-Web, Google-Extended, meta-externalagent). Octane a besoin d'une visibilité IA pour l'acquisition ; le travail éditorial des autres pages reste hors des corpus d'entraînement.
+- Entraînement de modèles : accès restreint à la page Octane, à ce fichier (GPTBot, ClaudeBot, anthropic-ai, Claude-Web, Google-Extended, meta-externalagent) ; GPTBot dispose aussi de l'image Open Graph Octane. L'autorisation d'entraînement est un choix distinct de l'accès des robots de recherche ; elle ne garantit aucune citation. Les autres pages sont interdites aux agents d'entraînement nommés qui respectent ces directives.
 
-Google-Extended ne sépare pas citation et entraînement : il relève du second régime tant que Google n'expose pas d'agent dédié.
+Google-Extended contrôle certains usages d'entraînement et d'ancrage des réponses de Gemini, sans agir sur l'inclusion ni le classement dans Google Search. Il relève ici du second régime : [documentation Google](https://developers.google.com/crawling/docs/crawlers-fetchers/google-common-crawlers).

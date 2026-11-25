@@ -17,9 +17,27 @@
 
   var modal = null;
   var lastFocus = null;
-  var firstField = null;
-  var lastFocusable = null;
-  var firstFocusable = null;
+  var sending = false;
+  var sent = false;
+  var focusTimer = null;
+  var contactContexts = {
+    agora: {
+      title: 'Demander une présentation d’AGORA',
+      subject: 'Présentation AGORA',
+      help: 'Indiquez votre commune et un exemple de mission : comment l’élu la pilote, comment l’agent partage ses retours du terrain et comment vous préparez la suite.'
+    },
+    forge: {
+      title: 'Parler de mon besoin',
+      subject: 'Projet sur mesure — AEGIS Forge',
+      help: 'Décrivez votre fonctionnement actuel et ce que vous aimeriez simplifier. Une idée encore à préciser suffit.'
+    },
+    octane: {
+      title: 'Contacter l’équipe Octane',
+      subject: 'Question ou retour sur Octane',
+      help: 'Décrivez votre question ou le problème rencontré. Pour un problème technique, précisez votre modèle de téléphone et la version de l’application.'
+    }
+  };
+  var contactContext = contactContexts[document.body.getAttribute('data-contact-context')] || null;
 
   function buildHtml() {
     return [
@@ -33,6 +51,7 @@
       '      <p class="aegis-cm__lede">Réponse sous 48 h ouvrées. Vos coordonnées servent uniquement à traiter votre demande.</p>',
       '    </div>',
       '    <form class="aegis-cm__form">',
+      '      <input type="hidden" name="subject" value="">',
       '      <div class="aegis-cm__field">',
       '        <label class="aegis-cm__label" for="aegis-cm-name">Nom</label>',
       '        <input class="aegis-cm__input" type="text" id="aegis-cm-name" name="name" required autocomplete="name">',
@@ -46,10 +65,10 @@
       '        <textarea class="aegis-cm__textarea" id="aegis-cm-message" name="message" minlength="10" required aria-describedby="aegis-cm-message-help"></textarea>',
       '        <p class="aegis-cm__help" id="aegis-cm-message-help">Décrivez le besoin, le contexte et les personnes qui utiliseront l\'outil.</p>',
       '      </div>',
-      '      <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" style="position:absolute;left:-9999px;width:1px;height:1px;">',
+      '      <input type="text" name="_gotcha" tabindex="-1" aria-hidden="true" autocomplete="off" style="position:absolute;left:-9999px;width:1px;height:1px;">',
       '      <div class="aegis-cm__consent">',
       '        <input type="checkbox" id="aegis-cm-consent" name="consent" value="yes" required>',
-      '        <label for="aegis-cm-consent">J\'accepte que mes données soient traitées pour répondre à ma demande, selon la <a href="mentions.html#confidentialite">politique de confidentialité</a>.</label>',
+      '        <label for="aegis-cm-consent">J\'accepte le traitement de ma demande via Formspree, avec un transfert aux États-Unis, selon la <a href="mentions.html#confidentialite">politique de confidentialité</a>.</label>',
       '      </div>',
       '      <div class="aegis-cm__actions">',
       '        <button type="submit" class="aegis-cm__submit">Envoyer</button>',
@@ -63,9 +82,9 @@
   }
 
   function getFocusableElements(root) {
-    return root.querySelectorAll(
+    return Array.prototype.filter.call(root.querySelectorAll(
       'button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])'
-    );
+    ), function (el) { return el.getAttribute('tabindex') !== '-1' && el.getAttribute('aria-hidden') !== 'true'; });
   }
 
   function trapFocus(e) {
@@ -93,27 +112,32 @@
   }
 
   function open(trigger) {
+    if (sent) resetForm();
     lastFocus = trigger || document.activeElement;
     modal.setAttribute('aria-hidden', 'false');
     document.body.classList.add('aegis-cm-open');
     document.addEventListener('keydown', onKeydown);
-    setTimeout(function () {
-      var nameInput = modal.querySelector('#aegis-cm-name');
-      if (nameInput) nameInput.focus();
+    clearTimeout(focusTimer);
+    focusTimer = setTimeout(function () {
+      if (modal.getAttribute('aria-hidden') !== 'false') return;
+      var focusTarget = modal.querySelector(sending ? '.aegis-cm__close' : '#aegis-cm-name');
+      if (focusTarget) focusTarget.focus();
     }, 50);
   }
 
   function close() {
+    clearTimeout(focusTimer);
     modal.setAttribute('aria-hidden', 'true');
     document.body.classList.remove('aegis-cm-open');
     document.removeEventListener('keydown', onKeydown);
-    resetForm();
+    // Garder le brouillon et l'envoi en cours lors d'une fermeture accidentelle.
     if (lastFocus && typeof lastFocus.focus === 'function') {
       lastFocus.focus();
     }
   }
 
   function resetForm() {
+    sent = false;
     var form = modal.querySelector('.aegis-cm__form');
     var status = modal.querySelector('.aegis-cm__status');
     var submit = modal.querySelector('.aegis-cm__submit');
@@ -130,7 +154,7 @@
   }
 
   function setFieldsDisabled(disabled) {
-    var fields = modal.querySelectorAll('.aegis-cm__input, .aegis-cm__textarea');
+    var fields = modal.querySelectorAll('.aegis-cm__input, .aegis-cm__textarea, #aegis-cm-consent');
     for (var i = 0; i < fields.length; i++) {
       fields[i].disabled = disabled;
     }
@@ -171,9 +195,11 @@
     else showStatus('err', 'Copie impossible. Sélectionnez l’adresse email ci-dessus.');
   }
 
-  function onSubmit(e) {
+  async function onSubmit(e) {
     e.preventDefault();
     var form = e.target;
+    if (sending || sent) return;
+    ['name', 'email', 'message'].forEach(function (key) { form.elements[key].value = form.elements[key].value.trim(); });
 
     if (!form.checkValidity()) {
       form.reportValidity();
@@ -186,6 +212,8 @@
     }
 
     var submit = form.querySelector('.aegis-cm__submit');
+    sending = true;
+    form.setAttribute('aria-busy', 'true');
     submit.disabled = true;
     submit.textContent = 'Envoi en cours...';
     setFieldsDisabled(true);
@@ -198,49 +226,63 @@
       consent: form.elements.consent.checked,
       _gotcha: form.elements._gotcha.value
     };
+    var payload = {
+      name: data.name,
+      email: data.email,
+      message: data.message,
+      consent: data.consent ? 'yes' : 'no'
+    };
+    if (contactContext) payload.subject = contactContext.subject;
 
     // Anti-spam honeypot : si _gotcha rempli, on simule un succes
     if (data._gotcha) {
+      sending = false;
+      sent = true;
+      form.setAttribute('aria-busy', 'false');
       showStatus('ok', 'Merci, on vous répond sous 48 h ouvrées.');
       submit.textContent = 'Envoyé';
       return;
     }
 
-    fetch(FORMSPREE_ENDPOINT, {
+    var controller = new AbortController();
+    var timedOut = false;
+    var timer;
+    var timeout = new Promise(function (_, reject) {
+      timer = setTimeout(function () {
+        timedOut = true;
+        controller.abort();
+        reject(new Error('timeout'));
+      }, 15000);
+    });
+    try {
+      var res = await Promise.race([fetch(FORMSPREE_ENDPOINT, {
       method: 'POST',
+      signal: controller.signal,
       headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json'
       },
-      body: JSON.stringify({
-        name: data.name,
-        email: data.email,
-        message: data.message,
-        consent: data.consent ? 'yes' : 'no'
-      })
-    })
-      .then(function (res) {
-        if (res.ok) {
-          showStatus('ok', 'Merci, on vous répond sous 48 h ouvrées.');
-          submit.textContent = 'Envoyé';
-        } else {
-          return res.json().then(function (body) {
-            var msg = body && body.errors && body.errors.length
-              ? body.errors.map(function (e) { return e.message; }).join(' ')
-              : 'Erreur d\'envoi (' + res.status + '). Réessayez ou écrivez à ' + FALLBACK_EMAIL + '.';
-            showStatus('err', msg);
-            submit.disabled = false;
-            submit.textContent = 'Réessayer';
-            setFieldsDisabled(false);
-          });
-        }
-      })
-      .catch(function () {
-        showStatus('err', 'Erreur réseau. Réessayez ou écrivez à ' + FALLBACK_EMAIL + '.');
+      body: JSON.stringify(payload)
+      }), timeout]);
+      if (!res.ok) {
+        showStatus('err', 'Le service n’a pas accepté le message (' + res.status + '). Réessayez ou écrivez à ' + FALLBACK_EMAIL + '.');
+      } else {
+        sent = true;
+        showStatus('ok', 'Votre message a été transmis. Merci, on vous répond sous 48 h ouvrées.');
+        submit.textContent = 'Envoyé';
+      }
+    } catch (_) {
+      showStatus('err', (timedOut ? 'Le délai de confirmation est dépassé.' : 'La connexion a été interrompue.') + ' L’envoi n’est pas confirmé. Votre texte est conservé ; évitez les renvois répétés. Vous pouvez écrire à ' + FALLBACK_EMAIL + '.');
+    } finally {
+      clearTimeout(timer);
+      sending = false;
+      form.setAttribute('aria-busy', 'false');
+      if (!sent) {
         submit.disabled = false;
         submit.textContent = 'Réessayer';
         setFieldsDisabled(false);
-      });
+      }
+    }
   }
 
   function attachTriggers() {
@@ -268,6 +310,13 @@
     container.innerHTML = buildHtml();
     modal = container.firstElementChild;
     document.body.appendChild(modal);
+    if (contactContext) {
+      modal.querySelector('#aegis-cm-title').textContent = contactContext.title;
+      modal.querySelector('#aegis-cm-message-help').textContent = contactContext.help;
+      var subject = modal.querySelector('[name="subject"]');
+      subject.value = contactContext.subject;
+      subject.defaultValue = contactContext.subject;
+    }
     modal.querySelector('.aegis-cm__form').addEventListener('submit', onSubmit);
     attachTriggers();
   }

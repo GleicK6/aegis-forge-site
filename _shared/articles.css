@@ -1,0 +1,131 @@
+
+/* ─── Article (page-local) ─── */
+.art-wrap { max-width: 780px; margin: 0 auto; padding: 56px 24px 48px; }
+.art-crumb {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  margin-bottom: 26px;
+}
+.art-crumb a { color: var(--sig); text-decoration: none; }
+.art-crumb a:hover { text-decoration: underline; }
+.art-crumb span { margin: 0 8px; color: var(--ink-4); }
+.art-date {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  color: var(--sig);
+  margin-bottom: 12px;
+}
+.art h1 {
+  font-family: var(--display);
+  font-size: clamp(28px, 4.4vw, 40px);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.14;
+  color: var(--ink);
+  margin: 0 0 26px;
+}
+.art p {
+  font-size: 16px;
+  line-height: 1.72;
+  color: var(--ink-2);
+  margin: 0 0 18px;
+}
+.art-rep {
+  margin-top: 34px;
+  padding: 26px 30px;
+  background: var(--surf-2);
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--sig);
+  border-radius: 4px;
+}
+.art-rep h2 {
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--sig);
+  margin: 0 0 14px;
+}
+.art-rep ul { margin: 0; padding-left: 18px; }
+.art-rep li {
+  font-size: 14.5px;
+  line-height: 1.62;
+  color: var(--ink-2);
+  margin-bottom: 9px;
+}
+.art-rep li:last-child { margin-bottom: 0; }
+.art-nav {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 40px;
+  padding-top: 22px;
+  border-top: 1px solid var(--line);
+  font-size: 13.5px;
+}
+.art-nav a { color: var(--ink-2); text-decoration: none; max-width: 46%; }
+.art-nav a:hover { color: var(--sig); }
+.art-nav .art-nav-next { text-align: right; margin-left: auto; }
+@media (max-width: 640px) {
+  .art-rep { padding: 20px 18px; }
+  .art-nav { flex-direction: column; }
+  .art-nav .art-nav-next { text-align: left; margin-left: 0; }
+}
+.news-contact {
+  margin-top: 52px;
+  padding: 34px;
+  background: var(--surf-deep);
+  border-radius: 6px;
+  color: #fff;
+}
+.news-contact h2 {
+  font-family: var(--display);
+  font-size: 24px;
+  font-weight: 700;
+  margin: 0 0 10px;
+}
+.news-contact p {
+  font-size: 14.5px;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.75);
+  margin: 0 0 20px;
+  max-width: 58ch;
+}
+@media (max-width: 640px) {
+  .news-contact { padding: 26px 20px; }
+}
+
+/* Lecture, repères et références communs aux articles. */
+.art .art-byline { font-size: 13px; color: var(--ink-3); margin: -10px 0 20px; }
+.art a { color: var(--pri); text-decoration: underline; text-underline-offset: 3px; }
+.art-toc { display: flex; flex-wrap: wrap; gap: 8px 20px; margin: 0 0 28px; padding: 14px 0; border-block: 1px solid var(--line); font-size: 14px; }
+.art-toc a { padding: 4px 0; }
+.art-section { margin-top: 34px; scroll-margin-top: 24px; }
+.art-section h2 { font: 700 24px/1.35 var(--display); margin-bottom: 24px; letter-spacing: -.02em; }
+.art-section h3 { font: 600 19px/1.4 var(--display); margin: 28px 0 12px; }
+.art-rep, .art-sources li { scroll-margin-top: 24px; }
+.art-sources ol { padding-left: 22px; }
+.art-practice .art-questions { margin-top: 16px; }
+.art-practice, .art-sources { margin-top: 32px; scroll-margin-top: 24px; }
+.art-practice { padding: 24px; border-left: 3px solid var(--pri); background: var(--surf); }
+.art-practice h2, .art-sources h2 { font: 700 20px/1.4 var(--display); margin: 0 0 14px; color: var(--ink); }
+.art-practice p { margin-bottom: 0; }
+.art-sources ul, .art-questions { padding-left: 22px; }
+.art-sources li, .art-questions li { margin-bottom: 12px; line-height: 1.7; }
+.art-sources { border-top: 1px solid var(--line); padding-top: 24px; font-size: 14px; }
+.art-sources a { overflow-wrap: anywhere; }
+@media (max-width: 640px) {
+  .art-wrap { padding: 32px 0 40px; }
+  .art-nav a { max-width: 100%; }
+}
+@media print {
+  .nav, .skip-link, .news-contact, .art-nav, .foot, .art-toc { display: none !important; }
+  .art-wrap { max-width: none; padding: 0; }
+  .art-rep, .art-practice { break-inside: avoid; }
+  .art-sources a::after { content: " (" attr(href) ")"; font-size: 10px; overflow-wrap: anywhere; }
+}
