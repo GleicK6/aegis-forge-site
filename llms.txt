@@ -4,7 +4,7 @@
 
 ## À propos
 
-AEGIS Forge est porté par Clément Bidal. Son expérience en environnement industriel à fortes exigences de sûreté et de sécurité nourrit une approche centrée sur les usages, les décisions documentées et le fonctionnement dans la durée. Les engagements de région de stockage, d'accès et d'export sont précisés pour chaque application.
+AEGIS Forge conçoit des logiciels selon la méthode FORGE : cadrage écrit, essais en conditions d’usage et mise en service documentée. Les doctrines métier et les référentiels applicables sont pris en compte dès le cadrage. Les engagements de région de stockage, d'accès et d'export sont précisés pour chaque application.
 
 La vitrine est hébergée sur GitHub Pages ; son formulaire de contact utilise Formspree, avec des traitements possibles aux États-Unis. La messagerie du domaine utilise OVHcloud. Les engagements applicatifs ne constituent pas une garantie de localisation UE pour tous ces services. Voir les mentions et la confidentialité.
 
@@ -27,8 +27,8 @@ La vitrine est hébergée sur GitHub Pages ; son formulaire de contact utilise F
 
 ## Pages institutionnelles
 
-- Atelier : [Accueil](https://aegis-forge.fr/)
-- Parcours : [Clément Bidal](https://aegis-forge.fr/#parcours)
+- Accueil : [AEGIS Forge](https://aegis-forge.fr/)
+- Méthode et exigences : [L’atelier](https://aegis-forge.fr/#parcours)
 - Projet, livrables et suivi : [Questions fréquentes](https://aegis-forge.fr/#questions)
 - Journal : [Actualités](https://aegis-forge.fr/actualites.html)
 - Mentions légales et confidentialité : [mentions.html](mentions.html)

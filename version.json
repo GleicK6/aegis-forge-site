@@ -1,6 +1,6 @@
 {
-  "revision": "ba3e1d4cdd6d50c504c9d24121d6b916f69472fb",
-  "contentHash": "c2dbd0c182f26909039cedfd789045ee946098e0f3205c41041f9ea9a03394b2",
+  "revision": "be9ded5204e021e2e507d77f4f32b8380a2d2eb5",
+  "contentHash": "379404cf34dd5f421b0467f8a42822c3fbb5cf54cecba26b36fe475ac025a6fb",
   "files": {
     ".htaccess": "021efeefb1cc5238cccd91db7b0ded643a86249e23fb036ff168d09da95e9b14",
     ".nojekyll": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
@@ -35,7 +35,7 @@
     "actualite-rgpd-en-mairie.html": "8a61110a34cc4e206e3e711a55436a5ec617bca663ccad0254d198e1232d5697",
     "actualites.html": "ad8aa69d1d39eafd3aaa2794cd81dc9492565b79507fc642d7f7484d965cddbb",
     "aegis-agora.html": "020a18bbc924451252a0daaf625d215ca88fecf1997fc0a81c219504602f0973",
-    "aegis-forge.html": "cfcb9bf0fff11f7cebee83b7ca4d040ed22a81740d218f51242b36a7783d414e",
+    "aegis-forge.html": "d00511880d9002ddf3dfde15993c9fca502318cd82e066d2876ad0bbe7063b04",
     "agora-icon.svg": "ed077c9bc4d41c286a6335712e770c37ddf105b3c65d0523817cd9b20c862ca4",
     "agora-logo.svg": "82a66ed02f964af2d7d90226777ce68a2ef16f8695e326742f92b8bf55c9c980",
     "fonts/fraunces-latin-wght-italic.woff2": "1d2cd9e5d867ccdd321b2f8ff0a6a44198a96d07dd073a51c930c09771f9f30b",
@@ -56,9 +56,9 @@
     "fonts/space-grotesk-latin-600-normal.woff2": "685bbbf69fa616df1ef81847c85fc76be097ddfb3468ff2257be54511ab3130f",
     "fonts/space-grotesk-latin-700-normal.woff2": "35f8aec56cfd5cbfdb03cc68733a54a0b05bb3617ffcd5fd332badc0b045ca55",
     "forge-octane.html": "c1fc9c75d91fe07bf2f64c246edaf4b0de4c231448fb11d6e3212826051db4c6",
-    "index.html": "cfcb9bf0fff11f7cebee83b7ca4d040ed22a81740d218f51242b36a7783d414e",
-    "llms.txt": "930c590cf2e1285dce8ecdb0752848d6da89c80d29de9d52694436fca2c04df5",
-    "mentions.html": "08be6240a45a3d10d8046f4b172bc41ec9660596e8fde1eed66b620f54206ce8",
+    "index.html": "d00511880d9002ddf3dfde15993c9fca502318cd82e066d2876ad0bbe7063b04",
+    "llms.txt": "b7459acde82acb926ffafdd9b83331f8d18befb658861a3c3081185e68a03661",
+    "mentions.html": "0d5c363e68d72a417f9a1879d2e25601049b26f15d000f369a3c9299219c3436",
     "octane-og.png": "0c2a73f07d187aae9166dc341ea235cbdd0951a34789f012dc3497204e83a366",
     "robots.txt": "41e1321229e9f85076dd54df8ffa8203d409160fb7aa0d371fd7a36706caaa32",
     "rss/aegis-forge-icon.webp": "4bc4399b6854389df0dd438612e809a6b2a186f8eb5a564451643d8027e4fcaa",
@@ -75,6 +75,6 @@
     "rss/octane-store-station.webp": "f2fd386a77f1b2bb1a0d5f437731e279291e081bd23e292c5acceb24a4e454ec",
     "rss/og-forge.png": "2ab6a417577bb69ab12af5555c7304f395aa1e1bd8e691401950026b9441acc1",
     "rss/og-prevention.png": "f647cfcc1921934bac64e8823d149f16269d227eab9f1323095616151ff84fb6",
-    "sitemap.xml": "35b93b035304809f2981e52631d8d73422456e6ffca539c7da0ed8e0a70c2096"
+    "sitemap.xml": "d92c636cd877dd2aeb6ca880976b7e5fd49ff1a0c435292fb1f822a2f4aee4cb"
   }
 }
